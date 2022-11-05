@@ -11,6 +11,7 @@
     "@types/node": "~16",
     "@typescript-eslint/eslint-plugin": "~5.39",
     "@typescript-eslint/parser": "~5.39",
+    "dotenv": "^16.0.3",
     "eslint": "~8.24",
     "eslint-config-prettier": "~8.5",
     "eslint-plugin-jest": "~27.1",
@@ -36,6 +37,7 @@
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",
   "dependencies": {
+    "@slack/bolt": "^3.12.2",
     "tslib": "~2.4"
   },
   "volta": {

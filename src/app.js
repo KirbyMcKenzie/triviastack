@@ -1,6 +1,9 @@
-const { App } = require("@slack/bolt");
-require("dotenv").config();
-const axios = require("axios");
+// const { App } = require('@slack/bolt');
+// require('dotenv').config();
+// const axios = require('axios');
+
+import { App } from '@slack/bolt';
+// import Axios from "axio"
 
 // Initializes your app with your bot token and signing secret
 
@@ -11,12 +14,12 @@ const app = new App({
 
 const decodeEscapedHTML = (str) => {
   const htmlEntities = {
-    "&amp;": "&",
-    "&lt;": "<",
-    "&gt;": ">",
-    "&quot;": "`",
-    "&apos;": "'",
-    "&#039;": "'",
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '`',
+    '&apos;': "'",
+    '&#039;': "'",
   };
   return str.replace(/&#{0,1}[a-z0-9]+;/gi, (match) => htmlEntities[match]);
 };
@@ -42,76 +45,76 @@ function numberToEnglish(n, custom_join_character) {
     word,
     words;
 
-  var and = custom_join_character || "and";
+  var and = custom_join_character || 'and';
 
   /* Is number zero? */
   if (parseInt(string) === 0) {
-    return "zero";
+    return 'zero';
   }
 
   /* Array of units as words */
   units = [
-    "",
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
-    "ten",
-    "eleven",
-    "twelve",
-    "thirteen",
-    "fourteen",
-    "fifteen",
-    "sixteen",
-    "seventeen",
-    "eighteen",
-    "nineteen",
+    '',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+    'ten',
+    'eleven',
+    'twelve',
+    'thirteen',
+    'fourteen',
+    'fifteen',
+    'sixteen',
+    'seventeen',
+    'eighteen',
+    'nineteen',
   ];
 
   /* Array of tens as words */
   tens = [
-    "",
-    "",
-    "twenty",
-    "thirty",
-    "forty",
-    "fifty",
-    "sixty",
-    "seventy",
-    "eighty",
-    "ninety",
+    '',
+    '',
+    'twenty',
+    'thirty',
+    'forty',
+    'fifty',
+    'sixty',
+    'seventy',
+    'eighty',
+    'ninety',
   ];
 
   /* Array of scales as words */
   scales = [
-    "",
-    "thousand",
-    "million",
-    "billion",
-    "trillion",
-    "quadrillion",
-    "quintillion",
-    "sextillion",
-    "septillion",
-    "octillion",
-    "nonillion",
-    "decillion",
-    "undecillion",
-    "duodecillion",
-    "tredecillion",
-    "quatttuor-decillion",
-    "quindecillion",
-    "sexdecillion",
-    "septen-decillion",
-    "octodecillion",
-    "novemdecillion",
-    "vigintillion",
-    "centillion",
+    '',
+    'thousand',
+    'million',
+    'billion',
+    'trillion',
+    'quadrillion',
+    'quintillion',
+    'sextillion',
+    'septillion',
+    'octillion',
+    'nonillion',
+    'decillion',
+    'undecillion',
+    'duodecillion',
+    'tredecillion',
+    'quatttuor-decillion',
+    'quindecillion',
+    'sexdecillion',
+    'septen-decillion',
+    'octodecillion',
+    'novemdecillion',
+    'vigintillion',
+    'centillion',
   ];
 
   /* Split user arguemnt into 3 digit chunks from right to left */
@@ -125,7 +128,7 @@ function numberToEnglish(n, custom_join_character) {
   /* Check if function has enough scale words to be able to stringify the user argument */
   chunksLen = chunks.length;
   if (chunksLen > scales.length) {
-    return "";
+    return '';
   }
 
   /* Stringify each integer in each chunk */
@@ -135,7 +138,7 @@ function numberToEnglish(n, custom_join_character) {
 
     if (chunk) {
       /* Split chunk into array of individual integers */
-      ints = chunks[i].split("").reverse().map(parseFloat);
+      ints = chunks[i].split('').reverse().map(parseFloat);
 
       /* If tens integer is 1, i.e. 10, then add 10 to units integer */
       if (ints[1] === 1) {
@@ -167,12 +170,12 @@ function numberToEnglish(n, custom_join_character) {
 
       /* Add hundreds word if array item exists */
       if ((word = units[ints[2]])) {
-        words.push(word + " hundred");
+        words.push(word + ' hundred');
       }
     }
   }
 
-  return words.reverse().join(" ");
+  return words.reverse().join(' ');
 }
 
 const SMALL_WORDS =
@@ -183,7 +186,7 @@ const IS_MANUAL_CASE = /.(?=[A-Z]|\..)/;
 const ALPHANUMERIC_PATTERN = /[A-Za-z0-9\u00C0-\u00FF]/;
 
 function titleCase(input) {
-  let result = "";
+  let result = '';
   let m;
 
   // tslint:disable-next-line
@@ -198,7 +201,7 @@ function titleCase(input) {
         index === 0 ||
         index + token.length === input.length) &&
       // Ignore URLs.
-      (input.charAt(index + token.length) !== ":" ||
+      (input.charAt(index + token.length) !== ':' ||
         WHITESPACE.test(input.charAt(index + token.length + 1)))
     ) {
       // Find and uppercase first word character, skips over *modifiers*.
@@ -212,60 +215,60 @@ function titleCase(input) {
   return result;
 }
 
-app.command("/trivia", async ({ command, ack, say }) => {
+app.command('/trivia', async ({ command, ack, say }) => {
   try {
     await say(
-      "|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n"
+      '|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n',
     );
     await ack();
     axios
-      .get("https://opentdb.com/api.php?amount=10")
+      .get('https://opentdb.com/api.php?amount=10')
       .then(async (res) => {
         const headerDate =
           res.headers && res.headers.date
             ? res.headers.date
-            : "no response date";
-        console.log("Status Code:", res.status);
-        console.log("Date in Response header:", headerDate);
+            : 'no response date';
+        console.log('Status Code:', res.status);
+        console.log('Date in Response header:', headerDate);
 
         const questions = res.data.results;
 
         questions.forEach(async (question, index) => {
-          console.log(question, "question");
+          console.log(question, 'question');
           const decodedQuestion = decodeEscapedHTML(question.question);
 
           console.log(`📣 [Trivia] - ${decodedQuestion}`);
           // await say(decodedQuestion);
 
           const answers = question.incorrect_answers.map((answer) => ({
-            type: "button",
+            type: 'button',
             text: {
-              type: "plain_text",
+              type: 'plain_text',
               text: answer,
               emoji: true,
             },
-            value: "click_me_123",
+            value: 'click_me_123',
           }));
 
           await say({
             blocks: [
               {
-                type: "divider",
+                type: 'divider',
               },
 
               {
-                type: "section",
+                type: 'section',
                 text: {
-                  type: "plain_text",
+                  type: 'plain_text',
                   text: decodedQuestion,
                   emoji: true,
                 },
               },
               {
-                type: "context",
+                type: 'context',
                 elements: [
                   {
-                    type: "mrkdwn",
+                    type: 'mrkdwn',
                     text: `*Category:* ${
                       question.category
                     }  *·*  *Difficulty:* ${titleCase(question.difficulty)}`,
@@ -273,16 +276,16 @@ app.command("/trivia", async ({ command, ack, say }) => {
                 ],
               },
               {
-                type: "actions",
+                type: 'actions',
                 elements: [
                   {
-                    type: "button",
+                    type: 'button',
                     text: {
-                      type: "plain_text",
+                      type: 'plain_text',
                       text: question.correct_answer,
                       emoji: true,
                     },
-                    value: "click_me_123",
+                    value: 'click_me_123',
                   },
                   ...answers,
                 ],
@@ -292,15 +295,15 @@ app.command("/trivia", async ({ command, ack, say }) => {
         });
       })
       .catch((err) => {
-        console.log("Error: ", err.message);
+        console.log('Error: ', err.message);
       });
   } catch (error) {
-    console.log(error, "err");
+    console.log(error, 'err');
     // console.error(error);
   }
 });
 
-app.message("yo", async ({ message, say }) => {
+app.message('yo', async ({ message, say }) => {
   // say() sends a message to the channel where the event was triggered
   await say(`Hey there <@${message.user}>!`);
 });
@@ -309,5 +312,5 @@ app.message("yo", async ({ message, say }) => {
   // Start your app
   await app.start(process.env.PORT || 3000);
 
-  console.log("⚡️ Bolt app is running!");
+  console.log('⚡️ Bolt app is running!');
 })();
