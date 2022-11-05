@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { App } from '@slack/bolt';
 import * as dotenv from 'dotenv';
 import { decodeEscapedHTML, titleCase } from './helpers/string';
 dotenv.config();
-const axios = require('axios');
+import axios from 'axios';
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
