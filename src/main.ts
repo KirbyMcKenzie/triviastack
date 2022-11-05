@@ -2,19 +2,13 @@
 // @ts-nocheck
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-// const { App } = require('@slack/bolt');
-// require('dotenv').config();
-// const axios = require('axios');
 
-import pkg from '@slack/bolt';
-const { App } = pkg;
+import bolt from '@slack/bolt';
+import * as dotenv from 'dotenv';
+dotenv.config();
+import axios from 'axio';
 
-// import { App } from '@slack/bolt';
-// import Axios from "axio"
-
-// Initializes your app with your bot token and signing secret
-
-const app = new App({
+const app = new bolt.App({
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET,
 });
@@ -31,12 +25,6 @@ const decodeEscapedHTML = (str) => {
   return str.replace(/&#{0,1}[a-z0-9]+;/gi, (match) => htmlEntities[match]);
 };
 
-/**
- * Convert an integer to its words representation
- *
- * @author McShaman (http://stackoverflow.com/users/788657/mcshaman)
- * @source http://stackoverflow.com/questions/14766951/convert-digits-into-words-with-javascript
- */
 function numberToEnglish(n, custom_join_character) {
   var string = n.toString(),
     units,
@@ -124,7 +112,7 @@ function numberToEnglish(n, custom_join_character) {
     'centillion',
   ];
 
-  /* Split user arguemnt into 3 digit chunks from right to left */
+  /* Split user argument into 3 digit chunks from right to left */
   start = string.length;
   chunks = [];
   while (start > 0) {
