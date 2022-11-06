@@ -15,14 +15,16 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
 });
 
-app.command('/trivia', async ({ ack, say }) => {
+app.command('/trivia', async ({ ack, say, payload }) => {
   await ack();
   await say('Quick quiz coming up!');
 
   axios.get('https://opentdb.com/api.php?amount=10').then(async (res) => {
-    const { error } = await supabase
-      .from('quizzes')
-      .insert({ questions: res.data.results, is_active: true });
+    const { error } = await supabase.from('quizzes').insert({
+      questions: res.data.results,
+      channel_id: payload.channel_id,
+      is_active: true,
+    });
 
     !!error && console.log(`SUPABASE ERROR: ${error}`);
 
@@ -85,12 +87,70 @@ app.command('/trivia', async ({ ack, say }) => {
   });
 });
 
-app.action('button_click', async ({ body, ack, say, payload }) => {
+app.action('button_click', async ({ body, ack, say }) => {
   await ack();
   await say(`<@${body.user.id}> clicked the button`);
-  console.log(body, 'body');
-  console.log('-=-=-=-=-=-=-=-=-=-=-=-=-=');
-  console.log(payload, 'payload');
+
+  const { data, error } = await supabase
+    .from('quizzes')
+    .select()
+    .eq('channel_id', body.channel.id);
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
+  console.log(data[0].questions, 'data');
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
+  const nextQuestion = data[0].questions[1];
+
+  console.log(nextQuestion, 'nextQuestion');
+
+  await say({
+    blocks: [
+      {
+        type: 'divider',
+      },
+
+      {
+        type: 'section',
+        text: {
+          type: 'plain_text',
+          text: decodeEscapedHTML(nextQuestion.question),
+          emoji: true,
+        },
+      },
+      {
+        type: 'context',
+        elements: [
+          {
+            type: 'mrkdwn',
+            text: `*Category:* ${
+              nextQuestion.category
+            }  *·*  *Difficulty:* ${titleCase(nextQuestion.difficulty)}`,
+          },
+        ],
+      },
+      {
+        type: 'actions',
+        elements: [
+          {
+            type: 'button',
+            text: {
+              type: 'plain_text',
+              text: nextQuestion.correct_answer,
+              emoji: true,
+            },
+            action_id: 'button_click',
+            value: nextQuestion.correct_answer,
+          },
+          // ...answers,
+        ],
+      },
+    ],
+  });
+
+  !!error && console.log(`SUPABASE ERROR: ${error}`);
 });
 
 app.message('yo', async ({ message, say }) => {
