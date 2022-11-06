@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import axios from 'axios';
 import { App } from '@slack/bolt';
 import dotenv from 'dotenv';
@@ -96,13 +97,20 @@ app.action('button_click', async ({ body, ack, say }) => {
     .select()
     .eq('channel_id', body.channel.id);
 
+  await supabase
+    .from('quizzes')
+    //@ts-ignore
+    .update({ current_question: data[0].current_question + 1 })
+    //@ts-ignore
+    .eq('id', data[0].id);
+
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   console.log(data[0].questions, 'data');
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  const nextQuestion = data[0].questions[1];
+  const nextQuestion = data[0].questions[data[0].current_question + 1];
 
   console.log(nextQuestion, 'nextQuestion');
 
