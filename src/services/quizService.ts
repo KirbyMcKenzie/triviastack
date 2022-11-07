@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SupabaseClient } from '@supabase/supabase-js';
 import { Question } from '../types/quiz';
 
 export const createNewQuiz = async (
-  supabaseClient: SupabaseClient,
+  client: SupabaseClient,
   questions: Question[],
   channel_id: string,
 ): Promise<void> => {
-  await supabaseClient.from('quizzes').insert({
+  await client.from('quizzes').insert({
     questions: questions,
     channel_id: channel_id,
     is_active: true,
@@ -15,14 +16,24 @@ export const createNewQuiz = async (
 
 // TODO: Add types
 export const getQuizzesByChannelId = async (
-  supabaseClient: SupabaseClient,
+  client: SupabaseClient,
   channel_id: string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<any[]> => {
-  const { data } = await supabaseClient
+  const { data } = await client
     .from('quizzes')
     .select()
     .eq('channel_id', channel_id);
 
   return data;
+};
+
+export const updateQuizCurrentQuestion = async (
+  client: SupabaseClient,
+  id: string,
+  updatedCurrentQuestion: number,
+): Promise<void> => {
+  await client
+    .from('quizzes')
+    .update({ current_question: updatedCurrentQuestion })
+    .eq('id', id);
 };

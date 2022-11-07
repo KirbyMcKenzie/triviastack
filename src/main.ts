@@ -6,7 +6,11 @@ import { decodeEscapedHTML, titleCase } from './helpers/string';
 dotenv.config();
 
 import { createClient } from '@supabase/supabase-js';
-import { createNewQuiz, getQuizzesByChannelId } from './services/quizService';
+import {
+  createNewQuiz,
+  getQuizzesByChannelId,
+  updateQuizCurrentQuestion,
+} from './services/quizService';
 
 const supabaseUrl = 'https://dlxythnybkfecdobxkkg.supabase.co';
 const supabaseKey = process.env.SUPABASE_KEY;
@@ -24,7 +28,7 @@ app.command('/trivia', async ({ ack, say, payload }) => {
   axios.get('https://opentdb.com/api.php?amount=10').then(async (res) => {
     await createNewQuiz(supabase, res.data.results, payload.channel_id);
 
-    const firstQuestion = res.data.results[0];
+    const [firstQuestion] = res.data.results;
 
     // const answers = firstQuestion.incorrect_answers.map((answer) => ({
     //   type: 'button',
@@ -83,15 +87,11 @@ app.action('button_click', async ({ body, ack, say }) => {
   await ack();
 
   const [firstQuiz] = await getQuizzesByChannelId(supabase, body.channel.id);
+  const { id, current_question, questions } = firstQuiz;
 
-  await supabase
-    .from('quizzes')
-    .update({ current_question: firstQuiz.current_question + 1 })
-    .eq('id', firstQuiz.id);
+  await updateQuizCurrentQuestion(supabase, id, current_question + 1);
 
-  console.log(firstQuiz.questions, 'data');
-
-  const nextQuestion = firstQuiz.questions[firstQuiz.current_question + 1];
+  const nextQuestion = questions[current_question + 1];
 
   console.log(nextQuestion, 'nextQuestion');
 
