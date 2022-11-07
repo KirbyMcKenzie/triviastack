@@ -81,23 +81,16 @@ app.command('/trivia', async ({ ack, say, payload }) => {
 
 app.action('button_click', async ({ body, ack, say }) => {
   await ack();
-  await say(`<@${body.user.id}> clicked the button`);
 
   const [firstQuiz] = await getQuizzesByChannelId(supabase, body.channel.id);
 
   await supabase
     .from('quizzes')
-    //@ts-ignore
     .update({ current_question: firstQuiz.current_question + 1 })
-    //@ts-ignore
     .eq('id', firstQuiz.id);
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //@ts-ignore
   console.log(firstQuiz.questions, 'data');
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //@ts-ignore
   const nextQuestion = firstQuiz.questions[firstQuiz.current_question + 1];
 
   console.log(nextQuestion, 'nextQuestion');
@@ -148,15 +141,12 @@ app.action('button_click', async ({ body, ack, say }) => {
 });
 
 app.message('yo', async ({ message, say }) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   const response = await say(`Hey there <@${message.user}>!`);
   console.log(response, 'response');
 });
 
 (async (): Promise<void> => {
-  // Start your app
   await app.start(process.env.PORT || 3000);
-
   console.log('⚡️ Bolt app is running!');
 })();
