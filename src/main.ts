@@ -6,7 +6,7 @@ import { decodeEscapedHTML, titleCase } from './helpers/string';
 dotenv.config();
 
 import { createClient } from '@supabase/supabase-js';
-import { createNewQuiz } from './services/quizService';
+import { createNewQuiz, getQuizzesByChannelId } from './services/quizService';
 
 const supabaseUrl = 'https://dlxythnybkfecdobxkkg.supabase.co';
 const supabaseKey = process.env.SUPABASE_KEY;
@@ -83,25 +83,22 @@ app.action('button_click', async ({ body, ack, say }) => {
   await ack();
   await say(`<@${body.user.id}> clicked the button`);
 
-  const { data, error } = await supabase
-    .from('quizzes')
-    .select()
-    .eq('channel_id', body.channel.id);
+  const [firstQuiz] = await getQuizzesByChannelId(supabase, body.channel.id);
 
   await supabase
     .from('quizzes')
     //@ts-ignore
-    .update({ current_question: data[0].current_question + 1 })
+    .update({ current_question: firstQuiz.current_question + 1 })
     //@ts-ignore
-    .eq('id', data[0].id);
+    .eq('id', firstQuiz.id);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  console.log(data[0].questions, 'data');
+  console.log(firstQuiz.questions, 'data');
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  const nextQuestion = data[0].questions[data[0].current_question + 1];
+  const nextQuestion = firstQuiz.questions[firstQuiz.current_question + 1];
 
   console.log(nextQuestion, 'nextQuestion');
 
@@ -148,8 +145,6 @@ app.action('button_click', async ({ body, ack, say }) => {
       },
     ],
   });
-
-  !!error && console.log(`SUPABASE ERROR: ${error}`);
 });
 
 app.message('yo', async ({ message, say }) => {

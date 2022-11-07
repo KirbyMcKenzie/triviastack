@@ -12,3 +12,17 @@ export const createNewQuiz = async (
     is_active: true,
   });
 };
+
+// TODO: Add types
+export const getQuizzesByChannelId = async (
+  supabaseClient: SupabaseClient,
+  channel_id: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<any[]> => {
+  const { data } = await supabaseClient
+    .from('quizzes')
+    .select()
+    .eq('channel_id', channel_id);
+
+  return data;
+};
