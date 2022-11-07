@@ -6,6 +6,7 @@ import { decodeEscapedHTML, titleCase } from './helpers/string';
 dotenv.config();
 
 import { createClient } from '@supabase/supabase-js';
+import { createNewQuiz } from './services/quizService';
 
 const supabaseUrl = 'https://dlxythnybkfecdobxkkg.supabase.co';
 const supabaseKey = process.env.SUPABASE_KEY;
@@ -21,13 +22,7 @@ app.command('/trivia', async ({ ack, say, payload }) => {
   await say('Quick quiz coming up!');
 
   axios.get('https://opentdb.com/api.php?amount=10').then(async (res) => {
-    const { error } = await supabase.from('quizzes').insert({
-      questions: res.data.results,
-      channel_id: payload.channel_id,
-      is_active: true,
-    });
-
-    !!error && console.log(`SUPABASE ERROR: ${error}`);
+    await createNewQuiz(supabase, res.data.results, payload.channel_id);
 
     const firstQuestion = res.data.results[0];
 
@@ -44,10 +39,6 @@ app.command('/trivia', async ({ ack, say, payload }) => {
 
     await say({
       blocks: [
-        {
-          type: 'divider',
-        },
-
         {
           type: 'section',
           text: {
@@ -164,7 +155,8 @@ app.action('button_click', async ({ body, ack, say }) => {
 app.message('yo', async ({ message, say }) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  await say(`Hey there <@${message.user}>!`);
+  const response = await say(`Hey there <@${message.user}>!`);
+  console.log(response, 'response');
 });
 
 (async (): Promise<void> => {
