@@ -6,7 +6,9 @@ import {
   createNewQuiz,
   getQuizzesByChannelId,
   updateQuizCurrentQuestion,
+  updateQuizQuestion,
 } from "services/quizService";
+import { Question } from "types/quiz";
 import NextConnectReceiver from "utils/NextConnectReceiver";
 import { decodeEscapedHTML, titleCase } from "utils/string";
 
@@ -30,16 +32,16 @@ const app = new App({
   developerMode: false,
 });
 
-app.event("message", async ({ event, say }) => {
-  const text = (event as any).text;
-  say({
-    text: text || "Hello world!",
-  });
-});
-
-app.message("yo", async ({ message, say }) => {
+app.message("yoza", async ({ message, say }) => {
   const user = (message as any).user;
   await say(`Hey there <@${user}>!`);
+});
+
+app.message("yeet", async ({ message, say }) => {
+  const user = (message as any).user;
+  await say(
+    `|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|`
+  );
 });
 
 app.command("/trivia", async ({ ack, say, payload }) => {
@@ -112,33 +114,49 @@ app.command("/trivia", async ({ ack, say, payload }) => {
 app.action("button_click", async ({ body, ack, say, action }) => {
   await ack();
 
-  const answeredBy = (body as any).user;
-  const answerValue = (body as any).actions[0].value;
-
-  if (answeredBy && answerValue) {
-    await say({
-      blocks: [
-        {
-          type: "context",
-          elements: [
-            {
-              type: "mrkdwn",
-              text: `<@${answeredBy.id}> answered with *${answerValue}*`,
-            },
-          ],
-        },
-      ],
-    });
-  }
-
   try {
+    const answeredBy = (body as any).user;
+    const answerValue = (body as any).actions[0].value;
+
     //@ts-ignore
     const [firstQuiz] = await getQuizzesByChannelId(supabase, body.channel.id);
     const { id, current_question, questions } = firstQuiz;
 
     await updateQuizCurrentQuestion(supabase, id, current_question + 1);
 
-    const nextQuestion = questions[current_question + 1];
+    const nextQuestion = questions[current_question];
+    const previousQuestion = questions[current_question - 1];
+
+    const isCorrect = previousQuestion.correct_answer === answerValue;
+
+    // TODO: fucking sort this out
+    const updatedQuestions = questions.map((question: any, index: number) => ({
+      ...question,
+      is_correct:
+        question.is_correct || index + 1 === current_question
+          ? isCorrect
+          : question.is_correct || null,
+    }));
+
+    await updateQuizQuestion(supabase, id, updatedQuestions);
+
+    if (answeredBy && answerValue) {
+      await say({
+        blocks: [
+          {
+            type: "context",
+            elements: [
+              {
+                type: "mrkdwn",
+                text: `<@${answeredBy.id}> answered with *${answerValue}* ${
+                  isCorrect ? " ✅" : " ❌"
+                } `,
+              },
+            ],
+          },
+        ],
+      });
+    }
 
     const answers = nextQuestion?.incorrect_answers?.map(
       (answer: string, index: number) => ({

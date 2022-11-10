@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Question } from "../types/quiz";
 
@@ -37,4 +36,12 @@ export const updateQuizCurrentQuestion = async (
     .from("quizzes")
     .update({ current_question: updatedCurrentQuestion })
     .eq("id", id);
+};
+
+export const updateQuizQuestion = async (
+  client: SupabaseClient,
+  id: string,
+  questions: any[]
+): Promise<void> => {
+  await client.from("quizzes").update({ questions }).eq("id", id);
 };
