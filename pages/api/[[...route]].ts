@@ -51,16 +51,21 @@ app.command("/trivia", async ({ ack, say, payload }) => {
 
     const [firstQuestion] = res.data.results;
 
-    // const answers = firstQuestion.incorrect_answers.map((answer) => ({
-    //   type: 'button',
-    //   text: {
-    //     type: 'plain_text',
-    //     text: answer,
-    //     emoji: true,
-    //   },
-    //   action_id: 'button_click',
-    //   value: answer,
-    // }));
+    console.log(firstQuestion, "firstQuestion");
+
+    const answers =
+      firstQuestion?.incorrect_answers?.map(
+        (answer: string, index: number) => ({
+          type: "button",
+          text: {
+            type: "plain_text",
+            text: answer,
+            emoji: true,
+          },
+          action_id: `button_click_${index}`,
+          value: answer,
+        })
+      ) || [];
 
     await say({
       blocks: [
@@ -96,7 +101,7 @@ app.command("/trivia", async ({ ack, say, payload }) => {
               action_id: "button_click",
               value: firstQuestion.correct_answer,
             },
-            // ...answers,
+            ...answers,
           ],
         },
       ],
@@ -104,70 +109,107 @@ app.command("/trivia", async ({ ack, say, payload }) => {
   });
 });
 
-app.action("button_click", async ({ body, ack, say }) => {
+app.action("button_click", async ({ body, ack, say, action }) => {
   await ack();
 
-  //@ts-ignore
-  const [firstQuiz] = await getQuizzesByChannelId(supabase, body.channel.id);
-  const { id, current_question, questions } = firstQuiz;
+  const answeredBy = (body as any).user;
+  const answerValue = (body as any).actions[0].value;
 
-  await updateQuizCurrentQuestion(supabase, id, current_question + 1);
+  if (answeredBy && answerValue) {
+    await say({
+      blocks: [
+        {
+          type: "context",
+          elements: [
+            {
+              type: "mrkdwn",
+              text: `<@${answeredBy.id}> answered with *${answerValue}*`,
+            },
+          ],
+        },
+      ],
+    });
+  }
 
-  const nextQuestion = questions[current_question + 1];
+  try {
+    //@ts-ignore
+    const [firstQuiz] = await getQuizzesByChannelId(supabase, body.channel.id);
+    const { id, current_question, questions } = firstQuiz;
 
-  console.log(nextQuestion, "nextQuestion");
+    await updateQuizCurrentQuestion(supabase, id, current_question + 1);
 
-  await say({
-    blocks: [
-      {
-        type: "divider",
-      },
+    const nextQuestion = questions[current_question + 1];
 
-      {
-        type: "section",
+    const answers = nextQuestion?.incorrect_answers?.map(
+      (answer: string, index: number) => ({
+        type: "button",
         text: {
           type: "plain_text",
-          text: decodeEscapedHTML(nextQuestion.question),
+          text: answer,
           emoji: true,
         },
-      },
-      {
-        type: "context",
-        elements: [
-          {
-            type: "mrkdwn",
-            text: `*Category:* ${
-              nextQuestion.category
-            }  *·*  *Difficulty:* ${titleCase(nextQuestion.difficulty)}`,
+        action_id: `button_click_${index}`,
+        value: answer,
+      })
+    );
+
+    await say({
+      blocks: [
+        {
+          type: "divider",
+        },
+
+        {
+          type: "section",
+          text: {
+            type: "plain_text",
+            text: decodeEscapedHTML(nextQuestion.question),
+            emoji: true,
           },
-        ],
-      },
-      {
-        type: "actions",
-        elements: [
-          {
-            type: "button",
-            text: {
-              type: "plain_text",
-              text: nextQuestion.correct_answer,
-              emoji: true,
+        },
+        {
+          type: "context",
+          elements: [
+            {
+              type: "mrkdwn",
+              text: `*Category:* ${
+                nextQuestion.category
+              }  *·*  *Difficulty:* ${titleCase(nextQuestion.difficulty)}`,
             },
-            action_id: "button_click",
-            value: nextQuestion.correct_answer,
-          },
-          // ...answers,
-        ],
-      },
-    ],
-  });
+          ],
+        },
+        {
+          type: "actions",
+          elements: [
+            {
+              type: "button",
+              text: {
+                type: "plain_text",
+                text: nextQuestion.correct_answer,
+                emoji: true,
+              },
+              action_id: "button_click",
+              value: nextQuestion.correct_answer,
+            },
+            ...answers,
+          ],
+        },
+      ],
+    });
+  } catch (error) {
+    await say(
+      ":confused:  There was an issue processing that click. Let me fetch the logs.."
+    );
+    await say(`:bug:  ${(error as string).toString()}`);
+  }
 });
 
 // this is run just in case
 const router = receiver.start();
 
-router.get("/api", (req: NextApiRequest, res: NextApiResponse) => {
+router.get("/api", (_req: NextApiRequest, res: NextApiResponse) => {
   res.status(200).json({
-    test: true,
+    health: "Alive and Kickin' ✌️",
   });
 });
 
