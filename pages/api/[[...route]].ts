@@ -12,7 +12,7 @@ import { Question } from "types/quiz";
 import NextConnectReceiver from "utils/NextConnectReceiver";
 import { decodeEscapedHTML, titleCase } from "utils/string";
 
-const supabaseUrl = "https://dlxythnybkfecdobxkkg.supabase.co";
+const supabaseUrl = process.env.SUPABASE_URL as string;
 const supabaseKey = process.env.SUPABASE_KEY as string;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -111,7 +111,8 @@ app.command("/trivia", async ({ ack, say, payload }) => {
   });
 });
 
-app.action("button_click", async ({ body, ack, say, action }) => {
+// TODO: Update message with respond
+app.action(/button_click/, async ({ body, ack, say, action }) => {
   await ack();
 
   try {
@@ -122,6 +123,11 @@ app.action("button_click", async ({ body, ack, say, action }) => {
     const [firstQuiz] = await getQuizzesByChannelId(supabase, body.channel.id);
     const { id, current_question, questions } = firstQuiz;
 
+    if (current_question === 10) {
+      await say(`🎉 Thats a wrap! Your Score: *69/420* 👏`);
+      return;
+    }
+
     await updateQuizCurrentQuestion(supabase, id, current_question + 1);
 
     const nextQuestion = questions[current_question];
@@ -129,7 +135,7 @@ app.action("button_click", async ({ body, ack, say, action }) => {
 
     const isCorrect = previousQuestion.correct_answer === answerValue;
 
-    // TODO: fucking sort this out
+    // TODO: Tidy up the junk
     const updatedQuestions = questions.map((question: any, index: number) => ({
       ...question,
       is_correct:
@@ -166,6 +172,7 @@ app.action("button_click", async ({ body, ack, say, action }) => {
           text: answer,
           emoji: true,
         },
+
         action_id: `button_click_${index}`,
         value: answer,
       })
