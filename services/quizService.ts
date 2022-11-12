@@ -1,16 +1,38 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Question, Quiz } from "../types/quiz";
+import { v4 as uuidv4 } from "uuid";
 
 export const createNewQuiz = async (
   client: SupabaseClient,
   questions: Question[],
   channel_id: string
 ): Promise<void> => {
-  await client.from("quizzes").insert({
-    questions: questions,
-    channel_id: channel_id,
-    is_active: true,
-  });
+  const { data, error } = await client
+    .from("quizzes")
+    .insert({
+      questions: questions,
+      channel_id: channel_id,
+      is_active: true,
+    })
+    .select();
+  error && console.log(error, "[SQL ERROR]");
+  //@ts-ignore
+  return data;
+};
+
+export const getCurrentQuizByChannelId = async (
+  client: SupabaseClient,
+  channelId: string
+): Promise<any> => {
+  const { data } = await client
+    .from("quizzes")
+    .select()
+    .eq("channel_id", channelId)
+    .eq("is_active", true)
+    .order("created_at", { ascending: false })
+    .limit(1);
+  //@ts-ignore
+  return data[0];
 };
 
 // TODO: Add types

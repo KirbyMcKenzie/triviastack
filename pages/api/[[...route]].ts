@@ -1,9 +1,10 @@
 import { App } from "@slack/bolt";
 import { createClient } from "@supabase/supabase-js";
 import axios from "axios";
-import next, { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import {
   createNewQuiz,
+  getCurrentQuizByChannelId,
   getQuizzesByChannelId,
   updateQuiz,
   updateQuizCurrentQuestion,
@@ -17,7 +18,6 @@ import {
   buildQuizCompleteBlock,
 } from "utils/blocks";
 import NextConnectReceiver from "utils/NextConnectReceiver";
-import { decodeEscapedHTML, titleCase } from "utils/string";
 
 const supabaseUrl = process.env.SUPABASE_URL as string;
 const supabaseKey = process.env.SUPABASE_KEY as string;
@@ -50,7 +50,12 @@ app.command("/trivia", async ({ ack, say, payload }) => {
   await say("Quick quiz coming up!");
 
   axios.get("https://opentdb.com/api.php?amount=3").then(async (res) => {
-    await createNewQuiz(supabase, res.data.results, payload.channel_id);
+    const quiz = await createNewQuiz(
+      supabase,
+      res.data.results,
+      payload.channel_id
+    );
+
     const [firstQuestion] = res.data.results;
 
     const answersBlock = buildQuestionAnswersBlock([
@@ -70,6 +75,7 @@ app.command("/trivia", async ({ ack, say, payload }) => {
 });
 
 // TODO: Update message with respond
+// TODO: update to next_question
 app.action(/button_click/, async ({ body, ack, say }) => {
   await ack();
 
@@ -78,8 +84,9 @@ app.action(/button_click/, async ({ body, ack, say }) => {
     const answerValue = (body as any).actions[0].value;
     const channelId = (body as any).channel.id;
 
-    const [firstQuiz] = await getQuizzesByChannelId(supabase, channelId);
-    const { id, current_question, questions } = firstQuiz;
+    const quiz = await getCurrentQuizByChannelId(supabase, channelId);
+
+    const { id, current_question, questions } = quiz;
 
     const nextQuestion = questions[current_question];
     const previousQuestion = questions[current_question - 1];
@@ -88,8 +95,6 @@ app.action(/button_click/, async ({ body, ack, say }) => {
     const updatedQuestions = questions.map((q: Question, index: number) =>
       index + 1 === current_question ? { ...q, is_correct: isCorrect } : q
     );
-
-    console.log(updatedQuestions, "updatedQuestions");
 
     await updateQuizQuestion(supabase, id, updatedQuestions);
 
@@ -147,6 +152,33 @@ app.action(/button_click/, async ({ body, ack, say }) => {
     );
     await say(`:bug:  ${(error as string).toString()}`);
   }
+});
+
+app.action("play_again", async ({ ack, say, body }) => {
+  await ack();
+  await say("Another quick quiz coming up!");
+
+  const channelId = (body as any).channel.id;
+
+  axios.get("https://opentdb.com/api.php?amount=3").then(async (res) => {
+    await createNewQuiz(supabase, res.data.results, channelId);
+
+    const [firstQuestion] = res.data.results;
+
+    const answersBlock = buildQuestionAnswersBlock([
+      firstQuestion.correct_answer,
+      ...firstQuestion.incorrect_answers,
+    ]);
+
+    const questionBlock = buildQuestionBlock({
+      text: firstQuestion.question,
+      difficulty: firstQuestion.difficulty,
+      category: firstQuestion.category,
+      answers: answersBlock,
+    });
+
+    await say(questionBlock);
+  });
 });
 
 // this is run just in case

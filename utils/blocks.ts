@@ -79,8 +79,7 @@ export const buildQuizCompleteBlock = (score: number, total: number) => ({
             text: "Play again",
             emoji: true,
           },
-          value: "click_me_123",
-          action_id: "actionId-0",
+          action_id: "play_again",
         },
         {
           type: "button",
