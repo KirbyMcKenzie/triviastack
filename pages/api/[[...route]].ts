@@ -1,7 +1,7 @@
 import { App } from "@slack/bolt";
 import { createClient } from "@supabase/supabase-js";
 import axios from "axios";
-import { NextApiRequest, NextApiResponse } from "next";
+import next, { NextApiRequest, NextApiResponse } from "next";
 import {
   createNewQuiz,
   getQuizzesByChannelId,
@@ -11,6 +11,11 @@ import {
 } from "services/quizService";
 import { Question } from "types/quiz";
 import { shuffle } from "utils/array";
+import {
+  buildQuestionAnswersBlock,
+  buildQuestionBlock,
+  buildQuizCompleteBlock,
+} from "utils/blocks";
 import NextConnectReceiver from "utils/NextConnectReceiver";
 import { decodeEscapedHTML, titleCase } from "utils/string";
 
@@ -46,64 +51,21 @@ app.command("/trivia", async ({ ack, say, payload }) => {
 
   axios.get("https://opentdb.com/api.php?amount=3").then(async (res) => {
     await createNewQuiz(supabase, res.data.results, payload.channel_id);
-
     const [firstQuestion] = res.data.results;
 
-    console.log(firstQuestion, "firstQuestion");
+    const answersBlock = buildQuestionAnswersBlock([
+      firstQuestion.correct_answer,
+      ...firstQuestion.incorrect_answers,
+    ]);
 
-    const answers =
-      firstQuestion?.incorrect_answers?.map(
-        (answer: string, index: number) => ({
-          type: "button",
-          text: {
-            type: "plain_text",
-            text: answer,
-            emoji: true,
-          },
-          action_id: `button_click_${index}`,
-          value: answer,
-        })
-      ) || [];
-
-    await say({
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "plain_text",
-            text: decodeEscapedHTML(firstQuestion.question),
-            emoji: true,
-          },
-        },
-        {
-          type: "context",
-          elements: [
-            {
-              type: "mrkdwn",
-              text: `*Category:* ${
-                firstQuestion.category
-              }  *·*  *Difficulty:* ${titleCase(firstQuestion.difficulty)}`,
-            },
-          ],
-        },
-        {
-          type: "actions",
-          elements: [
-            {
-              type: "button",
-              text: {
-                type: "plain_text",
-                text: firstQuestion.correct_answer,
-                emoji: true,
-              },
-              action_id: "button_click",
-              value: firstQuestion.correct_answer,
-            },
-            ...answers,
-          ],
-        },
-      ],
+    const questionBlock = buildQuestionBlock({
+      text: firstQuestion.question,
+      difficulty: firstQuestion.difficulty,
+      category: firstQuestion.category,
+      answers: answersBlock,
     });
+
+    await say(questionBlock);
   });
 });
 
@@ -114,26 +76,20 @@ app.action(/button_click/, async ({ body, ack, say }) => {
   try {
     const answeredBy = (body as any).user;
     const answerValue = (body as any).actions[0].value;
+    const channelId = (body as any).channel.id;
 
-    //@ts-ignore
-    const [firstQuiz] = await getQuizzesByChannelId(supabase, body.channel.id);
+    const [firstQuiz] = await getQuizzesByChannelId(supabase, channelId);
     const { id, current_question, questions } = firstQuiz;
 
     const nextQuestion = questions[current_question];
     const previousQuestion = questions[current_question - 1];
-
     const isCorrect = previousQuestion.correct_answer === answerValue;
 
     const updatedQuestions = questions.map((q: Question, index: number) =>
       index + 1 === current_question ? { ...q, is_correct: isCorrect } : q
     );
 
-    const correctAnswers = updatedQuestions.filter(
-      (question: Question) => !!question.is_correct
-    );
-
     console.log(updatedQuestions, "updatedQuestions");
-    console.log(correctAnswers.length, "updatedScore");
 
     await updateQuizQuestion(supabase, id, updatedQuestions);
 
@@ -148,8 +104,13 @@ app.action(/button_click/, async ({ body, ack, say }) => {
               {
                 type: "mrkdwn",
                 text: `<@${answeredBy.id}> answered with *${answerValue}* ${
-                  isCorrect ? " ✅" : " ❌"
-                } `,
+                  isCorrect ? " ✅ " : " ❌ "
+                }\n${
+                  !isCorrect
+                    ? `Correct answer: *${previousQuestion.correct_answer}*`
+                    : ""
+                }
+                `,
               },
             ],
           },
@@ -159,81 +120,27 @@ app.action(/button_click/, async ({ body, ack, say }) => {
 
     if (current_question === questions.length) {
       await updateQuiz(supabase, id, { is_active: false });
-      await say({
-        blocks: [
-          {
-            type: "divider",
-          },
-          {
-            type: "section",
-            text: {
-              type: "mrkdwn",
-              text: `🎉  *Quiz Complete!*\n\nYour Score: *${score}/${questions.length}* 👏`,
-            },
-          },
-        ],
-      });
+      const quizCompleteBlock = buildQuizCompleteBlock(score, questions.length);
+      await say(quizCompleteBlock);
       return;
     }
 
     await updateQuizCurrentQuestion(supabase, id, current_question + 1);
 
-    const incorrectAnswers = nextQuestion?.incorrect_answers?.map(
-      (answer: string, index: number) => ({
-        type: "button",
-        text: {
-          type: "plain_text",
-          text: answer,
-          emoji: true,
-        },
+    // TODO: consider merging question and answer block
+    const answersBlock = buildQuestionAnswersBlock([
+      nextQuestion.correct_answer,
+      ...nextQuestion.incorrect_answers,
+    ]);
 
-        action_id: `button_click_${index}`,
-        value: answer,
-      })
-    );
-
-    const correctAnswer = {
-      type: "button",
-      text: {
-        type: "plain_text",
-        text: nextQuestion.correct_answer,
-        emoji: true,
-      },
-      action_id: "button_click",
-      value: nextQuestion.correct_answer,
-    };
-
-    await say({
-      blocks: [
-        {
-          type: "divider",
-        },
-
-        {
-          type: "section",
-          text: {
-            type: "plain_text",
-            text: decodeEscapedHTML(nextQuestion.question),
-            emoji: true,
-          },
-        },
-        {
-          type: "context",
-          elements: [
-            {
-              type: "mrkdwn",
-              text: `*Category:* ${
-                nextQuestion.category
-              }  *·*  *Difficulty:* ${titleCase(nextQuestion.difficulty)}`,
-            },
-          ],
-        },
-        {
-          type: "actions",
-          elements: shuffle([correctAnswer, ...incorrectAnswers]),
-        },
-      ],
+    const questionBlock = buildQuestionBlock({
+      text: nextQuestion.question,
+      difficulty: nextQuestion.difficulty,
+      category: nextQuestion.category,
+      answers: answersBlock,
     });
+
+    await say(questionBlock);
   } catch (error) {
     await say(
       ":confused:  There was an issue processing that click. Let me fetch the logs.."
