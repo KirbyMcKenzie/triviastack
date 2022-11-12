@@ -6,6 +6,7 @@ interface Question {
   category: string;
   difficulty: string;
   answers: string[];
+  userId?: string;
 }
 
 export const buildQuestionBlock = ({
@@ -13,12 +14,23 @@ export const buildQuestionBlock = ({
   difficulty,
   category,
   answers,
+  userId = undefined,
 }: Question) => ({
   blocks: [
+    ...(userId
+      ? [
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `📣  *<@${userId}> has kicked off a game of trivia* \n`,
+            },
+          },
+        ]
+      : []),
     {
       type: "divider",
     },
-
     {
       type: "section",
       text: {

@@ -47,7 +47,6 @@ app.message("yeet", async ({ say }) => {
 
 app.command("/trivia", async ({ ack, say, payload }) => {
   await ack();
-  await say("Quick quiz coming up!");
 
   axios.get("https://opentdb.com/api.php?amount=3").then(async (res) => {
     const quiz = await createNewQuiz(
@@ -68,6 +67,7 @@ app.command("/trivia", async ({ ack, say, payload }) => {
       difficulty: firstQuestion.difficulty,
       category: firstQuestion.category,
       answers: answersBlock,
+      userId: payload.user_id,
     });
 
     await say(questionBlock);
