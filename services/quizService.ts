@@ -1,5 +1,5 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import { Question } from "../types/quiz";
+import { Question, Quiz } from "../types/quiz";
 
 export const createNewQuiz = async (
   client: SupabaseClient,
@@ -21,7 +21,8 @@ export const getQuizzesByChannelId = async (
   const { data } = await client
     .from("quizzes")
     .select()
-    .eq("channel_id", channel_id);
+    .eq("channel_id", channel_id)
+    .eq("is_active", true);
 
   //@ts-ignore
   return data;
@@ -44,4 +45,15 @@ export const updateQuizQuestion = async (
   questions: any[]
 ): Promise<void> => {
   await client.from("quizzes").update({ questions }).eq("id", id);
+};
+
+export const updateQuiz = async (
+  client: SupabaseClient,
+  id: string,
+  quiz: Partial<Quiz>
+): Promise<void> => {
+  await client
+    .from("quizzes")
+    .update({ ...quiz })
+    .eq("id", id);
 };

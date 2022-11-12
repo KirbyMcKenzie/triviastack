@@ -5,10 +5,12 @@ import { NextApiRequest, NextApiResponse } from "next";
 import {
   createNewQuiz,
   getQuizzesByChannelId,
+  updateQuiz,
   updateQuizCurrentQuestion,
   updateQuizQuestion,
 } from "services/quizService";
 import { Question } from "types/quiz";
+import { shuffle } from "utils/array";
 import NextConnectReceiver from "utils/NextConnectReceiver";
 import { decodeEscapedHTML, titleCase } from "utils/string";
 
@@ -18,14 +20,9 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 const receiver = new NextConnectReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET || "invalid",
-  // The `processBeforeResponse` option is required for all FaaS environments.
-  // It allows Bolt methods (e.g. `app.message`) to handle a Slack request
-  // before the Bolt framework responds to the request (e.g. `ack()`). This is
-  // important because FaaS immediately terminate handlers after the response.
   processBeforeResponse: true,
 });
 
-// Initializes your app with your bot token and the AWS Lambda ready receiver
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   receiver: receiver,
@@ -37,8 +34,7 @@ app.message("yoza", async ({ message, say }) => {
   await say(`Hey there <@${user}>!`);
 });
 
-app.message("yeet", async ({ message, say }) => {
-  const user = (message as any).user;
+app.message("yeet", async ({ say }) => {
   await say(
     `|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|`
   );
@@ -48,7 +44,7 @@ app.command("/trivia", async ({ ack, say, payload }) => {
   await ack();
   await say("Quick quiz coming up!");
 
-  axios.get("https://opentdb.com/api.php?amount=10").then(async (res) => {
+  axios.get("https://opentdb.com/api.php?amount=3").then(async (res) => {
     await createNewQuiz(supabase, res.data.results, payload.channel_id);
 
     const [firstQuestion] = res.data.results;
@@ -112,7 +108,7 @@ app.command("/trivia", async ({ ack, say, payload }) => {
 });
 
 // TODO: Update message with respond
-app.action(/button_click/, async ({ body, ack, say, action }) => {
+app.action(/button_click/, async ({ body, ack, say }) => {
   await ack();
 
   try {
@@ -123,28 +119,25 @@ app.action(/button_click/, async ({ body, ack, say, action }) => {
     const [firstQuiz] = await getQuizzesByChannelId(supabase, body.channel.id);
     const { id, current_question, questions } = firstQuiz;
 
-    if (current_question === 10) {
-      await say(`🎉 Thats a wrap! Your Score: *69/420* 👏`);
-      return;
-    }
-
-    await updateQuizCurrentQuestion(supabase, id, current_question + 1);
-
     const nextQuestion = questions[current_question];
     const previousQuestion = questions[current_question - 1];
 
     const isCorrect = previousQuestion.correct_answer === answerValue;
 
-    // TODO: Tidy up the junk
-    const updatedQuestions = questions.map((question: any, index: number) => ({
-      ...question,
-      is_correct:
-        question.is_correct || index + 1 === current_question
-          ? isCorrect
-          : question.is_correct || null,
-    }));
+    const updatedQuestions = questions.map((q: Question, index: number) =>
+      index + 1 === current_question ? { ...q, is_correct: isCorrect } : q
+    );
+
+    const correctAnswers = updatedQuestions.filter(
+      (question: Question) => !!question.is_correct
+    );
+
+    console.log(updatedQuestions, "updatedQuestions");
+    console.log(correctAnswers.length, "updatedScore");
 
     await updateQuizQuestion(supabase, id, updatedQuestions);
+
+    const score = updatedQuestions.filter((q: Question) => q.is_correct).length;
 
     if (answeredBy && answerValue) {
       await say({
@@ -164,7 +157,28 @@ app.action(/button_click/, async ({ body, ack, say, action }) => {
       });
     }
 
-    const answers = nextQuestion?.incorrect_answers?.map(
+    if (current_question === questions.length) {
+      await updateQuiz(supabase, id, { is_active: false });
+      await say({
+        blocks: [
+          {
+            type: "divider",
+          },
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `🎉  *Quiz Complete!*\n\nYour Score: *${score}/${questions.length}* 👏`,
+            },
+          },
+        ],
+      });
+      return;
+    }
+
+    await updateQuizCurrentQuestion(supabase, id, current_question + 1);
+
+    const incorrectAnswers = nextQuestion?.incorrect_answers?.map(
       (answer: string, index: number) => ({
         type: "button",
         text: {
@@ -177,6 +191,17 @@ app.action(/button_click/, async ({ body, ack, say, action }) => {
         value: answer,
       })
     );
+
+    const correctAnswer = {
+      type: "button",
+      text: {
+        type: "plain_text",
+        text: nextQuestion.correct_answer,
+        emoji: true,
+      },
+      action_id: "button_click",
+      value: nextQuestion.correct_answer,
+    };
 
     await say({
       blocks: [
@@ -205,19 +230,7 @@ app.action(/button_click/, async ({ body, ack, say, action }) => {
         },
         {
           type: "actions",
-          elements: [
-            {
-              type: "button",
-              text: {
-                type: "plain_text",
-                text: nextQuestion.correct_answer,
-                emoji: true,
-              },
-              action_id: "button_click",
-              value: nextQuestion.correct_answer,
-            },
-            ...answers,
-          ],
+          elements: shuffle([correctAnswer, ...incorrectAnswers]),
         },
       ],
     });
