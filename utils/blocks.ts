@@ -7,17 +7,26 @@ interface Question {
   difficulty: string;
   answers: string[];
   userId?: string;
+  answeredValue?: string;
+  correctAnswer?: string;
+  isCorrect?: boolean;
+  isFinalQuestion?: boolean;
 }
 
+// TODO: refactor
 export const buildQuestionBlock = ({
   text,
   difficulty,
   category,
   answers,
+  correctAnswer,
+  answeredValue,
   userId = undefined,
+  isCorrect = false,
+  isFinalQuestion = false,
 }: Question) => ({
   blocks: [
-    ...(userId
+    ...(userId && !answeredValue
       ? [
           {
             type: "section",
@@ -54,6 +63,40 @@ export const buildQuestionBlock = ({
       type: "actions",
       elements: answers,
     },
+    ...(answeredValue
+      ? [
+          {
+            type: "divider",
+          },
+          {
+            type: "context",
+            elements: [
+              {
+                type: "mrkdwn",
+                text: `<@${userId}> answered with *${answeredValue}* ${
+                  isCorrect ? " ✅ " : " ❌ "
+                }\n${!isCorrect ? `Correct answer: *${correctAnswer}*` : ""}
+              `,
+              },
+            ],
+          },
+          {
+            type: "actions",
+            elements: [
+              {
+                type: "button",
+                style: "primary",
+                text: {
+                  type: "plain_text",
+                  text: isFinalQuestion ? "Finish Quiz" : "Next Question",
+                  emoji: true,
+                },
+                action_id: "next_question",
+              },
+            ],
+          },
+        ]
+      : []),
   ],
 });
 
@@ -118,7 +161,7 @@ export const buildQuestionAnswersBlock = (answers: string[]) =>
         emoji: true,
       },
 
-      action_id: `button_click_${index}`,
+      action_id: `answer_question${index}`,
       value: answer,
     }))
   );

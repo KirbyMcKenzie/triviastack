@@ -74,18 +74,56 @@ app.command("/trivia", async ({ ack, say, payload }) => {
   });
 });
 
-// TODO: Update message with respond
-// TODO: update to next_question
-app.action(/button_click/, async ({ body, ack, say }) => {
+// TODO: add error handling
+app.action(/answer_question/, async ({ body, ack, respond }) => {
+  await ack();
+
+  const answeredBy = (body as any).user;
+  const answerValue = (body as any).actions[0].value;
+  const channelId = (body as any).channel.id;
+
+  const quiz = await getCurrentQuizByChannelId(supabase, channelId);
+  const { id, current_question, questions } = quiz;
+
+  // TODO: can probably rename to answeredQuestion
+  const previousQuestion = questions[current_question - 1];
+
+  const answersBlock = buildQuestionAnswersBlock([
+    previousQuestion.correct_answer,
+    ...previousQuestion.incorrect_answers,
+  ]);
+
+  const questionBlock = buildQuestionBlock({
+    text: previousQuestion.question,
+    difficulty: previousQuestion.difficulty,
+    category: previousQuestion.category,
+    answers: answersBlock,
+    answeredValue: answerValue,
+    userId: answeredBy.id,
+    correctAnswer: previousQuestion.correct_answer,
+    isCorrect: previousQuestion.correct_answer === answerValue,
+    isFinalQuestion: current_question === questions.length,
+  });
+
+  const isCorrect = previousQuestion.correct_answer === answerValue;
+
+  const updatedQuestions = questions.map((q: Question, index: number) =>
+    index + 1 === current_question ? { ...q, is_correct: isCorrect } : q
+  );
+
+  await updateQuizQuestion(supabase, id, updatedQuestions);
+
+  await respond(questionBlock);
+});
+
+app.action(/next_question/, async ({ body, ack, say, respond }) => {
   await ack();
 
   try {
-    const answeredBy = (body as any).user;
     const answerValue = (body as any).actions[0].value;
     const channelId = (body as any).channel.id;
 
     const quiz = await getCurrentQuizByChannelId(supabase, channelId);
-
     const { id, current_question, questions } = quiz;
 
     const nextQuestion = questions[current_question];
@@ -96,37 +134,16 @@ app.action(/button_click/, async ({ body, ack, say }) => {
       index + 1 === current_question ? { ...q, is_correct: isCorrect } : q
     );
 
-    await updateQuizQuestion(supabase, id, updatedQuestions);
-
-    const score = updatedQuestions.filter((q: Question) => q.is_correct).length;
-
-    if (answeredBy && answerValue) {
-      await say({
-        blocks: [
-          {
-            type: "context",
-            elements: [
-              {
-                type: "mrkdwn",
-                text: `<@${answeredBy.id}> answered with *${answerValue}* ${
-                  isCorrect ? " ✅ " : " ❌ "
-                }\n${
-                  !isCorrect
-                    ? `Correct answer: *${previousQuestion.correct_answer}*`
-                    : ""
-                }
-                `,
-              },
-            ],
-          },
-        ],
-      });
-    }
-
+    // TODO: finish quiz - maybe move
     if (current_question === questions.length) {
       await updateQuiz(supabase, id, { is_active: false });
+
+      const score = updatedQuestions.filter(
+        (q: Question) => q.is_correct
+      ).length;
+
       const quizCompleteBlock = buildQuizCompleteBlock(score, questions.length);
-      await say(quizCompleteBlock);
+      await respond(quizCompleteBlock);
       return;
     }
 
@@ -145,7 +162,7 @@ app.action(/button_click/, async ({ body, ack, say }) => {
       answers: answersBlock,
     });
 
-    await say(questionBlock);
+    await respond(questionBlock);
   } catch (error) {
     await say(
       ":confused:  There was an issue processing that click. Let me fetch the logs.."
@@ -156,8 +173,6 @@ app.action(/button_click/, async ({ body, ack, say }) => {
 
 app.action("play_again", async ({ ack, say, body }) => {
   await ack();
-  await say("Another quick quiz coming up!");
-
   const channelId = (body as any).channel.id;
 
   axios.get("https://opentdb.com/api.php?amount=3").then(async (res) => {
