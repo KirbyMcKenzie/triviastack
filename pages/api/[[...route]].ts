@@ -49,18 +49,17 @@ app.command("/trivia", async ({ ack, say, payload }) => {
   console.log("/ayy haha");
 
   say("Kirby is kicking off a new quiz!");
-  await ack();
+  // await ack();
 
   axios
     .get("https://opentdb.com/api.php?amount=10")
     .then(async (res) => {
-      console.log("attempting to create quiz");
-      console.log("attempting to create quiz");
       const quiz = await createNewQuiz(
         supabase,
         res.data.results,
         payload.channel_id
       );
+      console.log(quiz, "new quiz created");
 
       const [firstQuestion] = res.data.results;
 
