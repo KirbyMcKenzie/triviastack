@@ -38,9 +38,6 @@ export const buildQuestionBlock = ({
         ]
       : []),
     {
-      type: "divider",
-    },
-    {
       type: "section",
       text: {
         type: "plain_text",

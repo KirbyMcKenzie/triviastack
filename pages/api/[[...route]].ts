@@ -11,7 +11,6 @@ import {
   updateQuizQuestion,
 } from "services/quizService";
 import { Question } from "types/quiz";
-import { shuffle } from "utils/array";
 import {
   buildQuestionAnswersBlock,
   buildQuestionBlock,
@@ -48,7 +47,7 @@ app.message("yeet", async ({ say }) => {
 app.command("/trivia", async ({ ack, say, payload }) => {
   await ack();
 
-  axios.get("https://opentdb.com/api.php?amount=3").then(async (res) => {
+  axios.get("https://opentdb.com/api.php?amount=10").then(async (res) => {
     const quiz = await createNewQuiz(
       supabase,
       res.data.results,
@@ -175,7 +174,7 @@ app.action("play_again", async ({ ack, say, body }) => {
   await ack();
   const channelId = (body as any).channel.id;
 
-  axios.get("https://opentdb.com/api.php?amount=3").then(async (res) => {
+  axios.get("https://opentdb.com/api.php?amount=10").then(async (res) => {
     await createNewQuiz(supabase, res.data.results, channelId);
 
     const [firstQuestion] = res.data.results;
