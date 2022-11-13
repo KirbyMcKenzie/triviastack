@@ -47,13 +47,10 @@ app.message("yeet", async ({ say }) => {
 app.command("/trivia", async ({ ack, say, payload }) => {
   await ack();
 
-  axios.get("https://opentdb.com/api.php?amount=10").then(async (res) => {
-    const quiz = await createNewQuiz(
-      supabase,
-      res.data.results,
-      payload.channel_id
-    );
+  console.log("/trivia called");
 
+  axios.get("https://opentdb.com/api.php?amount=10").then(async (res) => {
+    await createNewQuiz(supabase, res.data.results, payload.channel_id);
     const [firstQuestion] = res.data.results;
 
     const answersBlock = buildQuestionAnswersBlock([
