@@ -31,7 +31,6 @@ const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   receiver: receiver,
   developerMode: false,
-  processBeforeResponse: true,
 });
 
 app.message("yoza", async ({ message, say }) => {
@@ -46,14 +45,13 @@ app.message("yeet", async ({ say }) => {
 });
 
 app.command("/trivia", async ({ ack, say, payload }) => {
-  await ack();
-
   console.log("/trivia called");
   console.log("/ayy haha");
 
   axios
     .get("https://opentdb.com/api.php?amount=10")
     .then(async (res) => {
+      await ack();
       console.log("attempting to create quiz");
       const quiz = await createNewQuiz(
         supabase,
