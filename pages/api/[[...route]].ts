@@ -191,8 +191,21 @@ app.action(/next_question/, async ({ body, ack, say, respond }) => {
 });
 
 app.action("play_again", async ({ ack, say, body }) => {
-  await ack();
   const channelId = (body as any).channel.id;
+  const userId = (body as any).user.id;
+
+  await ack();
+  await say({
+    blocks: [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `📣  *<@${userId}> has kicked off another game of trivia* \n`,
+        },
+      },
+    ],
+  });
 
   axios.get("https://opentdb.com/api.php?amount=10").then(async (res) => {
     await createNewQuiz(supabase, res.data.results, channelId);
