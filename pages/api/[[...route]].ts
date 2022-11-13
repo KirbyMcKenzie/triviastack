@@ -31,6 +31,7 @@ const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   receiver: receiver,
   developerMode: false,
+  processBeforeResponse: true,
 });
 
 app.message("yoza", async ({ message, say }) => {
