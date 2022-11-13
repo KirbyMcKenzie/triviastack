@@ -48,8 +48,8 @@ app.command("/trivia", async ({ ack, say, payload }) => {
   console.log("/trivia called");
   console.log("/ayy haha");
 
-  await ack();
   say("Kirby is kicking off a new quiz!");
+  await ack();
 
   axios
     .get("https://opentdb.com/api.php?amount=10")
