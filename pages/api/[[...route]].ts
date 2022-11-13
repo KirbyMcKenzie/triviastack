@@ -49,34 +49,39 @@ app.command("/trivia", async ({ ack, say, payload }) => {
 
   console.log("/trivia called");
 
-  axios.get("https://opentdb.com/api.php?amount=10").then(async (res) => {
-    const quiz = await createNewQuiz(
-      supabase,
-      res.data.results,
-      payload.channel_id
-    );
+  axios
+    .get("https://opentdb.com/api.php?amount=10")
+    .then(async (res) => {
+      const quiz = await createNewQuiz(
+        supabase,
+        res.data.results,
+        payload.channel_id
+      );
 
-    console.log(quiz, "new quiz created");
+      console.log(quiz, "new quiz created");
 
-    const [firstQuestion] = res.data.results;
+      const [firstQuestion] = res.data.results;
 
-    const answersBlock = buildQuestionAnswersBlock([
-      firstQuestion.correct_answer,
-      ...firstQuestion.incorrect_answers,
-    ]);
+      const answersBlock = buildQuestionAnswersBlock([
+        firstQuestion.correct_answer,
+        ...firstQuestion.incorrect_answers,
+      ]);
 
-    const questionBlock = buildQuestionBlock({
-      text: firstQuestion.question,
-      difficulty: firstQuestion.difficulty,
-      category: firstQuestion.category,
-      answers: answersBlock,
-      userId: payload.user_id,
+      const questionBlock = buildQuestionBlock({
+        text: firstQuestion.question,
+        difficulty: firstQuestion.difficulty,
+        category: firstQuestion.category,
+        answers: answersBlock,
+        userId: payload.user_id,
+      });
+
+      console.log(questionBlock, "saying question block");
+      await say(questionBlock);
+      console.log("posted question");
+    })
+    .catch((error) => {
+      console.log(error, "error fetching quiz");
     });
-
-    console.log(questionBlock, "saying question block");
-    await say(questionBlock);
-    console.log("posted question");
-  });
 });
 
 // TODO: add error handling
