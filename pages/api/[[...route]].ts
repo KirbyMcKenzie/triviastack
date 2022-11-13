@@ -5,7 +5,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import {
   createNewQuiz,
   getCurrentQuizByChannelId,
-  getQuizzesByChannelId,
   updateQuiz,
   updateQuizCurrentQuestion,
   updateQuizQuestion,
