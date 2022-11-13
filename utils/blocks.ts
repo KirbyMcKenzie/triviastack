@@ -98,14 +98,13 @@ export const buildQuizCompleteBlock = (score: number, total: number) => ({
         text: `🎉  *Quiz Complete!*\n\nYour Score: *${score}/${total}* 👏\nNot a bad effort 🤷‍♂️`,
       },
     },
-    {
-      type: "section",
-      text: {
-        type: "mrkdwn",
-        text: "Daily quiz streak: ✨ *10* ✨",
-      },
-    },
-
+    // {
+    //   type: "section",
+    //   text: {
+    //     type: "mrkdwn",
+    //     text: "Daily quiz streak: ✨ *10* ✨",
+    //   },
+    // },
     {
       type: "divider",
     },
@@ -121,6 +120,7 @@ export const buildQuizCompleteBlock = (score: number, total: number) => ({
             emoji: true,
           },
           action_id: "play_again",
+          // value: 5
         },
         {
           type: "button",

@@ -17,6 +17,7 @@ import {
 } from "utils/blocks";
 import NextConnectReceiver from "utils/NextConnectReceiver";
 
+const DEFAULT_NUM_QUESTIONS = 10;
 const supabaseUrl = process.env.SUPABASE_URL as string;
 const supabaseKey = process.env.SUPABASE_KEY as string;
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -43,8 +44,11 @@ app.message("yeet", async ({ say }) => {
   );
 });
 
-app.command("/trivia", async ({ ack, say, payload }) => {
-  console.log("/trivia called");
+const triviaSlashCommand =
+  process.env.NODE_ENV === "production" ? "/trivia" : "/dev-trivia";
+
+app.command(triviaSlashCommand, async ({ ack, say, payload }) => {
+  const numberOfQuestions = payload.text || DEFAULT_NUM_QUESTIONS;
 
   await ack();
   await say({
@@ -53,22 +57,20 @@ app.command("/trivia", async ({ ack, say, payload }) => {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `📣  *<@${payload.user_id}> has kicked off a game of trivia* \n`,
+          text: `*<@${payload.user_id}> has kicked off a game of trivia* 📣\n`,
         },
       },
     ],
   });
 
   await axios
-    .get("https://opentdb.com/api.php?amount=10")
+    .get(`https://opentdb.com/api.php?amount=${numberOfQuestions}`)
     .then(async (res) => {
       const quiz = await createNewQuiz(
         supabase,
         res.data.results,
         payload.channel_id
       );
-      console.log(quiz, "new quiz created");
-
       const [firstQuestion] = res.data.results;
 
       const answersBlock = buildQuestionAnswersBlock([
@@ -84,9 +86,7 @@ app.command("/trivia", async ({ ack, say, payload }) => {
         userId: payload.user_id,
       });
 
-      console.log(questionBlock, "saying question block");
       await say(questionBlock);
-      console.log("posted question");
     })
     .catch((error) => {
       console.log(error, "error fetching quiz");
@@ -131,7 +131,6 @@ app.action(/answer_question/, async ({ body, ack, respond }) => {
   );
 
   await updateQuizQuestion(supabase, id, updatedQuestions);
-
   await respond(questionBlock);
 });
 
@@ -186,6 +185,7 @@ app.action(/next_question/, async ({ body, ack, say, respond }) => {
     await say(
       ":confused:  There was an issue processing that click. Let me fetch the logs.."
     );
+    console.log(error);
     await say(`:bug:  ${(error as string).toString()}`);
   }
 });
@@ -197,35 +197,38 @@ app.action("play_again", async ({ ack, say, body }) => {
   await ack();
   await say({
     blocks: [
+      { type: "divider" },
       {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `📣  *<@${userId}> has kicked off another game of trivia* \n`,
+          text: `*<@${userId}> has kicked off another game of trivia* 📣 \n`,
         },
       },
     ],
   });
 
-  await axios.get("https://opentdb.com/api.php?amount=10").then(async (res) => {
-    await createNewQuiz(supabase, res.data.results, channelId);
+  await axios
+    .get(`https://opentdb.com/api.php?amount=${DEFAULT_NUM_QUESTIONS}`)
+    .then(async (res) => {
+      await createNewQuiz(supabase, res.data.results, channelId);
 
-    const [firstQuestion] = res.data.results;
+      const [firstQuestion] = res.data.results;
 
-    const answersBlock = buildQuestionAnswersBlock([
-      firstQuestion.correct_answer,
-      ...firstQuestion.incorrect_answers,
-    ]);
+      const answersBlock = buildQuestionAnswersBlock([
+        firstQuestion.correct_answer,
+        ...firstQuestion.incorrect_answers,
+      ]);
 
-    const questionBlock = buildQuestionBlock({
-      text: firstQuestion.question,
-      difficulty: firstQuestion.difficulty,
-      category: firstQuestion.category,
-      answers: answersBlock,
+      const questionBlock = buildQuestionBlock({
+        text: firstQuestion.question,
+        difficulty: firstQuestion.difficulty,
+        category: firstQuestion.category,
+        answers: answersBlock,
+      });
+
+      await say(questionBlock);
     });
-
-    await say(questionBlock);
-  });
 });
 
 // this is run just in case
