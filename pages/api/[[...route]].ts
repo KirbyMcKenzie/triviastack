@@ -207,7 +207,7 @@ app.action("play_again", async ({ ack, say, body }) => {
     ],
   });
 
-  axios.get("https://opentdb.com/api.php?amount=10").then(async (res) => {
+  await axios.get("https://opentdb.com/api.php?amount=10").then(async (res) => {
     await createNewQuiz(supabase, res.data.results, channelId);
 
     const [firstQuestion] = res.data.results;
