@@ -1,0 +1,30 @@
+display_information:
+  name: Trivia [Dev]
+features:
+  bot_user:
+    display_name: Trivia [Dev]
+    always_online: false
+  slash_commands:
+    - command: /t
+      url: https://d716a4f54444.au.ngrok.io/api/slack/events
+      description: Start new game of trivia!
+      should_escape: true
+oauth_config:
+  scopes:
+    bot:
+      - chat:write
+      - commands
+      - channels:history
+      - im:history
+settings:
+  event_subscriptions:
+    request_url: https://d716a4f54444.au.ngrok.io/api/slack/events
+    bot_events:
+      - message.channels
+      - message.im
+  interactivity:
+    is_enabled: true
+    request_url: https://d716a4f54444.au.ngrok.io/api/slack/events
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false
