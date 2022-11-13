@@ -47,7 +47,17 @@ app.command("/trivia", async ({ ack, say, payload }) => {
   console.log("/trivia called");
 
   await ack();
-  await say(":mega: @kirby has kicked off a game of trivia");
+  await say({
+    blocks: [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `📣  *<@${payload.user_id}> has kicked off a game of trivia* \n`,
+        },
+      },
+    ],
+  });
 
   await axios
     .get("https://opentdb.com/api.php?amount=10")

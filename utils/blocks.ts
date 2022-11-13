@@ -26,17 +26,6 @@ export const buildQuestionBlock = ({
   isFinalQuestion = false,
 }: Question) => ({
   blocks: [
-    ...(userId && !answeredValue
-      ? [
-          {
-            type: "section",
-            text: {
-              type: "mrkdwn",
-              text: `📣  *<@${userId}> has kicked off a game of trivia* \n`,
-            },
-          },
-        ]
-      : []),
     {
       type: "section",
       text: {
