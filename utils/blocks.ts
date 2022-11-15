@@ -140,8 +140,29 @@ export const buildQuizCompleteBlock = (score: number, total: number) => ({
   ],
 });
 
-export const buildQuestionAnswersBlock = (answers: string[]) =>
-  shuffle(
+// TODO: Refactor into single map
+export const buildQuestionAnswersBlock = (
+  answers: string[],
+  answerType: "multiple" | "boolean" = "multiple"
+) => {
+  if (answerType == "boolean") {
+    return answers
+      .sort()
+      .reverse()
+      .map((answer, index) => ({
+        type: "button",
+        text: {
+          type: "plain_text",
+          text: answer,
+          emoji: true,
+        },
+
+        action_id: `answer_question${index}`,
+        value: answer,
+      }));
+  }
+
+  return shuffle(
     answers.map((answer, index) => ({
       type: "button",
       text: {
@@ -154,3 +175,4 @@ export const buildQuestionAnswersBlock = (answers: string[]) =>
       value: answer,
     }))
   );
+};

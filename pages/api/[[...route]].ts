@@ -52,8 +52,6 @@ app.command(triviaSlashCommand, async ({ ack, say, client, payload }) => {
 
   await ack();
 
-  console.log(payload, "payload");
-
   if (numberOfQuestions > 50) {
     await client.chat.postEphemeral({
       token: process.env.SLACK_BOT_TOKEN,
@@ -112,22 +110,22 @@ app.command(triviaSlashCommand, async ({ ack, say, client, payload }) => {
   });
 
   await axios
-    .get(`https://opentdb.com/api.php?amount=${numberOfQuestions}`)
+    .get(`https://opentdb.com/api.php?amount=${numberOfQuestions}&type=boolean`)
     .then(async (res) => {
-      console.log(res, "created new quiz");
       const quiz = await createNewQuiz(
         supabase,
         res.data.results,
         payload.channel_id
       );
       const [firstQuestion] = res.data.results;
+      console.log({ quiz, firstQuestion }, "created new quiz");
 
       const numberOfQuestions = res.data.results.length;
 
-      const answersBlock = buildQuestionAnswersBlock([
-        firstQuestion.correct_answer,
-        ...firstQuestion.incorrect_answers,
-      ]);
+      const answersBlock = buildQuestionAnswersBlock(
+        [firstQuestion.correct_answer, ...firstQuestion.incorrect_answers],
+        firstQuestion.type
+      );
 
       const questionBlock = buildQuestionBlock({
         text: firstQuestion.question,
@@ -160,10 +158,10 @@ app.action(/answer_question/, async ({ body, ack, respond }) => {
   // TODO: can probably rename to answeredQuestion
   const previousQuestion = questions[current_question - 1];
 
-  const answersBlock = buildQuestionAnswersBlock([
-    previousQuestion.correct_answer,
-    ...previousQuestion.incorrect_answers,
-  ]);
+  const answersBlock = buildQuestionAnswersBlock(
+    [previousQuestion.correct_answer, ...previousQuestion.incorrect_answers],
+    previousQuestion.type
+  );
 
   const questionBlock = buildQuestionBlock({
     text: previousQuestion.question,
@@ -223,10 +221,10 @@ app.action(/next_question/, async ({ body, ack, say, respond }) => {
     await updateQuizCurrentQuestion(supabase, id, current_question + 1);
 
     // TODO: consider merging question and answer block
-    const answersBlock = buildQuestionAnswersBlock([
-      nextQuestion.correct_answer,
-      ...nextQuestion.incorrect_answers,
-    ]);
+    const answersBlock = buildQuestionAnswersBlock(
+      [nextQuestion.correct_answer, ...nextQuestion.incorrect_answers],
+      nextQuestion.type
+    );
 
     const questionBlock = buildQuestionBlock({
       text: nextQuestion.question,
@@ -274,10 +272,10 @@ app.action("play_again", async ({ ack, say, body }) => {
 
       const numberOfQuestions = res.data.results.length;
 
-      const answersBlock = buildQuestionAnswersBlock([
-        firstQuestion.correct_answer,
-        ...firstQuestion.incorrect_answers,
-      ]);
+      const answersBlock = buildQuestionAnswersBlock(
+        [firstQuestion.correct_answer, ...firstQuestion.incorrect_answers],
+        firstQuestion.type
+      );
 
       const questionBlock = buildQuestionBlock({
         text: firstQuestion.question,
