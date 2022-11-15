@@ -35,13 +35,11 @@ const app = new App({
 
 app.message("yoza", async ({ message, say }) => {
   const user = (message as any).user;
-  await say(`Hey there <@${user}>!`);
+  await say(`Hey my bro <@${user}>!`);
 });
 
 app.message("yeet", async ({ say }) => {
-  await say(
-    `|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|`
-  );
+  await say(`|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|`);
 });
 
 const triviaSlashCommand =
@@ -73,6 +71,8 @@ app.command(triviaSlashCommand, async ({ ack, say, payload }) => {
       );
       const [firstQuestion] = res.data.results;
 
+      const numberOfQuestions = res.data.results.length;
+
       const answersBlock = buildQuestionAnswersBlock([
         firstQuestion.correct_answer,
         ...firstQuestion.incorrect_answers,
@@ -81,6 +81,8 @@ app.command(triviaSlashCommand, async ({ ack, say, payload }) => {
       const questionBlock = buildQuestionBlock({
         text: firstQuestion.question,
         difficulty: firstQuestion.difficulty,
+        questionNumber: 1,
+        totalQuestions: numberOfQuestions,
         category: firstQuestion.category,
         answers: answersBlock,
         userId: payload.user_id,
@@ -114,6 +116,8 @@ app.action(/answer_question/, async ({ body, ack, respond }) => {
 
   const questionBlock = buildQuestionBlock({
     text: previousQuestion.question,
+    questionNumber: current_question,
+    totalQuestions: questions.length,
     difficulty: previousQuestion.difficulty,
     category: previousQuestion.category,
     answers: answersBlock,
@@ -175,6 +179,8 @@ app.action(/next_question/, async ({ body, ack, say, respond }) => {
 
     const questionBlock = buildQuestionBlock({
       text: nextQuestion.question,
+      questionNumber: current_question + 1,
+      totalQuestions: questions.length,
       difficulty: nextQuestion.difficulty,
       category: nextQuestion.category,
       answers: answersBlock,
@@ -215,6 +221,8 @@ app.action("play_again", async ({ ack, say, body }) => {
 
       const [firstQuestion] = res.data.results;
 
+      const numberOfQuestions = res.data.results.length;
+
       const answersBlock = buildQuestionAnswersBlock([
         firstQuestion.correct_answer,
         ...firstQuestion.incorrect_answers,
@@ -222,6 +230,8 @@ app.action("play_again", async ({ ack, say, body }) => {
 
       const questionBlock = buildQuestionBlock({
         text: firstQuestion.question,
+        questionNumber: 1,
+        totalQuestions: numberOfQuestions,
         difficulty: firstQuestion.difficulty,
         category: firstQuestion.category,
         answers: answersBlock,

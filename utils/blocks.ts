@@ -3,6 +3,8 @@ import { decodeEscapedHTML, titleCase } from "./string";
 
 interface Question {
   text: string;
+  questionNumber: string | number;
+  totalQuestions: string | number;
   category: string;
   difficulty: string;
   answers: string[];
@@ -16,6 +18,8 @@ interface Question {
 // TODO: refactor
 export const buildQuestionBlock = ({
   text,
+  questionNumber,
+  totalQuestions,
   difficulty,
   category,
   answers,
@@ -29,9 +33,10 @@ export const buildQuestionBlock = ({
     {
       type: "section",
       text: {
-        type: "plain_text",
-        text: decodeEscapedHTML(text),
-        emoji: true,
+        type: "mrkdwn",
+        text: `*Question ${questionNumber}/${totalQuestions}* - ${decodeEscapedHTML(
+          text
+        )}`,
       },
     },
     {
