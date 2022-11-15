@@ -110,7 +110,7 @@ app.command(triviaSlashCommand, async ({ ack, say, client, payload }) => {
   });
 
   await axios
-    .get(`https://opentdb.com/api.php?amount=${numberOfQuestions}&type=boolean`)
+    .get(`https://opentdb.com/api.php?amount=${numberOfQuestions}`)
     .then(async (res) => {
       const quiz = await createNewQuiz(
         supabase,
