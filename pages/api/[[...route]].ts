@@ -18,6 +18,8 @@ import {
 import NextConnectReceiver from "utils/NextConnectReceiver";
 
 const DEFAULT_NUM_QUESTIONS = 10;
+const MAX_QUESTIONS = 50;
+
 const supabaseUrl = process.env.SUPABASE_URL as string;
 const supabaseKey = process.env.SUPABASE_KEY as string;
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -45,10 +47,55 @@ app.message("yeet", async ({ say }) => {
 const triviaSlashCommand =
   process.env.NODE_ENV === "production" ? "/trivia" : "/dev-trivia";
 
-app.command(triviaSlashCommand, async ({ ack, say, payload }) => {
+app.command(triviaSlashCommand, async ({ ack, say, client, payload }) => {
   const numberOfQuestions = payload.text || DEFAULT_NUM_QUESTIONS;
 
   await ack();
+
+  console.log(payload, "payload");
+
+  if (numberOfQuestions > 50) {
+    await client.chat.postEphemeral({
+      token: process.env.SLACK_BOT_TOKEN,
+      channel: payload.channel_id,
+      user: payload.user_id,
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: "😵‍💫  Sorry, can't do that. We only support up to 50 questions at this time.",
+          },
+        },
+        {
+          type: "context",
+          elements: [
+            {
+              type: "mrkdwn",
+              text: `If you're interested in more questions, please get in touch 😼`,
+            },
+          ],
+        },
+        {
+          type: "actions",
+          elements: [
+            {
+              type: "button",
+              text: {
+                type: "plain_text",
+                text: "💡 Give product feedback",
+                emoji: true,
+              },
+              value: "click_me_123",
+              action_id: "actionId-1",
+            },
+          ],
+        },
+      ],
+    });
+    return;
+  }
+
   await say({
     blocks: [
       {
@@ -67,6 +114,7 @@ app.command(triviaSlashCommand, async ({ ack, say, payload }) => {
   await axios
     .get(`https://opentdb.com/api.php?amount=${numberOfQuestions}`)
     .then(async (res) => {
+      console.log(res, "created new quiz");
       const quiz = await createNewQuiz(
         supabase,
         res.data.results,
