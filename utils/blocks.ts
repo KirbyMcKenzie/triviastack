@@ -34,9 +34,15 @@ export const buildQuestionBlock = ({
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `*Question ${questionNumber}/${totalQuestions}* - ${decodeEscapedHTML(
-          text
-        )}`,
+        text:
+          // TODO: tidy this up
+          totalQuestions > 1
+            ? `*${
+                questionNumber === totalQuestions
+                  ? ":rotating_light: Final Question"
+                  : `Question ${questionNumber}/${totalQuestions}`
+              }* - ${decodeEscapedHTML(text)}`
+            : decodeEscapedHTML(text),
       },
     },
     {

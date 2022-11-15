@@ -52,10 +52,13 @@ app.command(triviaSlashCommand, async ({ ack, say, payload }) => {
   await say({
     blocks: [
       {
+        type: "divider",
+      },
+      {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `*<@${payload.user_id}> has kicked off a game of trivia* 📣\n`,
+          text: `*<@${payload.user_id}> has kicked off a game of trivia* 📣\n\n`,
         },
       },
     ],
