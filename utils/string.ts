@@ -174,12 +174,17 @@ export const titleCase = (input: string): string => {
 };
 
 export const decodeEscapedHTML = (str: string): string => {
+
+
+  // 'In Pok&eacute;mon, Ash&#039;s Pikachu refuses to go into a pokeball.', -> undefined
+
   const htmlEntities = {
     "&amp;": "&",
     "&lt;": "<",
     "&gt;": ">",
     "&quot;": "`",
     "&apos;": "'",
+    "&#039;": "'",
     "&#039;": "'",
   };
   //@ts-ignore

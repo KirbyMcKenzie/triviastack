@@ -155,12 +155,13 @@ export const buildQuestionAnswersBlock = (
         type: "button",
         text: {
           type: "plain_text",
-          text:
+          text: decodeEscapedHTML(
             answerValue === answer
               ? `${
                   correct_answer === answer ? `✅  ${answer}` : `❌  ${answer}`
                 }`
-              : answer,
+              : answer
+          ),
           emoji: true,
         },
 
@@ -174,10 +175,11 @@ export const buildQuestionAnswersBlock = (
       type: "button",
       text: {
         type: "plain_text",
-        text:
+        text: decodeEscapedHTML(
           answerValue === answer
             ? `${correct_answer === answer ? `✅  ${answer}` : `❌  ${answer}`}`
-            : answer,
+            : answer
+        ),
         emoji: true,
       },
 
