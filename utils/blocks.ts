@@ -62,18 +62,17 @@ export const buildQuestionBlock = ({
     },
     ...(answeredValue
       ? [
-          {
-            type: "divider",
-          },
+          // {
+          //   type: "divider",
+          // },
           {
             type: "context",
             elements: [
               {
                 type: "mrkdwn",
-                text: `<@${userId}> answered with *${answeredValue}* ${
-                  isCorrect ? " ✅ " : " ❌ "
-                }\n${!isCorrect ? `Correct answer: *${correctAnswer}*` : ""}
-              `,
+                text: `<@${userId}> answered with *${answeredValue}*\n${
+                  !isCorrect ? `Correct answer: *${correctAnswer}*` : ""
+                }`,
               },
             ],
           },
@@ -143,8 +142,11 @@ export const buildQuizCompleteBlock = (score: number, total: number) => ({
 // TODO: Refactor into single map
 export const buildQuestionAnswersBlock = (
   answers: string[],
-  answerType: "multiple" | "boolean" = "multiple"
+  answerType: "multiple" | "boolean" = "multiple",
+  answerValue: string | undefined = undefined
 ) => {
+  const [correct_answer] = answers;
+
   if (answerType == "boolean") {
     return answers
       .sort()
@@ -153,7 +155,12 @@ export const buildQuestionAnswersBlock = (
         type: "button",
         text: {
           type: "plain_text",
-          text: answer,
+          text:
+            answerValue === answer
+              ? `${
+                  correct_answer === answer ? `✅  ${answer}` : `❌  ${answer}`
+                }`
+              : answer,
           emoji: true,
         },
 
@@ -167,7 +174,10 @@ export const buildQuestionAnswersBlock = (
       type: "button",
       text: {
         type: "plain_text",
-        text: answer,
+        text:
+          answerValue === answer
+            ? `${correct_answer === answer ? `✅  ${answer}` : `❌  ${answer}`}`
+            : answer,
         emoji: true,
       },
 

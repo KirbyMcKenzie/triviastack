@@ -163,7 +163,8 @@ app.action(/answer_question/, async ({ body, ack, respond }) => {
 
   const answersBlock = buildQuestionAnswersBlock(
     [previousQuestion.correct_answer, ...previousQuestion.incorrect_answers],
-    previousQuestion.type
+    previousQuestion.type,
+    answerValue
   );
 
   const questionBlock = buildQuestionBlock({
