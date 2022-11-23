@@ -103,7 +103,7 @@ app.command(triviaSlashCommand, async ({ ack, say, client, payload }) => {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `*<@${payload.user_id}> has kicked off a game of trivia* 📣\n\n`,
+          text: `*<@${payload.user_id}> has kicked off a game of trivia*  📣\n\n`,
         },
       },
     ],
@@ -117,8 +117,11 @@ app.command(triviaSlashCommand, async ({ ack, say, client, payload }) => {
         res.data.results,
         payload.channel_id
       );
+
       const [firstQuestion] = res.data.results;
       console.log({ quiz, firstQuestion }, "created new quiz");
+      console.log("-------------------------------------------");
+      console.log(res.data.results, "results");
 
       const numberOfQuestions = res.data.results.length;
 
@@ -257,7 +260,7 @@ app.action("play_again", async ({ ack, say, body }) => {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `*<@${userId}> has kicked off another game of trivia* 📣 \n`,
+          text: `*<@${userId}> has kicked off another game of trivia*  📣 \n`,
         },
       },
     ],

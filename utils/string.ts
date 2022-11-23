@@ -183,5 +183,5 @@ export const decodeEscapedHTML = (str: string): string => {
     "&#039;": "'",
   };
   //@ts-ignore
-  return str.replace(/&#{0,1}[a-z0-9]+;/gi, (match) => htmlEntities[match]);
+  return str.replace(/&#{0,1}[a-z0-9]+;/giu, (match) => htmlEntities[match]);
 };
