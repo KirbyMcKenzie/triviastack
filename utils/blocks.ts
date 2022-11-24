@@ -1,5 +1,6 @@
 import { shuffle } from "./array";
-import { decodeEscapedHTML, titleCase } from "./string";
+import { titleCase } from "./string";
+import { decode } from "html-entities";
 
 interface Question {
   text: string;
@@ -41,8 +42,8 @@ export const buildQuestionBlock = ({
                 questionNumber === totalQuestions
                   ? ":rotating_light: Final Question"
                   : `Question ${questionNumber}/${totalQuestions}`
-              }* - ${decodeEscapedHTML(text)}`
-            : decodeEscapedHTML(text),
+              }* - ${decode(text)}`
+            : decode(text),
       },
     },
     {
@@ -70,8 +71,8 @@ export const buildQuestionBlock = ({
             elements: [
               {
                 type: "mrkdwn",
-                text: `<@${userId}> answered with *${answeredValue}*\n${
-                  !isCorrect ? `Correct answer: *${correctAnswer}*` : ""
+                text: `<@${userId}> answered with *${decode(answeredValue)}*\n${
+                  !isCorrect ? `Correct answer: *${decode(correctAnswer)}*` : ""
                 }`,
               },
             ],
@@ -155,7 +156,7 @@ export const buildQuestionAnswersBlock = (
         type: "button",
         text: {
           type: "plain_text",
-          text: decodeEscapedHTML(
+          text: decode(
             answerValue === answer
               ? `${
                   correct_answer === answer ? `✅  ${answer}` : `❌  ${answer}`
@@ -175,7 +176,7 @@ export const buildQuestionAnswersBlock = (
       type: "button",
       text: {
         type: "plain_text",
-        text: decodeEscapedHTML(
+        text: decode(
           answerValue === answer
             ? `${correct_answer === answer ? `✅  ${answer}` : `❌  ${answer}`}`
             : answer

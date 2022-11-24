@@ -172,21 +172,3 @@ export const titleCase = (input: string): string => {
 
   return result;
 };
-
-export const decodeEscapedHTML = (str: string): string => {
-
-
-  // 'In Pok&eacute;mon, Ash&#039;s Pikachu refuses to go into a pokeball.', -> undefined
-
-  const htmlEntities = {
-    "&amp;": "&",
-    "&lt;": "<",
-    "&gt;": ">",
-    "&quot;": "`",
-    "&apos;": "'",
-    "&#039;": "'",
-    "&#039;": "'",
-  };
-  //@ts-ignore
-  return str.replace(/&#{0,1}[a-z0-9]+;/giu, (match) => htmlEntities[match]);
-};
