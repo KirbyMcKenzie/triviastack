@@ -177,8 +177,12 @@ export const buildQuestionAnswersBlock = (
       text: {
         type: "plain_text",
         text: decode(
-          answerValue === answer
-            ? `${correct_answer === answer ? `✅  ${answer}` : `❌  ${answer}`}`
+          !!answerValue
+            ? `${
+                correct_answer === answer
+                  ? `✅  ${answer}`
+                  : `${answerValue === answer ? `❌` : ""}  ${answer}`
+              }`
             : answer
         ),
         emoji: true,
