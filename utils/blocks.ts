@@ -63,9 +63,6 @@ export const buildQuestionBlock = ({
     },
     ...(answeredValue
       ? [
-          // {
-          //   type: "divider",
-          // },
           {
             type: "context",
             elements: [
