@@ -127,13 +127,15 @@ app.command(triviaSlashCommand, async ({ ack, say, client, payload }) => {
       console.log(res.data.results, "res.data.results");
 
       const answers = shuffle([
-        firstQuestion.correct_answer,
-        ...firstQuestion.incorrect_answers,
+        firstQuestion.correctAnswer,
+        ...firstQuestion.incorrectAnswers,
       ]);
 
+      // TODO: actually do something with the answers
+      // shuffle answers for every question??
       const quiz = await createNewQuiz(
         supabase,
-        { ...res.data.results, shuffledAnswers: answers },
+        res.data.results,
         payload.channel_id
       );
 
@@ -144,7 +146,7 @@ app.command(triviaSlashCommand, async ({ ack, say, client, payload }) => {
       const numberOfQuestions = res.data.results.length;
 
       const answersBlock = buildQuestionAnswersBlock(
-        [firstQuestion.correct_answer, ...firstQuestion.incorrect_answers],
+        [firstQuestion.correctAnswer, ...firstQuestion.incorrectAnswers],
         firstQuestion.type
       );
 
@@ -174,35 +176,38 @@ app.action(/answer_question/, async ({ body, ack, respond }) => {
   const channelId = (body as any).channel.id;
 
   const quiz = await getCurrentQuizByChannelId(supabase, channelId);
-  const { id, current_question, questions } = quiz;
+  const { id, currentQuestion, questions } = quiz;
 
   // TODO: can probably rename to answeredQuestion
-  const previousQuestion = questions[current_question - 1];
+  const previousQuestion = questions[currentQuestion - 1];
 
   const answersBlock = buildQuestionAnswersBlock(
-    [previousQuestion.correct_answer, ...previousQuestion.incorrect_answers],
+    [previousQuestion.correctAnswer, ...previousQuestion.incorrectAnswers],
     previousQuestion.type,
     answerValue
   );
 
   const questionBlock = buildQuestionBlock({
     text: previousQuestion.question,
-    questionNumber: current_question,
+    questionNumber: currentQuestion,
     totalQuestions: questions.length,
     difficulty: previousQuestion.difficulty,
     category: previousQuestion.category,
     answers: answersBlock,
     answeredValue: answerValue,
     userId: answeredBy.id,
-    correctAnswer: previousQuestion.correct_answer,
-    isCorrect: previousQuestion.correct_answer === answerValue,
-    isFinalQuestion: current_question === questions.length,
+    correctAnswer: previousQuestion.correctAnswer,
+    isCorrect: previousQuestion.correctAnswer === answerValue,
+    isFinalQuestion: currentQuestion === questions.length,
   });
 
-  const isCorrect = previousQuestion.correct_answer === answerValue;
+  const isCorrect = previousQuestion.correctAnswer === answerValue;
 
+  console.log(questions, "isCorrect -0=-=-=-= ");
+
+  //@ts-ignore
   const updatedQuestions = questions.map((q: Question, index: number) =>
-    index + 1 === current_question ? { ...q, is_correct: isCorrect } : q
+    index + 1 === currentQuestion ? { ...q, isCorrect } : q
   );
 
   await updateQuizQuestion(supabase, id, updatedQuestions);
@@ -217,18 +222,18 @@ app.action(/next_question/, async ({ body, ack, say, respond }) => {
     const channelId = (body as any).channel.id;
 
     const quiz = await getCurrentQuizByChannelId(supabase, channelId);
-    const { id, current_question, questions } = quiz;
+    const { id, currentQuestion, questions } = quiz;
 
-    const nextQuestion = questions[current_question];
-    const previousQuestion = questions[current_question - 1];
+    const nextQuestion = questions[currentQuestion];
+    const previousQuestion = questions[currentQuestion - 1];
     const isCorrect = previousQuestion.correct_answer === answerValue;
 
     const updatedQuestions = questions.map((q: Question, index: number) =>
-      index + 1 === current_question ? { ...q, is_correct: isCorrect } : q
+      index + 1 === currentQuestion ? { ...q, is_correct: isCorrect } : q
     );
 
     // TODO: finish quiz - maybe move
-    if (current_question === questions.length) {
+    if (currentQuestion === questions.length) {
       await updateQuiz(supabase, id, { is_active: false });
 
       const score = updatedQuestions.filter(
@@ -240,17 +245,17 @@ app.action(/next_question/, async ({ body, ack, say, respond }) => {
       return;
     }
 
-    await updateQuizCurrentQuestion(supabase, id, current_question + 1);
+    await updateQuizCurrentQuestion(supabase, id, currentQuestion + 1);
 
     // TODO: consider merging question and answer block
     const answersBlock = buildQuestionAnswersBlock(
-      [nextQuestion.correct_answer, ...nextQuestion.incorrect_answers],
+      [nextQuestion.correctAnswer, ...nextQuestion.incorrectAnswers],
       nextQuestion.type
     );
 
     const questionBlock = buildQuestionBlock({
       text: nextQuestion.question,
-      questionNumber: current_question + 1,
+      questionNumber: currentQuestion + 1,
       totalQuestions: questions.length,
       difficulty: nextQuestion.difficulty,
       category: nextQuestion.category,
@@ -290,9 +295,11 @@ app.action("play_again", async ({ ack, say, body }) => {
     .then(async (res) => {
       const [firstQuestion] = res.data.results;
       const numberOfQuestions = res.data.results.length;
+
+      // TODO: fix this
       const answers = shuffle([
-        firstQuestion.correct_answer,
-        ...firstQuestion.incorrect_answers,
+        firstQuestion.correctAnswer,
+        ...firstQuestion.incorrectAnswers,
       ]);
 
       await createNewQuiz(
@@ -302,7 +309,7 @@ app.action("play_again", async ({ ack, say, body }) => {
       );
 
       const answersBlock = buildQuestionAnswersBlock(
-        [firstQuestion.correct_answer, ...firstQuestion.incorrect_answers],
+        [firstQuestion.correctAnswer, ...firstQuestion.incorrectAnswers],
         firstQuestion.type
       );
 

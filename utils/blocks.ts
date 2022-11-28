@@ -143,7 +143,7 @@ export const buildQuestionAnswersBlock = (
   answerType: "multiple" | "boolean" = "multiple",
   answerValue: string | undefined = undefined
 ) => {
-  const [correct_answer] = answers;
+  const [correctAnswer] = answers;
 
   if (answerType == "boolean") {
     return answers
@@ -156,7 +156,7 @@ export const buildQuestionAnswersBlock = (
           text: decode(
             answerValue === answer
               ? `${
-                  correct_answer === answer ? `✅  ${answer}` : `❌  ${answer}`
+                  correctAnswer === answer ? `✅  ${answer}` : `❌  ${answer}`
                 }`
               : answer
           ),
@@ -176,7 +176,7 @@ export const buildQuestionAnswersBlock = (
         text: decode(
           !!answerValue
             ? `${
-                correct_answer === answer
+                correctAnswer === answer
                   ? `✅  ${answer}`
                   : `${answerValue === answer ? `❌` : ""}  ${answer}`
               }`
