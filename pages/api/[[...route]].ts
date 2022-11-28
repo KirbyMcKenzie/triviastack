@@ -2,6 +2,7 @@ import { App } from "@slack/bolt";
 import { createClient } from "@supabase/supabase-js";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
+import { camelizeKeys } from "humps";
 import {
   createNewQuiz,
   getCurrentQuizByChannelId,
@@ -10,6 +11,7 @@ import {
   updateQuizQuestion,
 } from "services/quizService";
 import { Question } from "types/quiz";
+import { shuffle } from "utils/array";
 import {
   buildQuestionAnswersBlock,
   buildQuestionBlock,
@@ -23,6 +25,14 @@ const MAX_QUESTIONS = 50;
 const supabaseUrl = process.env.SUPABASE_URL as string;
 const supabaseKey = process.env.SUPABASE_KEY as string;
 const supabase = createClient(supabaseUrl, supabaseKey);
+
+const apiClient = axios.create();
+
+apiClient.interceptors.response.use((response) => {
+  response.data = camelizeKeys(response.data);
+
+  return response;
+});
 
 const receiver = new NextConnectReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET || "invalid",
@@ -109,16 +119,24 @@ app.command(triviaSlashCommand, async ({ ack, say, client, payload }) => {
     ],
   });
 
-  await axios
+  await apiClient
     .get(`https://opentdb.com/api.php?amount=${numberOfQuestions}`)
     .then(async (res) => {
+      const [firstQuestion] = res.data.results;
+
+      console.log(res.data.results, "res.data.results");
+
+      const answers = shuffle([
+        firstQuestion.correct_answer,
+        ...firstQuestion.incorrect_answers,
+      ]);
+
       const quiz = await createNewQuiz(
         supabase,
-        res.data.results,
+        { ...res.data.results, shuffledAnswers: answers },
         payload.channel_id
       );
 
-      const [firstQuestion] = res.data.results;
       console.log({ quiz, firstQuestion }, "created new quiz");
       console.log("-------------------------------------------");
       console.log(res.data.results, "results");
@@ -270,11 +288,18 @@ app.action("play_again", async ({ ack, say, body }) => {
   await axios
     .get(`https://opentdb.com/api.php?amount=${DEFAULT_NUM_QUESTIONS}`)
     .then(async (res) => {
-      await createNewQuiz(supabase, res.data.results, channelId);
-
       const [firstQuestion] = res.data.results;
-
       const numberOfQuestions = res.data.results.length;
+      const answers = shuffle([
+        firstQuestion.correct_answer,
+        ...firstQuestion.incorrect_answers,
+      ]);
+
+      await createNewQuiz(
+        supabase,
+        { ...res.data.results, shuffledAnswers: answers },
+        channelId
+      );
 
       const answersBlock = buildQuestionAnswersBlock(
         [firstQuestion.correct_answer, ...firstQuestion.incorrect_answers],
