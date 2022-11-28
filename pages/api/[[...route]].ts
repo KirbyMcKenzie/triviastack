@@ -62,7 +62,7 @@ app.command(triviaSlashCommand, async ({ ack, say, client, payload }) => {
 
   await ack();
 
-  if (numberOfQuestions > 50) {
+  if (numberOfQuestions > MAX_QUESTIONS) {
     await client.chat.postEphemeral({
       token: process.env.SLACK_BOT_TOKEN,
       channel: payload.channel_id,
@@ -72,7 +72,7 @@ app.command(triviaSlashCommand, async ({ ack, say, client, payload }) => {
           type: "section",
           text: {
             type: "mrkdwn",
-            text: "😵‍💫  Sorry, can't do that. We only support up to 50 questions at this time.",
+            text: `😵‍💫  Sorry, can't do that. We only support up to ${MAX_QUESTIONS} questions at this time.`,
           },
         },
         {
