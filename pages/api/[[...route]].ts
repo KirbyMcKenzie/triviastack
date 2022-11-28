@@ -203,8 +203,6 @@ app.action(/answer_question/, async ({ body, ack, respond }) => {
 
   const isCorrect = previousQuestion.correctAnswer === answerValue;
 
-  console.log(questions, "isCorrect -0=-=-=-= ");
-
   //@ts-ignore
   const updatedQuestions = questions.map((q: Question, index: number) =>
     index + 1 === currentQuestion ? { ...q, isCorrect } : q
@@ -234,9 +232,12 @@ app.action(/next_question/, async ({ body, ack, say, respond }) => {
 
     // TODO: finish quiz - maybe move
     if (currentQuestion === questions.length) {
+      // TODO: investigate if we should map these
+      //@ts-ignore
       await updateQuiz(supabase, id, { is_active: false });
 
       const score = updatedQuestions.filter(
+        //@ts-ignore
         (q: Question) => q.is_correct
       ).length;
 
@@ -302,11 +303,7 @@ app.action("play_again", async ({ ack, say, body }) => {
         ...firstQuestion.incorrectAnswers,
       ]);
 
-      await createNewQuiz(
-        supabase,
-        { ...res.data.results, shuffledAnswers: answers },
-        channelId
-      );
+      await createNewQuiz(supabase, res.data.results, channelId);
 
       const answersBlock = buildQuestionAnswersBlock(
         [firstQuestion.correctAnswer, ...firstQuestion.incorrectAnswers],
