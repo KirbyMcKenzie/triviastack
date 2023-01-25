@@ -1,6 +1,7 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Question, Quiz } from "../types/quiz";
 import { v4 as uuidv4 } from "uuid";
+import { camelizeKeys } from "humps";
 
 export const createNewQuiz = async (
   client: SupabaseClient,
@@ -17,7 +18,7 @@ export const createNewQuiz = async (
     .select();
   error && console.log(error, "[SQL ERROR]");
   //@ts-ignore
-  return data;
+  return camelizeKeys(data);
 };
 
 export const getCurrentQuizByChannelId = async (
@@ -32,7 +33,7 @@ export const getCurrentQuizByChannelId = async (
     .order("created_at", { ascending: false })
     .limit(1);
   //@ts-ignore
-  return data[0];
+  return camelizeKeys(data[0]);
 };
 
 // TODO: Add types
@@ -47,7 +48,7 @@ export const getQuizzesByChannelId = async (
     .eq("is_active", true);
 
   //@ts-ignore
-  return data;
+  return camelizeKeys(data);
 };
 
 export const updateQuizCurrentQuestion = async (
