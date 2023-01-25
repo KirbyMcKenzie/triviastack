@@ -58,10 +58,9 @@ const triviaSlashCommand =
   process.env.NODE_ENV === "production" ? "/trivia" : "/dev-trivia";
 
 app.command(triviaSlashCommand, async ({ ack, say, client, payload }) => {
-  const numberOfQuestions = payload.text || DEFAULT_NUM_QUESTIONS;
-
   await ack();
 
+  const numberOfQuestions = payload.text || DEFAULT_NUM_QUESTIONS;
   if (numberOfQuestions > MAX_QUESTIONS) {
     await client.chat.postEphemeral({
       token: process.env.SLACK_BOT_TOKEN,
@@ -178,6 +177,8 @@ app.action(/answer_question/, async ({ body, ack, respond }) => {
   const quiz = await getCurrentQuizByChannelId(supabase, channelId);
   const { id, currentQuestion, questions } = quiz;
 
+  console.log(currentQuestion, "currentQuestion");
+
   // TODO: can probably rename to answeredQuestion
   const previousQuestion = questions[currentQuestion - 1];
 
@@ -291,7 +292,7 @@ app.action("play_again", async ({ ack, say, body }) => {
     ],
   });
 
-  await axios
+  await apiClient
     .get(`https://opentdb.com/api.php?amount=${DEFAULT_NUM_QUESTIONS}`)
     .then(async (res) => {
       const [firstQuestion] = res.data.results;
