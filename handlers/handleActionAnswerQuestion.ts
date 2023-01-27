@@ -1,12 +1,4 @@
-import {
-  AckFn,
-  DialogValidation,
-  RespondFn,
-  SayArguments,
-  SlackAction,
-  SlackActionMiddlewareArgs,
-  SlackCommandMiddlewareArgs,
-} from "@slack/bolt";
+import { SlackActionMiddlewareArgs } from "@slack/bolt";
 import {
   getCurrentQuizByChannelId,
   updateQuizQuestion,
@@ -20,38 +12,35 @@ export const handleActionAnswerQuestion = async ({
 }: SlackActionMiddlewareArgs) => {
   await ack();
 
-  const answeredBy = (body as any).user;
+  const answeredBy = body.user;
   const answerValue = (body as any).actions[0].value;
-  const channelId = (body as any).channel.id;
+  const channelId = body?.channel?.id || "";
 
   const quiz = await getCurrentQuizByChannelId(channelId);
   const { id, currentQuestion, questions } = quiz;
 
-  // TODO: can probably rename to answeredQuestion
-  const previousQuestion = questions[currentQuestion - 1];
-
-  const answersBlock = buildQuestionAnswersBlock(
-    previousQuestion.answers,
-    previousQuestion.type,
-    answerValue,
-    previousQuestion.correctAnswer
-  );
+  const answeredQuestion = questions[currentQuestion - 1];
 
   const questionBlock = buildQuestionBlock({
-    text: previousQuestion.question,
+    text: answeredQuestion.question,
     questionNumber: currentQuestion,
     totalQuestions: questions.length,
-    difficulty: previousQuestion.difficulty,
-    category: previousQuestion.category,
-    answers: answersBlock,
+    difficulty: answeredQuestion.difficulty,
+    category: answeredQuestion.category,
+    answers: buildQuestionAnswersBlock(
+      answeredQuestion.answers,
+      answeredQuestion.type,
+      answerValue,
+      answeredQuestion.correctAnswer
+    ),
     answeredValue: answerValue,
     userId: answeredBy.id,
-    correctAnswer: previousQuestion.correctAnswer,
-    isCorrect: previousQuestion.correctAnswer === answerValue,
+    correctAnswer: answeredQuestion.correctAnswer,
+    isCorrect: answeredQuestion.correctAnswer === answerValue,
     isFinalQuestion: currentQuestion === questions.length,
   });
 
-  const isCorrect = previousQuestion.correctAnswer === answerValue;
+  const isCorrect = answeredQuestion.correctAnswer === answerValue;
 
   //@ts-ignore
   const updatedQuestions = questions.map((q: Question, index: number) =>

@@ -1,11 +1,4 @@
-import {
-  AckFn,
-  SayArguments,
-  DialogValidation,
-  SlackAction,
-  SayFn,
-  SlackActionMiddlewareArgs,
-} from "@slack/bolt";
+import { SlackActionMiddlewareArgs } from "@slack/bolt";
 import apiClient from "services/apiClient";
 import { createNewQuiz } from "services/quizService";
 import { shuffle } from "utils/array";
@@ -18,8 +11,8 @@ export const handleActionPlayAgain = async ({
   body,
   say,
 }: SlackActionMiddlewareArgs) => {
-  const channelId = (body as any).channel.id;
-  const userId = (body as any).user.id;
+  const channelId = body?.channel?.id || "";
+  const userId = body.user.id;
 
   await ack();
   await say({
@@ -54,18 +47,16 @@ export const handleActionPlayAgain = async ({
       console.log({ quiz, questions }, "😎 Created new quiz");
       console.log("-------------------------------------------");
 
-      const answersBlock = buildQuestionAnswersBlock(
-        firstQuestion.answers,
-        firstQuestion.type
-      );
-
       const questionBlock = buildQuestionBlock({
         text: firstQuestion.question,
         difficulty: firstQuestion.difficulty,
         questionNumber: 1,
         totalQuestions: questions.length,
         category: firstQuestion.category,
-        answers: answersBlock,
+        answers: buildQuestionAnswersBlock(
+          firstQuestion.answers,
+          firstQuestion.type
+        ),
       });
 
       await say(questionBlock);

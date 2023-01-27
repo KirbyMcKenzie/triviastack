@@ -21,7 +21,7 @@ export const handleActionNextQuestion = async ({
 
   try {
     const answerValue = (body as any).actions[0].value;
-    const channelId = (body as any).channel.id;
+    const channelId = body?.channel?.id || "";
 
     const quiz = await getCurrentQuizByChannelId(channelId);
     const { id, currentQuestion, questions } = quiz;
@@ -34,9 +34,7 @@ export const handleActionNextQuestion = async ({
       index + 1 === currentQuestion ? { ...q, is_correct: isCorrect } : q
     );
 
-    // TODO: finish quiz - maybe move
     if (currentQuestion === questions.length) {
-      // TODO: investigate if we should map these
       //@ts-ignore
       await updateQuiz(id, { is_active: false });
 
@@ -52,23 +50,21 @@ export const handleActionNextQuestion = async ({
 
     await updateQuizCurrentQuestion(id, currentQuestion + 1);
 
-    // TODO: consider merging question and answer block
-    const answersBlock = buildQuestionAnswersBlock(
-      nextQuestion.answers,
-      nextQuestion.type
-    );
-
     const questionBlock = buildQuestionBlock({
       text: nextQuestion.question,
       questionNumber: currentQuestion + 1,
       totalQuestions: questions.length,
       difficulty: nextQuestion.difficulty,
       category: nextQuestion.category,
-      answers: answersBlock,
+      answers: buildQuestionAnswersBlock(
+        nextQuestion.answers,
+        nextQuestion.type
+      ),
     });
 
     await respond(questionBlock);
   } catch (error) {
+    // TODO: Add these as context blocks potentially??
     await say(
       ":confused:  There was an issue processing that click. Let me fetch the logs.."
     );
