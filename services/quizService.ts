@@ -1,14 +1,13 @@
-import { SupabaseClient } from "@supabase/supabase-js";
 import { Question, Quiz } from "../types/quiz";
-import { v4 as uuidv4 } from "uuid";
 import { camelizeKeys } from "humps";
+import { supabase } from "./supabaseClient";
 
+// TODO: import client here instead
 export const createNewQuiz = async (
-  client: SupabaseClient,
   questions: Question[],
   channel_id: string
 ): Promise<void> => {
-  const { data, error } = await client
+  const { data, error } = await supabase
     .from("quizzes")
     .insert({
       questions: questions,
@@ -22,10 +21,9 @@ export const createNewQuiz = async (
 };
 
 export const getCurrentQuizByChannelId = async (
-  client: SupabaseClient,
   channelId: string
 ): Promise<any> => {
-  const { data } = await client
+  const { data } = await supabase
     .from("quizzes")
     .select()
     .eq("channel_id", channelId)
@@ -38,10 +36,9 @@ export const getCurrentQuizByChannelId = async (
 
 // TODO: Add types
 export const getQuizzesByChannelId = async (
-  client: SupabaseClient,
   channel_id: string
 ): Promise<any[]> => {
-  const { data } = await client
+  const { data } = await supabase
     .from("quizzes")
     .select()
     .eq("channel_id", channel_id)
@@ -52,30 +49,27 @@ export const getQuizzesByChannelId = async (
 };
 
 export const updateQuizCurrentQuestion = async (
-  client: SupabaseClient,
   id: string,
   updatedCurrentQuestion: number
 ): Promise<void> => {
-  await client
+  await supabase
     .from("quizzes")
     .update({ current_question: updatedCurrentQuestion })
     .eq("id", id);
 };
 
 export const updateQuizQuestion = async (
-  client: SupabaseClient,
   id: string,
   questions: any[]
 ): Promise<void> => {
-  await client.from("quizzes").update({ questions }).eq("id", id);
+  await supabase.from("quizzes").update({ questions }).eq("id", id);
 };
 
 export const updateQuiz = async (
-  client: SupabaseClient,
   id: string,
   quiz: Partial<Quiz>
 ): Promise<void> => {
-  await client
+  await supabase
     .from("quizzes")
     .update({ ...quiz })
     .eq("id", id);
