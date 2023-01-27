@@ -121,31 +121,24 @@ app.command(triviaSlashCommand, async ({ ack, say, client, payload }) => {
   await apiClient
     .get(`https://opentdb.com/api.php?amount=${numberOfQuestions}`)
     .then(async (res) => {
-      const [firstQuestion] = res.data.results;
+      const questions = res.data.results.map((question: any) => ({
+        ...question,
+        answers: shuffle([
+          question.correctAnswer,
+          ...question.incorrectAnswers,
+        ]),
+      }));
 
-      console.log(res.data.results, "res.data.results");
+      const [firstQuestion] = questions;
 
-      const answers = shuffle([
-        firstQuestion.correctAnswer,
-        ...firstQuestion.incorrectAnswers,
-      ]);
+      const quiz = await createNewQuiz(supabase, questions, payload.channel_id);
 
-      // TODO: actually do something with the answers
-      // shuffle answers for every question??
-      const quiz = await createNewQuiz(
-        supabase,
-        res.data.results,
-        payload.channel_id
-      );
-
-      console.log({ quiz, firstQuestion }, "created new quiz");
       console.log("-------------------------------------------");
-      console.log(res.data.results, "results");
-
-      const numberOfQuestions = res.data.results.length;
+      console.log({ quiz, questions }, "😎 Created new quiz");
+      console.log("-------------------------------------------");
 
       const answersBlock = buildQuestionAnswersBlock(
-        [firstQuestion.correctAnswer, ...firstQuestion.incorrectAnswers],
+        firstQuestion.answers,
         firstQuestion.type
       );
 
@@ -153,7 +146,7 @@ app.command(triviaSlashCommand, async ({ ack, say, client, payload }) => {
         text: firstQuestion.question,
         difficulty: firstQuestion.difficulty,
         questionNumber: 1,
-        totalQuestions: numberOfQuestions,
+        totalQuestions: questions.length,
         category: firstQuestion.category,
         answers: answersBlock,
         userId: payload.user_id,
@@ -183,9 +176,10 @@ app.action(/answer_question/, async ({ body, ack, respond }) => {
   const previousQuestion = questions[currentQuestion - 1];
 
   const answersBlock = buildQuestionAnswersBlock(
-    [previousQuestion.correctAnswer, ...previousQuestion.incorrectAnswers],
+    previousQuestion.answers,
     previousQuestion.type,
-    answerValue
+    answerValue,
+    previousQuestion.correctAnswer
   );
 
   const questionBlock = buildQuestionBlock({
@@ -251,7 +245,7 @@ app.action(/next_question/, async ({ body, ack, say, respond }) => {
 
     // TODO: consider merging question and answer block
     const answersBlock = buildQuestionAnswersBlock(
-      [nextQuestion.correctAnswer, ...nextQuestion.incorrectAnswers],
+      nextQuestion.answers,
       nextQuestion.type
     );
 

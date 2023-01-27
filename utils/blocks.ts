@@ -138,18 +138,20 @@ export const buildQuizCompleteBlock = (score: number, total: number) => ({
 });
 
 // TODO: Refactor into single map
+// TODO: can this be refactored?
 export const buildQuestionAnswersBlock = (
-  answers: string[],
+  answers: any, // TODO: fix type
   answerType: "multiple" | "boolean" = "multiple",
-  answerValue: string | undefined = undefined
+  answerValue: string | undefined = undefined,
+  correctAnswer: string | undefined = undefined
 ) => {
-  const [correctAnswer] = answers;
+  // const [correctAnswer] = answers;
 
   if (answerType == "boolean") {
     return answers
       .sort()
       .reverse()
-      .map((answer, index) => ({
+      .map((answer: any, index: number) => ({
         type: "button",
         text: {
           type: "plain_text",
@@ -168,25 +170,23 @@ export const buildQuestionAnswersBlock = (
       }));
   }
 
-  return shuffle(
-    answers.map((answer, index) => ({
-      type: "button",
-      text: {
-        type: "plain_text",
-        text: decode(
-          !!answerValue
-            ? `${
-                correctAnswer === answer
-                  ? `✅  ${answer}`
-                  : `${answerValue === answer ? `❌` : ""}  ${answer}`
-              }`
-            : answer
-        ),
-        emoji: true,
-      },
+  return answers.map((answer: any, index: number) => ({
+    type: "button",
+    text: {
+      type: "plain_text",
+      text: decode(
+        !!answerValue
+          ? `${
+              correctAnswer === answer
+                ? `✅  ${answer}`
+                : `${answerValue === answer ? `❌` : ""}  ${answer}`
+            }`
+          : answer
+      ),
+      emoji: true,
+    },
 
-      action_id: `answer_question${index}`,
-      value: answer,
-    }))
-  );
+    action_id: `answer_question${index}`,
+    value: answer,
+  }));
 };
