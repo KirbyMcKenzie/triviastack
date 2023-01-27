@@ -1,9 +1,12 @@
-import { KnownEventFromType, SayFn } from "@slack/bolt/dist/types";
+import {
+  AllMiddlewareArgs,
+  SlackEventMiddlewareArgs,
+} from "@slack/bolt/dist/types";
 
-export const handleMessageYoza = async (
-  message: KnownEventFromType<"message">,
-  say: SayFn
-) => {
+export const handleMessageYoza = async ({
+  message,
+  say,
+}: SlackEventMiddlewareArgs<"message"> & AllMiddlewareArgs) => {
   const user = (message as any).user;
   await say(`Yoza <@${user}> 😼`);
 };

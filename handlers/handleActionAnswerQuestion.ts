@@ -4,6 +4,8 @@ import {
   RespondFn,
   SayArguments,
   SlackAction,
+  SlackActionMiddlewareArgs,
+  SlackCommandMiddlewareArgs,
 } from "@slack/bolt";
 import {
   getCurrentQuizByChannelId,
@@ -11,11 +13,11 @@ import {
 } from "services/quizService";
 import { buildQuestionAnswersBlock, buildQuestionBlock } from "utils/blocks";
 
-export const handleActionAnswerQuestion = async (
-  ack: AckFn<void> | AckFn<string | SayArguments> | AckFn<DialogValidation>,
-  body: SlackAction,
-  respond: RespondFn
-) => {
+export const handleActionAnswerQuestion = async ({
+  ack,
+  body,
+  respond,
+}: SlackActionMiddlewareArgs) => {
   await ack();
 
   const answeredBy = (body as any).user;

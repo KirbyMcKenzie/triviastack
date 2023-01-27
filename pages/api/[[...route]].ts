@@ -22,28 +22,28 @@ const app = new App({
   developerMode: false,
 });
 
-app.message("yoza", async ({ message, say }) => {
-  await handleMessageYoza(message, say);
+app.message("yoza", async (listeners) => {
+  await handleMessageYoza(listeners);
 });
 
-app.message("yeet", async ({ say }) => {
-  await handleMessageYeet(say);
+app.message("yeet", async (listeners) => {
+  await handleMessageYeet(listeners);
 });
 
-app.command(triviaSlashCommand, async ({ ack, say, client, payload }) => {
-  await handleCommandQuickQuiz(ack, say, client, payload);
+app.command(triviaSlashCommand, async (listeners) => {
+  await handleCommandQuickQuiz(listeners);
 });
 
-app.action(/answer_question/, async ({ ack, body, respond }) => {
-  await handleActionAnswerQuestion(ack, body, respond);
+app.action(/answer_question/, async (listeners) => {
+  await handleActionAnswerQuestion(listeners);
 });
 
-app.action(/next_question/, async ({ ack, body, say, respond }) => {
-  await handleActionNextQuestion(ack, body, say, respond);
+app.action(/next_question/, async (listeners) => {
+  await handleActionNextQuestion(listeners);
 });
 
-app.action("play_again", async ({ ack, body, say }) => {
-  await handleActionPlayAgain(ack, body, say);
+app.action("play_again", async (listeners) => {
+  await handleActionPlayAgain(listeners);
 });
 
 // this is run just in case

@@ -1,11 +1,4 @@
-import {
-  AckFn,
-  SayArguments,
-  DialogValidation,
-  SlackAction,
-  RespondFn,
-  SayFn,
-} from "@slack/bolt";
+import { SlackActionMiddlewareArgs } from "@slack/bolt";
 import {
   getCurrentQuizByChannelId,
   updateQuiz,
@@ -18,12 +11,12 @@ import {
   buildQuestionBlock,
 } from "utils/blocks";
 
-export const handleActionNextQuestion = async (
-  ack: AckFn<void> | AckFn<string | SayArguments> | AckFn<DialogValidation>,
-  body: SlackAction,
-  say: SayFn,
-  respond: RespondFn
-) => {
+export const handleActionNextQuestion = async ({
+  ack,
+  body,
+  say,
+  respond,
+}: SlackActionMiddlewareArgs) => {
   await ack();
 
   try {

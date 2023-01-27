@@ -4,6 +4,7 @@ import {
   DialogValidation,
   SlackAction,
   SayFn,
+  SlackActionMiddlewareArgs,
 } from "@slack/bolt";
 import apiClient from "services/apiClient";
 import { createNewQuiz } from "services/quizService";
@@ -12,11 +13,11 @@ import { buildQuestionAnswersBlock, buildQuestionBlock } from "utils/blocks";
 
 const DEFAULT_NUM_QUESTIONS = 10;
 
-export const handleActionPlayAgain = async (
-  ack: AckFn<void> | AckFn<string | SayArguments> | AckFn<DialogValidation>,
-  body: SlackAction,
-  say: SayFn
-) => {
+export const handleActionPlayAgain = async ({
+  ack,
+  body,
+  say,
+}: SlackActionMiddlewareArgs) => {
   const channelId = (body as any).channel.id;
   const userId = (body as any).user.id;
 

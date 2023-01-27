@@ -1,4 +1,4 @@
-import { AckFn, SayFn, SlashCommand } from "@slack/bolt/dist/types";
+import { SlackCommandMiddlewareArgs } from "@slack/bolt/dist/types";
 import { WebClient } from "@slack/web-api";
 import apiClient from "services/apiClient";
 import { createNewQuiz } from "services/quizService";
@@ -8,12 +8,16 @@ import { buildQuestionAnswersBlock, buildQuestionBlock } from "utils/blocks";
 const DEFAULT_NUM_QUESTIONS = 10;
 const MAX_QUESTIONS = 50;
 
-export const handleCommandQuickQuiz = async (
-  ack: AckFn<string>,
-  say: SayFn,
-  client: WebClient,
-  payload: SlashCommand
-) => {
+interface CommandMiddlewareArgs extends SlackCommandMiddlewareArgs {
+  client: WebClient;
+}
+
+export const handleCommandQuickQuiz = async ({
+  ack,
+  say,
+  client,
+  payload,
+}: CommandMiddlewareArgs) => {
   await ack();
 
   const numberOfQuestions = payload.text || DEFAULT_NUM_QUESTIONS;
