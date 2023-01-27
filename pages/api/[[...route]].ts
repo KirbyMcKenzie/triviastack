@@ -170,8 +170,6 @@ app.action(/answer_question/, async ({ body, ack, respond }) => {
   const quiz = await getCurrentQuizByChannelId(supabase, channelId);
   const { id, currentQuestion, questions } = quiz;
 
-  console.log(currentQuestion, "currentQuestion");
-
   // TODO: can probably rename to answeredQuestion
   const previousQuestion = questions[currentQuestion - 1];
 
@@ -289,27 +287,32 @@ app.action("play_again", async ({ ack, say, body }) => {
   await apiClient
     .get(`https://opentdb.com/api.php?amount=${DEFAULT_NUM_QUESTIONS}`)
     .then(async (res) => {
-      const [firstQuestion] = res.data.results;
-      const numberOfQuestions = res.data.results.length;
+      const questions = res.data.results.map((question: any) => ({
+        ...question,
+        answers: shuffle([
+          question.correctAnswer,
+          ...question.incorrectAnswers,
+        ]),
+      }));
 
-      // TODO: fix this
-      const answers = shuffle([
-        firstQuestion.correctAnswer,
-        ...firstQuestion.incorrectAnswers,
-      ]);
+      const [firstQuestion] = questions;
 
-      await createNewQuiz(supabase, res.data.results, channelId);
+      const quiz = await createNewQuiz(supabase, questions, channelId);
+
+      console.log("-------------------------------------------");
+      console.log({ quiz, questions }, "😎 Created new quiz");
+      console.log("-------------------------------------------");
 
       const answersBlock = buildQuestionAnswersBlock(
-        [firstQuestion.correctAnswer, ...firstQuestion.incorrectAnswers],
+        firstQuestion.answers,
         firstQuestion.type
       );
 
       const questionBlock = buildQuestionBlock({
         text: firstQuestion.question,
-        questionNumber: 1,
-        totalQuestions: numberOfQuestions,
         difficulty: firstQuestion.difficulty,
+        questionNumber: 1,
+        totalQuestions: questions.length,
         category: firstQuestion.category,
         answers: answersBlock,
       });
