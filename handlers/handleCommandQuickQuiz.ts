@@ -1,8 +1,4 @@
-import {
-  AllMiddlewareArgs,
-  SlackCommandMiddlewareArgs,
-} from "@slack/bolt/dist/types";
-import { WebClient } from "@slack/web-api";
+import { SlackCommandMiddlewareArgs } from "@slack/bolt/dist/types";
 import apiClient from "services/apiClient";
 import { createNewQuiz } from "services/quizService";
 import { shuffle } from "utils/array";
@@ -10,6 +6,7 @@ import {
   buildErrorMaxQuestionsExceeded,
   buildQuestionAnswersBlock,
   buildQuestionBlock,
+  buildQuizNewGameHeader,
 } from "utils/blocks";
 
 const DEFAULT_NUM_QUESTIONS = 10;
@@ -28,20 +25,7 @@ export const handleCommandQuickQuiz = async ({
     return await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
   }
 
-  await say({
-    blocks: [
-      {
-        type: "divider",
-      },
-      {
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: `*<@${payload.user_id}> has kicked off a game of trivia*  📣\n\n`,
-        },
-      },
-    ],
-  });
+  await say(buildQuizNewGameHeader(payload.user_id));
 
   await apiClient
     .get(`https://opentdb.com/api.php?amount=${numberOfQuestions}`)

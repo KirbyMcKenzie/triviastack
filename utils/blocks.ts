@@ -232,3 +232,23 @@ export const buildErrorMaxQuestionsExceeded = (
     },
   ],
 });
+
+export const buildQuizNewGameHeader = (
+  userId: string,
+  isFirstGame = false
+) => ({
+  blocks: [
+    {
+      type: "divider",
+    },
+    {
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: `*<@${userId}> has kicked off ${
+          isFirstGame ? "a" : "another"
+        } game of trivia*  📣\n\n`,
+      },
+    },
+  ],
+});

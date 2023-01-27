@@ -2,7 +2,11 @@ import { SlackActionMiddlewareArgs } from "@slack/bolt";
 import apiClient from "services/apiClient";
 import { createNewQuiz } from "services/quizService";
 import { shuffle } from "utils/array";
-import { buildQuestionAnswersBlock, buildQuestionBlock } from "utils/blocks";
+import {
+  buildQuestionAnswersBlock,
+  buildQuestionBlock,
+  buildQuizNewGameHeader,
+} from "utils/blocks";
 
 const DEFAULT_NUM_QUESTIONS = 10;
 
@@ -12,21 +16,9 @@ export const handleActionPlayAgain = async ({
   say,
 }: SlackActionMiddlewareArgs) => {
   const channelId = body?.channel?.id || "";
-  const userId = body.user.id;
 
   await ack();
-  await say({
-    blocks: [
-      { type: "divider" },
-      {
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: `*<@${userId}> has kicked off another game of trivia*  📣 \n`,
-        },
-      },
-    ],
-  });
+  await say(buildQuizNewGameHeader(body.user.id, false));
 
   await apiClient
     .get(`https://opentdb.com/api.php?amount=${DEFAULT_NUM_QUESTIONS}`)
