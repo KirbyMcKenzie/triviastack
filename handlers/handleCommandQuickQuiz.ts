@@ -6,7 +6,11 @@ import { WebClient } from "@slack/web-api";
 import apiClient from "services/apiClient";
 import { createNewQuiz } from "services/quizService";
 import { shuffle } from "utils/array";
-import { buildQuestionAnswersBlock, buildQuestionBlock } from "utils/blocks";
+import {
+  buildErrorMaxQuestionsExceeded,
+  buildQuestionAnswersBlock,
+  buildQuestionBlock,
+} from "utils/blocks";
 
 const DEFAULT_NUM_QUESTIONS = 10;
 const MAX_QUESTIONS = 50;
@@ -14,52 +18,14 @@ const MAX_QUESTIONS = 50;
 export const handleCommandQuickQuiz = async ({
   ack,
   say,
-  client,
+  respond,
   payload,
-}: SlackCommandMiddlewareArgs & AllMiddlewareArgs) => {
+}: SlackCommandMiddlewareArgs) => {
   await ack();
 
   const numberOfQuestions = payload.text || DEFAULT_NUM_QUESTIONS;
   if (numberOfQuestions > MAX_QUESTIONS) {
-    await client.chat.postEphemeral({
-      token: process.env.SLACK_BOT_TOKEN,
-      channel: payload.channel_id,
-      user: payload.user_id,
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: `😵‍💫  Sorry, can't do that. We only support up to ${MAX_QUESTIONS} questions at this time.`,
-          },
-        },
-        {
-          type: "context",
-          elements: [
-            {
-              type: "mrkdwn",
-              text: `If you're interested in more questions, please get in touch 😼`,
-            },
-          ],
-        },
-        {
-          type: "actions",
-          elements: [
-            {
-              type: "button",
-              text: {
-                type: "plain_text",
-                text: "💡 Give product feedback",
-                emoji: true,
-              },
-              value: "click_me_123",
-              action_id: "actionId-1",
-            },
-          ],
-        },
-      ],
-    });
-    return;
+    return await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
   }
 
   await say({

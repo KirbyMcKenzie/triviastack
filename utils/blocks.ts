@@ -190,3 +190,45 @@ export const buildQuestionAnswersBlock = (
     value: answer,
   }));
 };
+
+export const buildErrorMaxQuestionsExceeded = (
+  maxQuestions: number,
+  isEphemeral = true
+) => ({
+  response_type: isEphemeral
+    ? "ephemeral"
+    : ("in_channel" as "ephemeral" | "in_channel"),
+  blocks: [
+    {
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: `😵‍💫  Sorry, can't do that. We only support up to ${maxQuestions} questions at this time.`,
+      },
+    },
+    {
+      type: "context",
+      elements: [
+        {
+          type: "mrkdwn",
+          text: `If you're interested in more questions, please get in touch 😼`,
+        },
+      ],
+    },
+    {
+      type: "actions",
+      elements: [
+        {
+          type: "button",
+          text: {
+            type: "plain_text",
+            text: "💡 Give product feedback",
+            emoji: true,
+          },
+          value: "click_me_123",
+          action_id: "actionId-1",
+        },
+      ],
+    },
+  ],
+});
