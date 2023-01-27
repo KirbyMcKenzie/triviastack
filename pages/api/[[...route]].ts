@@ -1,12 +1,14 @@
 import { App } from "@slack/bolt";
 import { NextApiRequest, NextApiResponse } from "next";
 import NextConnectReceiver from "utils/NextConnectReceiver";
-import { handleMessageYoza } from "handlers/handleMessageYoza";
-import { handleMessageYeet } from "handlers/handleMessageYeet";
-import { handleCommandQuickQuiz } from "handlers/handleCommandQuickQuiz";
-import { handleActionAnswerQuestion } from "handlers/handleActionAnswerQuestion";
-import { handleActionNextQuestion } from "handlers/handleActionNextQuestion";
-import { handleActionPlayAgain } from "handlers/handleActionPlayAgain";
+import {
+  handleActionAnswerQuestion,
+  handleActionNextQuestion,
+  handleActionPlayAgain,
+  handleCommandQuickQuiz,
+  handleMessageYeet,
+  handleMessageYoza,
+} from "handlers";
 
 const triviaSlashCommand =
   process.env.NODE_ENV === "production" ? "/trivia" : "/dev-trivia";
