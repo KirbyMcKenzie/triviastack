@@ -3,6 +3,7 @@ import {
   getCurrentQuizByChannelId,
   updateQuizQuestion,
 } from "services/quizService";
+import { Question } from "types/quiz";
 import { buildQuestionBlock } from "utils/blocks";
 
 export const handleActionAnswerQuestion = async ({
@@ -31,7 +32,6 @@ export const handleActionAnswerQuestion = async ({
 
   const isCorrect = answeredQuestion.correctAnswer === answerValue;
 
-  //@ts-ignore
   const updatedQuestions = questions.map((q: Question, index: number) =>
     index + 1 === currentQuestion ? { ...q, isCorrect } : q
   );

@@ -35,8 +35,7 @@ export const handleActionNextQuestion = async ({
       await updateQuiz(id, { is_active: false });
 
       const score = updatedQuestions.filter(
-        //@ts-ignore
-        (q: Question) => q.isCorrect
+        ({ isCorrect }: Question) => isCorrect
       ).length;
 
       const quizCompleteBlock = buildQuizCompleteBlock(score, questions.length);

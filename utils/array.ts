@@ -1,5 +1,4 @@
-// TODO: consider a generic?
-export const shuffle = (array: any[]) => {
+export const shuffle = <T>(array: T[]) => {
   let currentIndex = array.length,
     randomIndex;
 

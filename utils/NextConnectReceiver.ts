@@ -69,15 +69,21 @@ const httpsOptionKeys = [
 const missingServerErrorDescription =
   "The receiver cannot be started because private state was mutated. Please report this to the maintainers.";
 
-export const respondToSslCheck: RequestHandler<NextApiRequest, NextApiResponse> = (req, res, next) => {
+export const respondToSslCheck: RequestHandler<
+  NextApiRequest,
+  NextApiResponse
+> = (req, res, next) => {
   if (req.body && req.body.ssl_check) {
-    res.send('');
+    res.send("");
     return;
   }
   next();
 };
 
-export const respondToUrlVerification: RequestHandler<NextApiRequest, NextApiResponse> = (req, res, next) => {
+export const respondToUrlVerification: RequestHandler<
+  NextApiRequest,
+  NextApiResponse
+> = (req, res, next) => {
   if (req.body && req.body.type && req.body.type === "url_verification") {
     res.json({ challenge: req.body.challenge });
     return;
@@ -85,8 +91,6 @@ export const respondToUrlVerification: RequestHandler<NextApiRequest, NextApiRes
   next();
 };
 
-// TODO: we throw away the key names for endpoints, so maybe we should use this interface. is it better for migrations?
-// if that's the reason, let's document that with a comment.
 export interface NextConnectReceiverOptions {
   signingSecret: string | (() => PromiseLike<string>);
   logger?: Logger;
@@ -148,7 +152,11 @@ export default class NextConnectReceiver implements Receiver {
     signingSecret = "",
     logger = undefined,
     logLevel = LogLevel.INFO,
-    endpoints = { events: "/api/slack/events", commands: "/api/slack/commands", actions: "/api/slack/actions" },
+    endpoints = {
+      events: "/api/slack/events",
+      commands: "/api/slack/commands",
+      actions: "/api/slack/actions",
+    },
     processBeforeResponse = false,
     signatureVerification = true,
     clientId = undefined,
@@ -171,11 +179,12 @@ export default class NextConnectReceiver implements Receiver {
     const bodyParser = this.signatureVerification
       ? buildVerificationBodyParserMiddleware(this.logger, signingSecret)
       : buildBodyParserMiddleware(this.logger);
-    const expressMiddleware: RequestHandler<NextApiRequest, NextApiResponse>[] = [
-      respondToSslCheck,
-      respondToUrlVerification,
-      this.requestHandler.bind(this),
-    ];
+    const expressMiddleware: RequestHandler<NextApiRequest, NextApiResponse>[] =
+      [
+        respondToSslCheck,
+        respondToUrlVerification,
+        this.requestHandler.bind(this),
+      ];
     this.processBeforeResponse = processBeforeResponse;
 
     const endpointList =
@@ -228,52 +237,65 @@ export default class NextConnectReceiver implements Receiver {
           ? "/api/slack/oauth_redirect"
           : installerOptions.redirectUriPath;
       const { callbackOptions, stateVerification } = installerOptions;
-      this.router.use(redirectUriPath, async (req: NextApiRequest, res: NextApiResponse) => {
-        if (stateVerification === false) {
-          // when stateVerification is disabled pass install options directly to handler
-          // since they won't be encoded in the state param of the generated url
-          await this.installer!.handleCallback(
-            req,
-            res,
-            callbackOptions,
-            installUrlOptions
-          );
-        } else {
-          await this.installer!.handleCallback(req, res, callbackOptions);
+      this.router.use(
+        redirectUriPath,
+        async (req: NextApiRequest, res: NextApiResponse) => {
+          if (stateVerification === false) {
+            // when stateVerification is disabled pass install options directly to handler
+            // since they won't be encoded in the state param of the generated url
+            await this.installer!.handleCallback(
+              req,
+              res,
+              callbackOptions,
+              installUrlOptions
+            );
+          } else {
+            await this.installer!.handleCallback(req, res, callbackOptions);
+          }
         }
-      });
+      );
 
       const installPath =
         installerOptions.installPath === undefined
           ? "/api/slack/install"
           : installerOptions.installPath;
-      this.router.get(installPath, async (_req: NextApiRequest, res: NextApiResponse, next: NextHandler) => {
-        try {
-          const url = await this.installer!.generateInstallUrl(
-            installUrlOptions,
-            stateVerification
-          );
-          if (installerOptions.directInstall) {
-            // If a Slack app sets "Direct Install URL" in the Slack app configuration,
-            // the installation flow of the app should start with the Slack authorize URL.
-            // See https://api.slack.com/start/distributing/directory#direct_install for more details.
-            res.redirect(url);
-          } else {
-            // The installation starts from a landing page served by this app.
-            const renderHtml =
-              installerOptions.renderHtmlForInstallPath !== undefined
-                ? installerOptions.renderHtmlForInstallPath
-                : defaultRenderHtmlForInstallPath;
-            res.send(renderHtml(url));
+      this.router.get(
+        installPath,
+        async (
+          _req: NextApiRequest,
+          res: NextApiResponse,
+          next: NextHandler
+        ) => {
+          try {
+            const url = await this.installer!.generateInstallUrl(
+              installUrlOptions,
+              stateVerification
+            );
+            if (installerOptions.directInstall) {
+              // If a Slack app sets "Direct Install URL" in the Slack app configuration,
+              // the installation flow of the app should start with the Slack authorize URL.
+              // See https://api.slack.com/start/distributing/directory#direct_install for more details.
+              res.redirect(url);
+            } else {
+              // The installation starts from a landing page served by this app.
+              const renderHtml =
+                installerOptions.renderHtmlForInstallPath !== undefined
+                  ? installerOptions.renderHtmlForInstallPath
+                  : defaultRenderHtmlForInstallPath;
+              res.send(renderHtml(url));
+            }
+          } catch (error) {
+            next(error);
           }
-        } catch (error) {
-          next(error);
         }
-      });
+      );
     }
   }
 
-  private async requestHandler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+  private async requestHandler(
+    req: NextApiRequest,
+    res: NextApiResponse
+  ): Promise<void> {
     let isAcknowledged = false;
     setTimeout(() => {
       if (!isAcknowledged) {
@@ -287,7 +309,7 @@ export default class NextConnectReceiver implements Receiver {
 
     // Handle the actions
     if (req.body.payload) {
-      req.body = JSON.parse(req.body.payload)
+      req.body = JSON.parse(req.body.payload);
     }
 
     const event: ReceiverEvent = {
@@ -338,12 +360,12 @@ export default class NextConnectReceiver implements Receiver {
         const errorCode = (err as CodedError).code;
         if (errorCode === ErrorCode.AuthorizationError) {
           // authorize function threw an exception, which means there is no valid installation data
-          res.status(401).send('');
+          res.status(401).send("");
           isAcknowledged = true;
           return;
         }
       }
-      res.status(500).send('');
+      res.status(500).send("");
       throw err;
     }
   }
@@ -406,11 +428,11 @@ function buildVerificationBodyParserMiddleware(
       if (error) {
         if (error instanceof ReceiverAuthenticityError) {
           logError(logger, "Request verification failed", error);
-          return res.status(401).send('');
+          return res.status(401).send("");
         }
 
         logError(logger, "Parsing request body failed", error);
-        return res.status(400).send('');
+        return res.status(400).send("");
       }
     }
 
@@ -489,7 +511,9 @@ export function verifySignatureAndParseBody(
   return parseRequestBody(body, contentType);
 }
 
-function buildBodyParserMiddleware(logger: Logger): RequestHandler<NextApiRequest, NextApiResponse> {
+function buildBodyParserMiddleware(
+  logger: Logger
+): RequestHandler<NextApiRequest, NextApiResponse> {
   return async (req, res, next) => {
     let stringBody: string;
     // On some environments like GCP (Google Cloud Platform),
@@ -506,7 +530,7 @@ function buildBodyParserMiddleware(logger: Logger): RequestHandler<NextApiReques
     } catch (error) {
       if (error) {
         logError(logger, "Parsing request body failed", error);
-        return res.status(400).send('');
+        return res.status(400).send("");
       }
     }
     return next();
