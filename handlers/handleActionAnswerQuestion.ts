@@ -3,7 +3,7 @@ import {
   getCurrentQuizByChannelId,
   updateQuizQuestion,
 } from "services/quizService";
-import { buildQuestionAnswersBlock, buildQuestionBlock } from "utils/blocks";
+import { buildQuestionBlock } from "utils/blocks";
 
 export const handleActionAnswerQuestion = async ({
   ack,
@@ -22,22 +22,11 @@ export const handleActionAnswerQuestion = async ({
   const answeredQuestion = questions[currentQuestion - 1];
 
   const questionBlock = buildQuestionBlock({
-    text: answeredQuestion.question,
-    questionNumber: currentQuestion,
+    question: answeredQuestion,
+    currentQuestion: currentQuestion,
     totalQuestions: questions.length,
-    difficulty: answeredQuestion.difficulty,
-    category: answeredQuestion.category,
-    answers: buildQuestionAnswersBlock(
-      answeredQuestion.answers,
-      answeredQuestion.type,
-      answerValue,
-      answeredQuestion.correctAnswer
-    ),
     answeredValue: answerValue,
     userId: answeredBy.id,
-    correctAnswer: answeredQuestion.correctAnswer,
-    isCorrect: answeredQuestion.correctAnswer === answerValue,
-    isFinalQuestion: currentQuestion === questions.length,
   });
 
   const isCorrect = answeredQuestion.correctAnswer === answerValue;

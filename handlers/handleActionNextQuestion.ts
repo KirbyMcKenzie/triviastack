@@ -5,11 +5,7 @@ import {
   updateQuizCurrentQuestion,
 } from "services/quizService";
 import { Question } from "types/quiz";
-import {
-  buildQuizCompleteBlock,
-  buildQuestionAnswersBlock,
-  buildQuestionBlock,
-} from "utils/blocks";
+import { buildQuizCompleteBlock, buildQuestionBlock } from "utils/blocks";
 
 export const handleActionNextQuestion = async ({
   ack,
@@ -40,7 +36,7 @@ export const handleActionNextQuestion = async ({
 
       const score = updatedQuestions.filter(
         //@ts-ignore
-        (q: Question) => q.is_correct
+        (q: Question) => q.isCorrect
       ).length;
 
       const quizCompleteBlock = buildQuizCompleteBlock(score, questions.length);
@@ -51,15 +47,10 @@ export const handleActionNextQuestion = async ({
     await updateQuizCurrentQuestion(id, currentQuestion + 1);
 
     const questionBlock = buildQuestionBlock({
-      text: nextQuestion.question,
-      questionNumber: currentQuestion + 1,
+      question: nextQuestion,
+      currentQuestion: currentQuestion + 1,
       totalQuestions: questions.length,
-      difficulty: nextQuestion.difficulty,
-      category: nextQuestion.category,
-      answers: buildQuestionAnswersBlock(
-        nextQuestion.answers,
-        nextQuestion.type
-      ),
+      answeredValue: answerValue,
     });
 
     await respond(questionBlock);
