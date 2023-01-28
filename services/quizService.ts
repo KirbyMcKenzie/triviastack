@@ -1,8 +1,10 @@
 import { Question, Quiz } from "../types/quiz";
 import { camelizeKeys } from "humps";
 import { supabase } from "./supabaseClient";
+import apiClient from "./apiClient";
+import { shuffle } from "utils/array";
 
-// TODO: import client here instead
+// TODO: add a log here
 export const createNewQuiz = async (
   questions: Question[],
   channel_id: string
@@ -73,4 +75,16 @@ export const updateQuiz = async (
     .from("quizzes")
     .update({ ...quiz })
     .eq("id", id);
+};
+
+export const fetchQuizQuestions = async (
+  numberOfQuestions = 10
+): Promise<Question[]> => {
+  const data = await apiClient
+    .get(`https://opentdb.com/api.php?amount=${numberOfQuestions}`)
+    .then((res) => res.data.results);
+  return data.map((question: Question) => ({
+    ...question,
+    answers: shuffle([question.correctAnswer, ...question.incorrectAnswers]),
+  }));
 };
