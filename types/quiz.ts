@@ -11,10 +11,11 @@ export interface Quiz {
 
 export interface Question {
   category: string;
-  type: string;
+  type: "multiple" | "boolean";
   difficulty: string;
   question: string;
   correctAnswer: string;
   incorrectAnswers: string[];
+  answers: string[];
   isCorrect?: boolean;
 }

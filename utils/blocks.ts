@@ -1,35 +1,29 @@
-import { shuffle } from "./array";
-import { titleCase } from "./string";
 import { decode } from "html-entities";
+import { Question } from "types/quiz";
+import { titleCase } from "./string";
 
-interface Question {
-  text: string;
-  questionNumber: string | number;
-  totalQuestions: string | number;
-  category: string;
-  difficulty: string;
-  answers: string[];
-  userId?: string;
+export interface QuestionBlockProps {
+  question: Question;
+  currentQuestion: number;
+  totalQuestions: number;
   answeredValue?: string;
-  correctAnswer?: string;
-  isCorrect?: boolean;
-  isFinalQuestion?: boolean;
+  userId?: string;
 }
 
-// TODO: refactor
+export interface QuestionAnswerBlockProps {
+  answers: string[];
+  type: "multiple" | "boolean";
+  answerValue: string | undefined;
+  correctAnswer: string | undefined;
+}
+
 export const buildQuestionBlock = ({
-  text,
-  questionNumber,
+  question,
+  currentQuestion,
   totalQuestions,
-  difficulty,
-  category,
-  answers,
-  correctAnswer,
   answeredValue,
-  userId = undefined,
-  isCorrect = false,
-  isFinalQuestion = false,
-}: Question) => ({
+  userId,
+}: QuestionBlockProps) => ({
   blocks: [
     {
       type: "section",
@@ -39,11 +33,11 @@ export const buildQuestionBlock = ({
           // TODO: tidy this up
           totalQuestions > 1
             ? `*${
-                questionNumber === totalQuestions
+                currentQuestion === totalQuestions
                   ? ":rotating_light: Final Question"
-                  : `Question ${questionNumber}/${totalQuestions}`
-              }* - ${decode(text)}`
-            : decode(text),
+                  : `Question ${currentQuestion}/${totalQuestions}`
+              }* - ${decode(question.question)}`
+            : decode(question.question),
       },
     },
     {
@@ -51,15 +45,20 @@ export const buildQuestionBlock = ({
       elements: [
         {
           type: "mrkdwn",
-          text: `*Category:* ${category}  *·*  *Difficulty:* ${titleCase(
-            difficulty
-          )}`,
+          text: `*Category:* ${
+            question.category
+          }  *·*  *Difficulty:* ${titleCase(question.difficulty)}`,
         },
       ],
     },
     {
       type: "actions",
-      elements: answers,
+      elements: buildQuestionAnswersBlock({
+        type: question.type,
+        answers: question.answers,
+        answerValue: answeredValue,
+        correctAnswer: question.correctAnswer,
+      }),
     },
     ...(answeredValue
       ? [
@@ -69,7 +68,9 @@ export const buildQuestionBlock = ({
               {
                 type: "mrkdwn",
                 text: `<@${userId}> answered with *${decode(answeredValue)}*\n${
-                  !isCorrect ? `Correct answer: *${decode(correctAnswer)}*` : ""
+                  !question.isCorrect
+                    ? `Correct answer: *${decode(question.correctAnswer)}*`
+                    : ""
                 }`,
               },
             ],
@@ -82,7 +83,10 @@ export const buildQuestionBlock = ({
                 style: "primary",
                 text: {
                   type: "plain_text",
-                  text: isFinalQuestion ? "Finish Quiz" : "Next Question",
+                  text:
+                    currentQuestion === totalQuestions
+                      ? "Finish Quiz"
+                      : "Next Question",
                   emoji: true,
                 },
                 action_id: "next_question",
@@ -93,6 +97,56 @@ export const buildQuestionBlock = ({
       : []),
   ],
 });
+
+export const buildQuestionAnswersBlock = ({
+  answers = [],
+  type = "multiple",
+  answerValue,
+  correctAnswer,
+}: QuestionAnswerBlockProps) => {
+  if (type == "boolean") {
+    return answers
+      .sort()
+      .reverse()
+      .map((answer, index) => ({
+        type: "button",
+        text: {
+          type: "plain_text",
+          text: decode(
+            answerValue === answer
+              ? `${
+                  correctAnswer === answer ? `✅  ${answer}` : `❌  ${answer}`
+                }`
+              : answer
+          ),
+          emoji: true,
+        },
+
+        action_id: `answer_question${index}`,
+        value: answer,
+      }));
+  }
+
+  return answers.map((answer, index) => ({
+    type: "button",
+    text: {
+      type: "plain_text",
+      text: decode(
+        !!answerValue
+          ? `${
+              correctAnswer === answer
+                ? `✅  ${answer}`
+                : `${answerValue === answer ? `❌` : ""}  ${answer}`
+            }`
+          : answer
+      ),
+      emoji: true,
+    },
+
+    action_id: `answer_question${index}`,
+    value: answer,
+  }));
+};
 
 export const buildQuizCompleteBlock = (score: number, total: number) => ({
   blocks: [
@@ -136,60 +190,6 @@ export const buildQuizCompleteBlock = (score: number, total: number) => ({
     },
   ],
 });
-
-// TODO: Refactor into single map
-// TODO: can this be refactored?
-export const buildQuestionAnswersBlock = (
-  answers: any, // TODO: fix type
-  answerType: "multiple" | "boolean" = "multiple",
-  answerValue: string | undefined = undefined,
-  correctAnswer: string | undefined = undefined
-) => {
-  // const [correctAnswer] = answers;
-
-  if (answerType == "boolean") {
-    return answers
-      .sort()
-      .reverse()
-      .map((answer: any, index: number) => ({
-        type: "button",
-        text: {
-          type: "plain_text",
-          text: decode(
-            answerValue === answer
-              ? `${
-                  correctAnswer === answer ? `✅  ${answer}` : `❌  ${answer}`
-                }`
-              : answer
-          ),
-          emoji: true,
-        },
-
-        action_id: `answer_question${index}`,
-        value: answer,
-      }));
-  }
-
-  return answers.map((answer: any, index: number) => ({
-    type: "button",
-    text: {
-      type: "plain_text",
-      text: decode(
-        !!answerValue
-          ? `${
-              correctAnswer === answer
-                ? `✅  ${answer}`
-                : `${answerValue === answer ? `❌` : ""}  ${answer}`
-            }`
-          : answer
-      ),
-      emoji: true,
-    },
-
-    action_id: `answer_question${index}`,
-    value: answer,
-  }));
-};
 
 export const buildErrorMaxQuestionsExceeded = (
   maxQuestions: number,
