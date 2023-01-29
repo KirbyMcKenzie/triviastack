@@ -1,5 +1,6 @@
 import { decode } from "html-entities";
 import { Question } from "types/quiz";
+import { getGameOverEmoji, getGameOverResponse } from "./quiz";
 import { titleCase } from "./string";
 
 export interface QuestionBlockProps {
@@ -157,7 +158,10 @@ export const buildQuizCompleteBlock = (score: number, total: number) => ({
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `🎉  *Quiz Complete!*\n\nYour Score: *${score}/${total}* 👏\nNot a bad effort 🤷‍♂️`,
+        text: `🎉  *Quiz Complete!*\n\nYour Score: *${score}/${total}* ${getGameOverEmoji(
+          score,
+          total
+        )}\n${getGameOverResponse(score, total)}`,
       },
     },
     {
