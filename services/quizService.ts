@@ -4,11 +4,13 @@ import { supabase } from "./supabaseClient";
 import apiClient from "./apiClient";
 import { shuffle } from "utils/array";
 
-// TODO: add a log here
+// TODO: Type this file properly
+// TODO: Add logging & error handling
+
 export const createNewQuiz = async (
   questions: Question[],
   channel_id: string
-): Promise<void> => {
+): Promise<Quiz> => {
   const { data, error } = await supabase
     .from("quizzes")
     .insert({
@@ -18,13 +20,12 @@ export const createNewQuiz = async (
     })
     .select();
   error && console.log(error, "[SQL ERROR]");
-  //@ts-ignore
-  return camelizeKeys(data);
+  return camelizeKeys(data) as unknown as Quiz;
 };
 
 export const getCurrentQuizByChannelId = async (
   channelId: string
-): Promise<any> => {
+): Promise<Quiz> => {
   const { data } = await supabase
     .from("quizzes")
     .select()
@@ -33,21 +34,19 @@ export const getCurrentQuizByChannelId = async (
     .order("created_at", { ascending: false })
     .limit(1);
   //@ts-ignore
-  return camelizeKeys(data[0]);
+  return camelizeKeys(data[0]) as unknown as Quiz;
 };
 
-// TODO: Add types
 export const getQuizzesByChannelId = async (
   channel_id: string
-): Promise<any[]> => {
+): Promise<Quiz[]> => {
   const { data } = await supabase
     .from("quizzes")
     .select()
     .eq("channel_id", channel_id)
     .eq("is_active", true);
 
-  //@ts-ignore
-  return camelizeKeys(data);
+  return camelizeKeys(data) as unknown as Quiz[];
 };
 
 export const updateQuizCurrentQuestion = async (
@@ -62,7 +61,7 @@ export const updateQuizCurrentQuestion = async (
 
 export const updateQuizQuestion = async (
   id: string,
-  questions: any[]
+  questions: Question[]
 ): Promise<void> => {
   await supabase.from("quizzes").update({ questions }).eq("id", id);
 };

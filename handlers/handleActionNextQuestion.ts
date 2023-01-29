@@ -24,7 +24,7 @@ export const handleActionNextQuestion = async ({
 
     const nextQuestion = questions[currentQuestion];
     const previousQuestion = questions[currentQuestion - 1];
-    const isCorrect = previousQuestion.correct_answer === answerValue;
+    const isCorrect = previousQuestion.correctAnswer === answerValue;
 
     const updatedQuestions = questions.map((q: Question, index: number) =>
       index + 1 === currentQuestion ? { ...q, is_correct: isCorrect } : q
