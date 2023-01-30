@@ -15,50 +15,41 @@ export const handleActionNextQuestion = async ({
 }: SlackActionMiddlewareArgs) => {
   await ack();
 
-  try {
-    const answerValue = (body as any).actions[0].value;
-    const channelId = body?.channel?.id || "";
+  const answerValue = (body as any).actions[0].value;
+  const channelId = body?.channel?.id || "";
 
-    const quiz = await getCurrentQuizByChannelId(channelId);
-    const { id, currentQuestion, questions } = quiz;
+  const quiz = await getCurrentQuizByChannelId(channelId);
+  const { id, currentQuestion, questions } = quiz;
 
-    const nextQuestion = questions[currentQuestion];
-    const previousQuestion = questions[currentQuestion - 1];
-    const isCorrect = previousQuestion.correctAnswer === answerValue;
+  const nextQuestion = questions[currentQuestion];
+  const previousQuestion = questions[currentQuestion - 1];
+  const isCorrect = previousQuestion.correctAnswer === answerValue;
 
-    const updatedQuestions = questions.map((q: Question, index: number) =>
-      index + 1 === currentQuestion ? { ...q, is_correct: isCorrect } : q
-    );
+  const updatedQuestions = questions.map((q: Question, index: number) =>
+    index + 1 === currentQuestion ? { ...q, is_correct: isCorrect } : q
+  );
 
-    if (currentQuestion === questions.length) {
-      //@ts-ignore
-      await updateQuiz(id, { is_active: false });
+  if (currentQuestion === questions.length) {
+    //@ts-ignore
+    await updateQuiz(id, { is_active: false });
 
-      const score = updatedQuestions.filter(
-        ({ isCorrect }: Question) => isCorrect
-      ).length;
+    const score = updatedQuestions.filter(
+      ({ isCorrect }: Question) => isCorrect
+    ).length;
 
-      const quizCompleteBlock = buildQuizCompleteBlock(score, questions.length);
-      await respond(quizCompleteBlock);
-      return;
-    }
-
-    await updateQuizCurrentQuestion(id, currentQuestion + 1);
-
-    const questionBlock = buildQuestionBlock({
-      question: nextQuestion,
-      currentQuestion: currentQuestion + 1,
-      totalQuestions: questions.length,
-      answeredValue: answerValue,
-    });
-
-    await respond(questionBlock);
-  } catch (error) {
-    // TODO: Add these as context blocks potentially??
-    await say(
-      ":confused:  There was an issue processing that click. Let me fetch the logs.."
-    );
-    console.log(error);
-    await say(`:bug:  ${(error as string).toString()}`);
+    const quizCompleteBlock = buildQuizCompleteBlock(score, questions.length);
+    await respond(quizCompleteBlock);
+    return;
   }
+
+  await updateQuizCurrentQuestion(id, currentQuestion + 1);
+
+  const questionBlock = buildQuestionBlock({
+    question: nextQuestion,
+    currentQuestion: currentQuestion + 1,
+    totalQuestions: questions.length,
+    answeredValue: answerValue,
+  });
+
+  await respond(questionBlock);
 };

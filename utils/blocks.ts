@@ -10,6 +10,7 @@ export interface QuestionBlockProps {
   answeredValue?: string;
   userId?: string;
   disableButtons?: boolean;
+  hasError?: boolean;
 }
 
 export interface QuestionAnswerBlockProps {
@@ -27,6 +28,7 @@ export const buildQuestionBlock = ({
   answeredValue,
   disableButtons,
   userId,
+  hasError,
 }: QuestionBlockProps) => ({
   blocks: [
     {
@@ -98,6 +100,26 @@ export const buildQuestionBlock = ({
               },
             ],
           },
+          ...(hasError
+            ? [
+                {
+                  type: "divider",
+                },
+              ]
+            : []),
+          ...(hasError
+            ? [
+                {
+                  type: "context",
+                  elements: [
+                    {
+                      type: "mrkdwn",
+                      text: "😵‍💫 There was an issue processing that click. Please try again, and <https://triviabot.app/support|contact support> if the issue persists.",
+                    },
+                  ],
+                },
+              ]
+            : []),
         ]
       : []),
   ],
