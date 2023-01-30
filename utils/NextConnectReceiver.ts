@@ -15,7 +15,6 @@ import App from "@slack/bolt/dist/App";
 import {
   ReceiverAuthenticityError,
   ReceiverMultipleAckError,
-  ReceiverInconsistentStateError,
   ErrorCode,
   CodedError,
 } from "@slack/bolt/dist/errors";
