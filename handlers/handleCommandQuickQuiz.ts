@@ -22,9 +22,9 @@ export const handleCommandQuickQuiz = async ({
     return await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
   }
 
-  await say(
-    buildQuizNewGameHeader(payload.user_id, true, numberOfQuestions === 50)
-  );
+  // await say(
+  //   buildQuizNewGameHeader(payload.user_id, true, numberOfQuestions === 50)
+  // );
 
   const questions = await fetchQuizQuestions(numberOfQuestions);
   await createNewQuiz(questions, payload.channel_id);
