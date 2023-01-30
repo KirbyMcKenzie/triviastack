@@ -1,6 +1,6 @@
 import { App } from "@slack/bolt";
 import { NextApiRequest, NextApiResponse } from "next";
-import NextConnectReceiver from "utils/nextConnectReceiver";
+import NextConnectReceiver from "utils/NextConnectReceiver";
 import {
   handleActionAnswerQuestion,
   handleActionNextQuestion,
