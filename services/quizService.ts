@@ -24,13 +24,14 @@ export const createNewQuiz = async (
 };
 
 export const getCurrentQuizByChannelId = async (
-  channelId: string
+  channelId: string,
+  isActive: boolean = true
 ): Promise<Quiz> => {
   const { data } = await supabase
     .from("quizzes")
     .select()
     .eq("channel_id", channelId)
-    .eq("is_active", true)
+    .eq("is_active", isActive)
     .order("created_at", { ascending: false })
     .limit(1);
   //@ts-ignore

@@ -17,13 +17,14 @@ export const handleCommandQuickQuiz = async ({
 }: SlackCommandMiddlewareArgs) => {
   await ack();
 
-  // TODO: add case for non numbers
   const numberOfQuestions = parseInt(payload.text) || DEFAULT_NUM_QUESTIONS;
   if (numberOfQuestions > MAX_QUESTIONS) {
     return await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
   }
 
-  await say(buildQuizNewGameHeader(payload.user_id));
+  await say(
+    buildQuizNewGameHeader(payload.user_id, true, numberOfQuestions === 50)
+  );
 
   const questions = await fetchQuizQuestions(numberOfQuestions);
   await createNewQuiz(questions, payload.channel_id);

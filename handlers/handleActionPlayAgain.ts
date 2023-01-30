@@ -1,5 +1,9 @@
 import { SlackActionMiddlewareArgs } from "@slack/bolt";
-import { createNewQuiz, fetchQuizQuestions } from "services/quizService";
+import {
+  createNewQuiz,
+  fetchQuizQuestions,
+  getCurrentQuizByChannelId,
+} from "services/quizService";
 import { buildQuestionBlock, buildQuizNewGameHeader } from "utils/blocks";
 
 export const handleActionPlayAgain = async ({
@@ -12,7 +16,12 @@ export const handleActionPlayAgain = async ({
   await ack();
   await say(buildQuizNewGameHeader(body.user.id, false));
 
-  const questions = await fetchQuizQuestions();
+  const { questions: previousQuestions } = await getCurrentQuizByChannelId(
+    channelId,
+    false
+  );
+
+  const questions = await fetchQuizQuestions(previousQuestions.length);
   await createNewQuiz(questions, channelId);
 
   const questionBlock = buildQuestionBlock({
