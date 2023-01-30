@@ -231,11 +231,21 @@ export const buildErrorMaxQuestionsExceeded = (
           type: "button",
           text: {
             type: "plain_text",
+            text: "Dismiss",
+            emoji: true,
+          },
+          value: "dismiss",
+          action_id: "dismiss",
+        },
+        {
+          type: "button",
+          text: {
+            type: "plain_text",
             text: "💡 Give product feedback",
             emoji: true,
           },
           value: "click_me_123",
-          action_id: "actionId-1",
+          action_id: "actionId-2",
         },
       ],
     },

@@ -10,6 +10,7 @@ import {
   handleMessageYoza,
 } from "handlers";
 import { handleActionNoop } from "handlers/handleActionNoop";
+import { handleActionDismiss } from "handlers/handleActionDismiss";
 
 const triviaSlashCommand =
   process.env.NODE_ENV === "production" ? "/trivia" : "/dev-trivia";
@@ -47,6 +48,10 @@ app.action(/next_question/, async (listeners) => {
 
 app.action(/play_again/, async (listeners) => {
   await handleActionPlayAgain(listeners);
+});
+
+app.action(/dismiss/, async (listeners) => {
+  await handleActionDismiss(listeners);
 });
 
 app.action(/noop/, async (listeners) => {
