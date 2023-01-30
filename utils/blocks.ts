@@ -9,6 +9,7 @@ export interface QuestionBlockProps {
   totalQuestions: number;
   answeredValue?: string;
   userId?: string;
+  disableButtons?: boolean;
 }
 
 export interface QuestionAnswerBlockProps {
@@ -16,6 +17,7 @@ export interface QuestionAnswerBlockProps {
   type: "multiple" | "boolean";
   answerValue: string | undefined;
   correctAnswer: string | undefined;
+  disableButtons?: boolean;
 }
 
 export const buildQuestionBlock = ({
@@ -23,6 +25,7 @@ export const buildQuestionBlock = ({
   currentQuestion,
   totalQuestions,
   answeredValue,
+  disableButtons,
   userId,
 }: QuestionBlockProps) => ({
   blocks: [
@@ -59,6 +62,7 @@ export const buildQuestionBlock = ({
         answers: question.answers,
         answerValue: answeredValue,
         correctAnswer: question.correctAnswer,
+        disableButtons,
       }),
     },
     ...(answeredValue
@@ -104,6 +108,7 @@ export const buildQuestionAnswersBlock = ({
   type = "multiple",
   answerValue,
   correctAnswer,
+  disableButtons = false,
 }: QuestionAnswerBlockProps) => {
   if (type == "boolean") {
     return answers
@@ -123,7 +128,7 @@ export const buildQuestionAnswersBlock = ({
           emoji: true,
         },
 
-        action_id: `answer_question${index}`,
+        action_id: disableButtons ? `noop${index}` : `answer_question${index}`,
         value: answer,
       }));
   }
@@ -144,7 +149,7 @@ export const buildQuestionAnswersBlock = ({
       emoji: true,
     },
 
-    action_id: `answer_question${index}`,
+    action_id: disableButtons ? `noop${index}` : `answer_question${index}`,
     value: answer,
   }));
 };
@@ -239,7 +244,8 @@ export const buildErrorMaxQuestionsExceeded = (
 
 export const buildQuizNewGameHeader = (
   userId: string,
-  isFirstGame = false
+  isFirstGame = false,
+  isSuperQuiz = false
 ) => ({
   blocks: [
     {
@@ -247,12 +253,20 @@ export const buildQuizNewGameHeader = (
     },
     {
       type: "section",
-      text: {
-        type: "mrkdwn",
-        text: `*<@${userId}> has kicked off ${
-          isFirstGame ? "a" : "another"
-        } game of trivia*  📣\n\n`,
-      },
+      text: isSuperQuiz
+        ? {
+            // TODO: jazz this up a bit
+            type: "mrkdwn",
+            text: `🚨 *<@${userId}> has kicked off ${
+              isFirstGame ? "a" : "another"
+            } game of SUPER TRIVIA* 🚨\n\n`,
+          }
+        : {
+            type: "mrkdwn",
+            text: `*<@${userId}> has kicked off ${
+              isFirstGame ? "a" : "another"
+            } game of trivia*  📣\n\n`,
+          },
     },
   ],
 });

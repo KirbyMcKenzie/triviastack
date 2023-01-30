@@ -28,6 +28,7 @@ export const handleActionAnswerQuestion = async ({
     totalQuestions: questions.length,
     answeredValue: answerValue,
     userId: answeredBy.id,
+    disableButtons: true,
   });
 
   const isCorrect = answeredQuestion.correctAnswer === answerValue;

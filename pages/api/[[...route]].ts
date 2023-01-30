@@ -9,6 +9,7 @@ import {
   handleMessageYeet,
   handleMessageYoza,
 } from "handlers";
+import { handleActionNoop } from "handlers/handleActionNoop";
 
 const triviaSlashCommand =
   process.env.NODE_ENV === "production" ? "/trivia" : "/dev-trivia";
@@ -44,8 +45,12 @@ app.action(/next_question/, async (listeners) => {
   await handleActionNextQuestion(listeners);
 });
 
-app.action("play_again", async (listeners) => {
+app.action(/play_again/, async (listeners) => {
   await handleActionPlayAgain(listeners);
+});
+
+app.action(/noop/, async (listeners) => {
+  await handleActionNoop(listeners);
 });
 
 // this is run just in case
