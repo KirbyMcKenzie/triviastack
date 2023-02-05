@@ -1,4 +1,4 @@
-import { App, FileInstallationStore } from "@slack/bolt";
+import { App, FileInstallationStore, LogLevel } from "@slack/bolt";
 import { NextApiRequest, NextApiResponse } from "next";
 import NextConnectReceiver from "utils/NextConnectReceiver";
 import {
@@ -21,73 +21,89 @@ const triviaSlashCommand = isProd ? "/trivia" : "/dev-trivia";
 
 const receiver = new NextConnectReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET || "invalid",
+  clientId: process.env.SLACK_CLIENT_ID,
+  clientSecret: process.env.SLACK_CLIENT_SECRET,
   processBeforeResponse: true,
+  logLevel: LogLevel.DEBUG,
+  stateSecret: "my-state-secret",
+  scopes: ["channels:history", "chat:write", "commands", "im:history"],
+  installationStore: {
+    storeInstallation: async (installation) => {
+      console.log("storeInstallation called");
+      // Bolt will pass your handler an installation object
+      // Change the lines below so they save to your database
+      // TODO: Think about whether we need to handle this case until the app can handle org-level apps
+      // if (installation.isEnterpriseInstall && installation.enterprise !== undefined) {
+      //   // handle storing org-wide app installation
+      //   return await database.set(installation.enterprise.id, installation);
+      // }
+      if (installation.team !== undefined) {
+        // single team app installation
+        return await createInstallationStore(
+          installation.team.id,
+          installation
+        );
+      }
+      // TODO: Log and alert
+      throw new Error("Failed saving installation data to installationStore");
+    },
+    fetchInstallation: async (installQuery) => {
+      console.log("fetchInstallation called");
+      // Bolt will pass your handler an installQuery object
+      // Change the lines below so they fetch from your database
+      // if (
+      //   installQuery.isEnterpriseInstall &&
+      //   installQuery.enterpriseId !== undefined
+      // ) {
+      //   // handle org wide app installation lookup
+      //   return await database.get(installQuery.enterpriseId);
+      // }
+      if (installQuery.teamId !== undefined) {
+        // single team app installation lookup
+        return await getInstallationStore(installQuery.teamId);
+      }
+      throw new Error("Failed fetching installation");
+    },
+    //   deleteInstallation: async (installQuery) => {
+    //     // Bolt will pass your handler  an installQuery object
+    //     // Change the lines below so they delete from your database
+    //     if (
+    //       installQuery.isEnterpriseInstall &&
+    //       installQuery.enterpriseId !== undefined
+    //     ) {
+    //       // org wide app installation deletion
+    //       return await database.delete(installQuery.enterpriseId);
+    //     }
+    //     if (installQuery.teamId !== undefined) {
+    //       // single team app installation deletion
+    //       return await database.delete(installQuery.teamId);
+    //     }
+    //     throw new Error("Failed to delete installation");
+    //   },
+  },
 });
 
 const app = new App({
-  token: process.env.SLACK_BOT_TOKEN,
+  signingSecret: process.env.SLACK_SIGNING_SECRET,
+  clientId: process.env.SLACK_CLIENT_ID,
+  clientSecret: process.env.SLACK_CLIENT_SECRET,
+  // token: process.env.SLACK_BOT_TOKEN,
+  logLevel: LogLevel.DEBUG,
   receiver: receiver,
   developerMode: false,
-  stateSecret: "my-state-secret",
-  scopes: ["channels:history", "chat:write", "commands", "im:history"],
-  installationStore: !isProd
-    ? new FileInstallationStore()
-    : {
-        storeInstallation: async (installation) => {
-          console.log("storeInstallation called");
-          // Bolt will pass your handler an installation object
-          // Change the lines below so they save to your database
-          // TODO: Think about whether we need to handle this case until the app can handle org-level apps
-          // if (installation.isEnterpriseInstall && installation.enterprise !== undefined) {
-          //   // handle storing org-wide app installation
-          //   return await database.set(installation.enterprise.id, installation);
-          // }
-          if (installation.team !== undefined) {
-            // single team app installation
-            return await createInstallationStore(
-              installation.team.id,
-              installation
-            );
-          }
-          // TODO: Log and alert
-          throw new Error(
-            "Failed saving installation data to installationStore"
-          );
-        },
-        fetchInstallation: async (installQuery) => {
-          console.log("fetchInstallation called");
-          // Bolt will pass your handler an installQuery object
-          // Change the lines below so they fetch from your database
-          // if (
-          //   installQuery.isEnterpriseInstall &&
-          //   installQuery.enterpriseId !== undefined
-          // ) {
-          //   // handle org wide app installation lookup
-          //   return await database.get(installQuery.enterpriseId);
-          // }
-          if (installQuery.teamId !== undefined) {
-            // single team app installation lookup
-            return await getInstallationStore(installQuery.teamId);
-          }
-          throw new Error("Failed fetching installation");
-        },
-        //   deleteInstallation: async (installQuery) => {
-        //     // Bolt will pass your handler  an installQuery object
-        //     // Change the lines below so they delete from your database
-        //     if (
-        //       installQuery.isEnterpriseInstall &&
-        //       installQuery.enterpriseId !== undefined
-        //     ) {
-        //       // org wide app installation deletion
-        //       return await database.delete(installQuery.enterpriseId);
-        //     }
-        //     if (installQuery.teamId !== undefined) {
-        //       // single team app installation deletion
-        //       return await database.delete(installQuery.teamId);
-        //     }
-        //     throw new Error("Failed to delete installation");
-        //   },
-      },
+  // authorize: async ({ teamId }) => {
+  //   console.log("authorize called");
+  //   const installation = await getInstallationStore(teamId || "");
+
+  //   return {
+  //     botToken: installation.bot?.token,
+  //     botId: installation.bot?.id,
+  //     botUserId: installation.bot?.userId,
+  //   };
+
+  //   // TODO: add check and reintroduce
+  //   throw new Error("No matching authorizations");
+  // },
 });
 
 app.message("yoza", async (listeners) => {
