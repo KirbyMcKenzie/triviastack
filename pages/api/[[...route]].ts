@@ -28,7 +28,13 @@ const receiver = new NextConnectReceiver({
   processBeforeResponse: true,
   logLevel: LogLevel.DEBUG,
   stateSecret: "my-state-secret",
-  scopes: ["channels:history", "chat:write", "commands", "im:history"],
+  scopes: [
+    "channels:history",
+    "chat:write",
+    "commands",
+    "im:history",
+    "reactions:write",
+  ],
   installationStore: {
     storeInstallation: async (installation) => {
       console.log("storeInstallation called");
@@ -89,7 +95,7 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   clientId: process.env.SLACK_CLIENT_ID,
   clientSecret: process.env.SLACK_CLIENT_SECRET,
-  logLevel: LogLevel.DEBUG,
+  // logLevel: LogLevel.DEBUG,
   receiver: receiver,
   developerMode: false,
 });
@@ -100,6 +106,14 @@ app.message("yoza", async (listeners) => {
 
 app.message("yeet", async (listeners) => {
   await handleMessageYeet(listeners);
+});
+
+app.message(/bloody oath/, async ({ payload, client }) => {
+  await client.reactions.add({
+    name: "flag-au",
+    channel: payload.channel,
+    timestamp: payload.event_ts,
+  });
 });
 
 app.command(triviaSlashCommand, async (listeners) => {
