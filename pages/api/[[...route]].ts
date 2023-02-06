@@ -4,6 +4,7 @@ import NextConnectReceiver from "utils/NextConnectReceiver";
 import {
   handleActionAnswerQuestion,
   handleActionNextQuestion,
+  handleActionOpenModalFeedback,
   handleActionPlayAgain,
   handleCommandQuickQuiz,
   handleMessageYeet,
@@ -15,6 +16,7 @@ import {
   createInstallationStore,
   getInstallationStore,
 } from "services/installationStoreService";
+import { createFeedback } from "services/feedbackService";
 
 const isProd = process.env.NODE_ENV === "production";
 const triviaSlashCommand = isProd ? "/trivia" : "/dev-trivia";
@@ -60,9 +62,7 @@ const receiver = new NextConnectReceiver({
       // }
       if (installQuery.teamId !== undefined) {
         // single team app installation lookup
-        const store = await getInstallationStore(installQuery.teamId);
-        console.log(store, "getInstallationStore");
-        return store;
+        return await getInstallationStore(installQuery.teamId);
       }
       throw new Error("Failed fetching installation");
     },
@@ -118,12 +118,42 @@ app.action(/play_again/, async (listeners) => {
   await handleActionPlayAgain(listeners);
 });
 
+app.action(/feedback_open/, async (listeners) => {
+  await handleActionOpenModalFeedback(listeners);
+});
+
 app.action(/dismiss/, async (listeners) => {
   await handleActionDismiss(listeners);
 });
 
 app.action(/noop/, async (listeners) => {
   await handleActionNoop(listeners);
+});
+
+app.view(/submit_feedback/, async ({ ack, body, view, client }) => {
+  await ack();
+  console.log(body, "body");
+  const user = body.user;
+  const teamId = body.team?.id || "invalid-team";
+  const channelId = view.callback_id.split("_")[0];
+  const feedback = view.state.values.input_feedback.feedback_input
+    .value as string;
+  console.log(feedback, "feedback");
+  await client.chat.postEphemeral({
+    channel: channelId,
+    user: user.id,
+    blocks: [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `*Feedback received!* Thanks for improving Trivia 🤝`,
+        },
+      },
+    ],
+  });
+
+  await createFeedback(teamId, channelId, feedback, user);
 });
 
 // this is run just in case

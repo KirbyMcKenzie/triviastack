@@ -23,11 +23,6 @@ export const getInstallationStore = async (
     .from("installationStores")
     .select()
     .eq("team_id", teamId);
-  console.log(
-    //@ts-ignore
-    data,
-    "getInstallationStore:::::installationService"
-  );
   //@ts-ignore
   return camelizeKeys(data[0].installation) as unknown as Installation;
 };
