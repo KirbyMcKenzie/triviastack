@@ -60,7 +60,9 @@ const receiver = new NextConnectReceiver({
       // }
       if (installQuery.teamId !== undefined) {
         // single team app installation lookup
-        return await getInstallationStore(installQuery.teamId);
+        const store = await getInstallationStore(installQuery.teamId);
+        console.log(store, "getInstallationStore");
+        return store;
       }
       throw new Error("Failed fetching installation");
     },

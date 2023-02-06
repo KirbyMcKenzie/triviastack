@@ -19,7 +19,12 @@ export const getInstallationStore = async (
   const { data } = await supabase
     .from("installationStores")
     .select()
-    .eq("channel_id", teamId);
-
-  return camelizeKeys(data) as unknown as Installation;
+    .eq("team_id", teamId);
+  console.log(
+    //@ts-ignore
+    data,
+    "getInstallationStore:::::installationService"
+  );
+  //@ts-ignore
+  return camelizeKeys(data[0].installation) as unknown as Installation;
 };
