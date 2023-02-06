@@ -89,23 +89,9 @@ const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   clientId: process.env.SLACK_CLIENT_ID,
   clientSecret: process.env.SLACK_CLIENT_SECRET,
-  // token: process.env.SLACK_BOT_TOKEN,
   logLevel: LogLevel.DEBUG,
   receiver: receiver,
   developerMode: false,
-  // authorize: async ({ teamId }) => {
-  //   console.log("authorize called");
-  //   const installation = await getInstallationStore(teamId || "");
-
-  //   return {
-  //     botToken: installation.bot?.token,
-  //     botId: installation.bot?.id,
-  //     botUserId: installation.bot?.userId,
-  //   };
-
-  //   // TODO: add check and reintroduce
-  //   throw new Error("No matching authorizations");
-  // },
 });
 
 app.message("yoza", async (listeners) => {
