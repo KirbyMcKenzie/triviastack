@@ -5,6 +5,7 @@ import { handleActionPlayAgain } from "./handleActionPlayAgain";
 import { handleCommandQuickQuiz } from "./handleCommandQuickQuiz";
 import { handleMessageYeet } from "./handleMessageYeet";
 import { handleMessageYoza } from "./handleMessageYoza";
+import { handleViewSubmitFeedback } from "./handleViewSubmitFeedback";
 
 export {
   handleActionAnswerQuestion,
@@ -14,4 +15,5 @@ export {
   handleCommandQuickQuiz,
   handleMessageYeet,
   handleMessageYoza,
+  handleViewSubmitFeedback,
 };
