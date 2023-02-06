@@ -6,10 +6,13 @@ export const createInstallationStore = async (
   teamId: string,
   installation: Installation
 ): Promise<void> => {
-  const { error } = await supabase.from("installationStores").insert({
-    team_id: teamId,
-    installation,
-  });
+  const { error } = await supabase.from("installationStores").upsert(
+    {
+      team_id: teamId,
+      installation,
+    },
+    { onConflict: "team_id" }
+  );
   error && console.log(error, "[SQL ERROR]");
 };
 
