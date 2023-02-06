@@ -17,10 +17,6 @@ import {
   createInstallationStore,
   getInstallationStore,
 } from "services/installationStoreService";
-import { createFeedback } from "services/feedbackService";
-
-const isProd = process.env.NODE_ENV === "production";
-const triviaSlashCommand = isProd ? "/trivia" : "/dev-trivia";
 
 // TODO: move this out of here
 const receiver = new NextConnectReceiver({
@@ -92,7 +88,7 @@ app.message(/bloody oath/, async ({ payload, client }) => {
   });
 });
 
-app.command(triviaSlashCommand, async (listeners) => {
+app.command("/trivia", async (listeners) => {
   await handleCommandQuickQuiz(listeners);
 });
 
