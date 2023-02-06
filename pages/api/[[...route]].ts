@@ -17,6 +17,7 @@ import {
   createInstallationStore,
   getInstallationStore,
 } from "services/installationStoreService";
+import { handleMessageBloodyOath } from "handlers/handleMessageBloodyOath";
 
 // TODO: move this out of here
 const receiver = new NextConnectReceiver({
@@ -76,16 +77,13 @@ app.message("yoza", async (listeners) => {
   await handleMessageYoza(listeners);
 });
 
+// TODO: Make this dev only
 app.message("yeet", async (listeners) => {
   await handleMessageYeet(listeners);
 });
 
-app.message(/bloody oath/, async ({ payload, client }) => {
-  await client.reactions.add({
-    name: "flag-au",
-    channel: payload.channel,
-    timestamp: payload.event_ts,
-  });
+app.message(/bloody oath/, async (listeners) => {
+  await handleMessageBloodyOath(listeners);
 });
 
 app.command("/trivia", async (listeners) => {

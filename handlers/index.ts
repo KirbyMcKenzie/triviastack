@@ -3,6 +3,7 @@ import { handleActionNextQuestion } from "./handleActionNextQuestion";
 import { handleActionOpenModalFeedback } from "./handleActionOpenModalFeedback";
 import { handleActionPlayAgain } from "./handleActionPlayAgain";
 import { handleCommandQuickQuiz } from "./handleCommandQuickQuiz";
+import { handleMessageBloodyOath } from "./handleMessageBloodyOath";
 import { handleMessageYeet } from "./handleMessageYeet";
 import { handleMessageYoza } from "./handleMessageYoza";
 import { handleViewSubmitFeedback } from "./handleViewSubmitFeedback";
