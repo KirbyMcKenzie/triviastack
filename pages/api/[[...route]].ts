@@ -54,7 +54,7 @@ const receiver = new NextConnectReceiver({
       }
       throw new Error("Failed fetching installation");
     },
-    // TODO: implement this
+    // TODO: implement this with soft delete
     //   deleteInstallation: async (installQuery) => {
     //     if (installQuery.teamId !== undefined) {
     //       // single team app installation deletion
