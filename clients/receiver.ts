@@ -11,7 +11,7 @@ export const receiver = new NextConnectReceiver({
   clientSecret: process.env.SLACK_CLIENT_SECRET,
   processBeforeResponse: true,
   logLevel: LogLevel.DEBUG,
-  stateSecret: "my-state-secret",
+  stateSecret: "my-state-secret", // TODO: Change this
   scopes: [
     "channels:history",
     "chat:write",
@@ -19,7 +19,6 @@ export const receiver = new NextConnectReceiver({
     "im:history",
     "reactions:write",
   ],
-  // TODO: move this out of here
   installationStore: {
     storeInstallation: async (installation) => {
       console.log("storeInstallation called");
