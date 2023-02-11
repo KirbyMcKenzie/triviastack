@@ -1,6 +1,6 @@
 import { Installation } from "@slack/bolt";
 import { camelizeKeys } from "humps";
-import { supabase } from "./supabaseClient";
+import { supabase } from "../clients/supabase";
 
 export const createInstallationStore = async (
   teamId: string,

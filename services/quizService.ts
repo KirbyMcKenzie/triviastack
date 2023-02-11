@@ -1,7 +1,7 @@
 import { Question, Quiz } from "../types/quiz";
 import { camelizeKeys } from "humps";
-import { supabase } from "./supabaseClient";
-import apiClient from "./apiClient";
+import { supabase } from "../clients/supabase";
+import apiClient from "../clients/api";
 import { shuffle } from "utils/array";
 
 // TODO: Type this file properly

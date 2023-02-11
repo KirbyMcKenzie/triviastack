@@ -1,5 +1,5 @@
 import { SlackUser } from "types/user";
-import { supabase } from "./supabaseClient";
+import { supabase } from "../clients/supabase";
 
 // TODO: consider using object params here
 export const createFeedback = async (
