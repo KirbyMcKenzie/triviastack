@@ -23,13 +23,15 @@ const app = new App({
   developerMode: false,
 });
 
+const isDev = process.env.NODE_ENV === "development";
+
+isDev &&
+  app.message("yeet", async (listeners) => {
+    await handleMessageYeet(listeners);
+  });
+
 app.message("yoza", async (listeners) => {
   await handleMessageYoza(listeners);
-});
-
-// TODO: Make this dev only
-app.message("yeet", async (listeners) => {
-  await handleMessageYeet(listeners);
 });
 
 app.message(/bloody oath/, async (listeners) => {
