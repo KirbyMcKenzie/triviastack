@@ -1,6 +1,6 @@
 import { AllMiddlewareArgs, SlackActionMiddlewareArgs } from "@slack/bolt";
 
-export const handleActionOpenModalFeedback = async ({
+const handleOpenModalFeedback = async ({
   ack,
   body,
   client,
@@ -48,3 +48,5 @@ export const handleActionOpenModalFeedback = async ({
     console.log(error);
   }
 };
+
+export default handleOpenModalFeedback;

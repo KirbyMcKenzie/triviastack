@@ -5,7 +5,7 @@ import {
 } from "@slack/bolt/dist/types";
 import { createFeedback } from "services/feedbackService";
 
-export const handleViewSubmitFeedback = async ({
+const handleSubmitFeedback = async ({
   ack,
   body,
   view,
@@ -33,3 +33,5 @@ export const handleViewSubmitFeedback = async ({
 
   await createFeedback(teamId, channelId, feedback, user);
 };
+
+export default handleSubmitFeedback;

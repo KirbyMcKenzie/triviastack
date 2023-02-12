@@ -1,7 +1,9 @@
 import { SlackActionMiddlewareArgs } from "@slack/bolt";
 
 // TODO: Consider adding analytics to this
-export const handleActionNoop = async ({ ack }: SlackActionMiddlewareArgs) => {
+const handleNoop = async ({ ack }: SlackActionMiddlewareArgs) => {
   await ack();
   console.warn("[handleActionNoop] called");
 };
+
+export default handleNoop;

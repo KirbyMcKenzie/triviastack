@@ -3,7 +3,7 @@ import {
   SlackEventMiddlewareArgs,
 } from "@slack/bolt/dist/types";
 
-export const handleMessageBloodyOath = async ({
+const handleBloodyOath = async ({
   client,
   payload,
 }: SlackEventMiddlewareArgs<"message"> & AllMiddlewareArgs) => {
@@ -13,3 +13,5 @@ export const handleMessageBloodyOath = async ({
     timestamp: payload.event_ts,
   });
 };
+
+export default handleBloodyOath;

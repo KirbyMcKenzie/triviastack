@@ -3,10 +3,12 @@ import {
   SlackEventMiddlewareArgs,
 } from "@slack/bolt/dist/types";
 
-export const handleMessageYoza = async ({
+const handleYoza = async ({
   message,
   say,
 }: SlackEventMiddlewareArgs<"message"> & AllMiddlewareArgs) => {
   const user = (message as any).user;
   await say(`Yoza <@${user}> 😼`);
 };
+
+export default handleYoza;

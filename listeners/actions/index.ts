@@ -1,18 +1,18 @@
 import { App } from "@slack/bolt";
-import { handleActionAnswerQuestion } from "./handleActionAnswerQuestion";
-import { handleActionDismiss } from "./handleActionDismiss";
-import { handleActionNextQuestion } from "./handleActionNextQuestion";
-import { handleActionNoop } from "./handleActionNoop";
-import { handleActionOpenModalFeedback } from "./handleActionOpenModalFeedback";
-import { handleActionPlayAgain } from "./handleActionPlayAgain";
+import handleAnswerQuestion from "./handleAnswerQuestion";
+import handleDismiss from "./handleDismiss";
+import handleNextQuestion from "./handleNextQuestion";
+import handleNoop from "./handleNoop";
+import handleOpenModalFeedback from "./handleOpenModalFeedback";
+import handlePlayAgain from "./handlePlayAgain";
 
 const registerActions = (app: App) => {
-  app.action(/answer_question/, handleActionAnswerQuestion);
-  app.action(/next_question/, handleActionNextQuestion);
-  app.action(/play_again/, handleActionPlayAgain);
-  app.action(/feedback_open/, handleActionOpenModalFeedback);
-  app.action(/dismiss/, handleActionDismiss);
-  app.action(/noop/, handleActionNoop);
+  app.action(/answer_question/, handleAnswerQuestion);
+  app.action(/dismiss/, handleDismiss);
+  app.action(/feedback_open/, handleOpenModalFeedback);
+  app.action(/next_question/, handleNextQuestion);
+  app.action(/noop/, handleNoop);
+  app.action(/play_again/, handlePlayAgain);
 };
 
 export default registerActions;

@@ -1,7 +1,8 @@
 import { App } from "@slack/bolt";
 import { NextApiRequest, NextApiResponse } from "next";
-import { handleViewSubmitFeedback, registerListeners } from "listeners";
+
 import { receiver } from "clients/receiver";
+import { registerListeners } from "listeners";
 
 const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
@@ -9,10 +10,6 @@ const app = new App({
   clientSecret: process.env.SLACK_CLIENT_SECRET,
   receiver: receiver,
   developerMode: false,
-});
-
-app.view(/submit_feedback/, async (listeners) => {
-  await handleViewSubmitFeedback(listeners);
 });
 
 registerListeners(app);

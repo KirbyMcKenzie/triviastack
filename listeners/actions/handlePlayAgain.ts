@@ -6,7 +6,7 @@ import {
 } from "services/quizService";
 import { buildQuestionBlock, buildQuizNewGameHeader } from "utils/blocks";
 
-export const handleActionPlayAgain = async ({
+const handlePlayAgain = async ({
   ack,
   body,
   say,
@@ -32,3 +32,5 @@ export const handleActionPlayAgain = async ({
 
   await say(questionBlock);
 };
+
+export default handlePlayAgain;

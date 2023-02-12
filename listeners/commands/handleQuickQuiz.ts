@@ -9,7 +9,7 @@ import {
 const DEFAULT_NUM_QUESTIONS = 10;
 const MAX_QUESTIONS = 50;
 
-export const handleCommandQuickQuiz = async ({
+const handleQuickQuiz = async ({
   ack,
   say,
   respond,
@@ -38,3 +38,5 @@ export const handleCommandQuickQuiz = async ({
 
   await say(questionBlock);
 };
+
+export default handleQuickQuiz;

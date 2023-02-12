@@ -7,7 +7,7 @@ import {
 import { Question } from "types/quiz";
 import { buildQuizCompleteBlock, buildQuestionBlock } from "utils/blocks";
 
-export const handleActionNextQuestion = async ({
+const handleNextQuestion = async ({
   ack,
   body,
   say,
@@ -53,3 +53,5 @@ export const handleActionNextQuestion = async ({
 
   await respond(questionBlock);
 };
+
+export default handleNextQuestion;

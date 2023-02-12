@@ -1,6 +1,6 @@
 import { SlackActionMiddlewareArgs } from "@slack/bolt";
 
-export const handleActionDismiss = async ({
+export const handleDismiss = async ({
   ack,
   respond,
 }: SlackActionMiddlewareArgs) => {
@@ -10,3 +10,5 @@ export const handleActionDismiss = async ({
     delete_original: true,
   });
 };
+
+export default handleDismiss;

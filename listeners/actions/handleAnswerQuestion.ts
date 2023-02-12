@@ -6,7 +6,7 @@ import {
 import { Question } from "types/quiz";
 import { buildQuestionBlock } from "utils/blocks";
 
-export const handleActionAnswerQuestion = async ({
+const handleAnswerQuestion = async ({
   ack,
   body,
   respond,
@@ -40,3 +40,5 @@ export const handleActionAnswerQuestion = async ({
   await updateQuizQuestion(id, updatedQuestions);
   await respond(questionBlock);
 };
+
+export default handleAnswerQuestion;

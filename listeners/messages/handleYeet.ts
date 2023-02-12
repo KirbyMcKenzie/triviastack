@@ -3,8 +3,10 @@ import {
   SlackEventMiddlewareArgs,
 } from "@slack/bolt/dist/types";
 
-export const handleMessageYeet = async ({
+const handleYeet = async ({
   say,
 }: SlackEventMiddlewareArgs<"message"> & AllMiddlewareArgs) => {
   await say(`|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|`);
 };
+
+export default handleYeet;
