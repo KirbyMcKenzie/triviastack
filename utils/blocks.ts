@@ -57,7 +57,6 @@ export const buildQuestionBlock = ({
       text: {
         type: "mrkdwn",
         text:
-          // TODO: tidy this up
           totalQuestions > 1
             ? `*${
                 currentQuestion === totalQuestions
