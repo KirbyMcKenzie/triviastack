@@ -3,7 +3,6 @@ import { createNewQuiz, fetchQuizQuestions } from "services/quizService";
 import {
   buildErrorMaxQuestionsExceeded,
   buildQuestionBlock,
-  buildQuizNewGameHeader,
 } from "utils/blocks";
 
 const DEFAULT_NUM_QUESTIONS = 10;
@@ -22,10 +21,6 @@ const handleQuickQuiz = async ({
     return await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
   }
 
-  await say(
-    buildQuizNewGameHeader(payload.user_id, true, numberOfQuestions === 50)
-  );
-
   const questions = await fetchQuizQuestions(numberOfQuestions);
   await createNewQuiz(questions, payload.channel_id);
 
@@ -34,6 +29,7 @@ const handleQuickQuiz = async ({
     currentQuestion: 1,
     totalQuestions: questions.length,
     userId: payload.user_id,
+    isSuperQuiz: numberOfQuestions === MAX_QUESTIONS,
   });
 
   await say(questionBlock);

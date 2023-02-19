@@ -10,6 +10,8 @@ export interface QuestionBlockProps {
   answeredValue?: string;
   userId?: string;
   disableButtons?: boolean;
+  isSuperQuiz?: boolean;
+  isFirstGame?: boolean;
   hasError?: boolean;
 }
 
@@ -28,9 +30,28 @@ export const buildQuestionBlock = ({
   answeredValue,
   disableButtons,
   userId,
+  isSuperQuiz = false,
+  isFirstGame = true,
   hasError,
 }: QuestionBlockProps) => ({
   blocks: [
+    ...(!isFirstGame ? [{ type: "divider" }] : []),
+    {
+      type: "section",
+      text: isSuperQuiz
+        ? {
+            type: "mrkdwn",
+            text: `🚨 *<@${userId}> has kicked off ${
+              isFirstGame ? "a" : "another"
+            } game of SUPER TRIVIA* 🚨\n\n`,
+          }
+        : {
+            type: "mrkdwn",
+            text: `*<@${userId}> has kicked off ${
+              isFirstGame ? "a" : "another"
+            } game of trivia*  📣\n\n`,
+          },
+    },
     {
       type: "section",
       text: {
@@ -274,6 +295,7 @@ export const buildErrorMaxQuestionsExceeded = (
   ],
 });
 
+// TODO: keep this just in case gen quiz is too slow
 export const buildQuizNewGameHeader = (
   userId: string,
   isFirstGame = false,

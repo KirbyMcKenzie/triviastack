@@ -4,17 +4,17 @@ import {
   fetchQuizQuestions,
   getCurrentQuizByChannelId,
 } from "services/quizService";
-import { buildQuestionBlock, buildQuizNewGameHeader } from "utils/blocks";
+import { buildQuestionBlock } from "utils/blocks";
+
+const MAX_QUESTIONS = 50;
 
 const handlePlayAgain = async ({
   ack,
   body,
   say,
 }: SlackActionMiddlewareArgs) => {
-  const channelId = body?.channel?.id || "";
-
   await ack();
-  await say(buildQuizNewGameHeader(body.user.id, false));
+  const channelId = body?.channel?.id || "";
 
   const { questions: previousQuestions } = await getCurrentQuizByChannelId(
     channelId,
@@ -28,6 +28,9 @@ const handlePlayAgain = async ({
     question: questions[0],
     currentQuestion: 1,
     totalQuestions: questions.length,
+    isSuperQuiz: previousQuestions.length === MAX_QUESTIONS,
+    isFirstGame: false,
+    userId: body.user.id,
   });
 
   await say(questionBlock);
