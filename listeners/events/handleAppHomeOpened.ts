@@ -13,27 +13,115 @@ const handleAppHomeOpened = async ({
       type: "home",
       blocks: [
         {
-          type: "section",
+          type: "header",
           text: {
-            type: "mrkdwn",
-            text: "*Welcome home, <@" + event.user + "> :house:*",
+            type: "plain_text",
+            text: "Quick Trivia",
+            emoji: true,
           },
+        },
+        {
+          type: "context",
+          elements: [
+            {
+              type: "mrkdwn",
+              text: "Start a game of trivia in a selected channel with your default quiz settings.",
+            },
+          ],
+        },
+        {
+          type: "actions",
+          elements: [
+            {
+              type: "button",
+              text: {
+                type: "plain_text",
+                text: "⚡️ Start Quiz",
+              },
+              value: "click_me_123",
+              style: "primary",
+              action_id: "actionId-0",
+            },
+            {
+              type: "button",
+              text: {
+                type: "plain_text",
+                text: "⚙️  Edit Quick Settings",
+              },
+              value: "click_me_123",
+              action_id: "actionId-1",
+            },
+          ],
         },
         {
           type: "divider",
         },
         {
-          type: "section",
+          type: "header",
           text: {
-            type: "mrkdwn",
-            text: "🚧  We're working hard to make this space feel nice and cozy, *check back soon!*  🚧",
+            type: "plain_text",
+            text: "Custom Trivia",
+            emoji: true,
           },
         },
         {
-          type: "image",
-          block_id: "image4",
-          image_url: "https://i.giphy.com/media/3orifgBu5DCkYU0nM4/giphy.webp",
-          alt_text: "Progress",
+          type: "context",
+          elements: [
+            {
+              type: "mrkdwn",
+              text: "Start a game of trivia in a selected channel with your choice of categories and difficulty.",
+            },
+          ],
+        },
+        {
+          type: "actions",
+          elements: [
+            {
+              type: "button",
+              text: {
+                type: "plain_text",
+                text: "⚡️ Create Quiz",
+              },
+              value: "click_me_123",
+              style: "primary",
+              action_id: "actionId-0",
+            },
+          ],
+        },
+        {
+          type: "divider",
+        },
+        {
+          type: "header",
+          text: {
+            type: "plain_text",
+            text: "Daily Trivia",
+            emoji: true,
+          },
+        },
+        {
+          type: "context",
+          elements: [
+            {
+              type: "mrkdwn",
+              text: "Schedule trivia to begin at a specified time each day",
+            },
+          ],
+        },
+        {
+          type: "actions",
+          elements: [
+            {
+              type: "button",
+              text: {
+                type: "plain_text",
+                text: "⏳ Create Schedule",
+              },
+              value: "click_me_123",
+              style: "primary",
+              action_id: "actionId-0",
+            },
+          ],
         },
       ],
     },
