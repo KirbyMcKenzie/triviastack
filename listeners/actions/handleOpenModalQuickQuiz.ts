@@ -23,9 +23,10 @@ const handleOpenModalQuickQuiz = async ({
         blocks: [
           {
             type: "input",
+            block_id: "input_select_channel",
             element: {
-              type: "conversations_select",
-              action_id: "channel-select",
+              type: "channels_select",
+              action_id: "select_channel",
             },
             label: {
               type: "plain_text",
@@ -35,6 +36,7 @@ const handleOpenModalQuickQuiz = async ({
           },
           {
             type: "input",
+            block_id: "input_num_questions",
             element: {
               // @ts-ignore
               type: "number_input",
@@ -42,7 +44,7 @@ const handleOpenModalQuickQuiz = async ({
               initial_value: "10",
               max_value: "50",
               min_value: "1",
-              action_id: "number_input-action",
+              action_id: "num_questions",
             },
             label: {
               type: "plain_text",
@@ -52,7 +54,9 @@ const handleOpenModalQuickQuiz = async ({
           },
           {
             type: "input",
+            block_id: "input_select_difficulty",
             element: {
+              action_id: "select_difficulty",
               type: "static_select",
               initial_option: {
                 text: {
@@ -101,7 +105,6 @@ const handleOpenModalQuickQuiz = async ({
                   value: "difficulty-hard",
                 },
               ],
-              action_id: "static_select-difficulty",
             },
             label: {
               type: "plain_text",
@@ -111,8 +114,10 @@ const handleOpenModalQuickQuiz = async ({
           },
           {
             type: "input",
+            block_id: "input_select_categories",
             element: {
               type: "multi_static_select",
+              action_id: "select_categories",
               placeholder: {
                 type: "plain_text",
                 text: "Select an item",
@@ -282,7 +287,6 @@ const handleOpenModalQuickQuiz = async ({
                   value: "category-sport",
                 },
               ],
-              action_id: "category-select ",
             },
             label: {
               type: "plain_text",

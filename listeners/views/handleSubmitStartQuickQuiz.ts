@@ -13,11 +13,10 @@ const handleSubmitStartQuickQuiz = async ({
   client,
 }: SlackViewMiddlewareArgs<SlackViewAction> & AllMiddlewareArgs) => {
   await ack();
+  console.log(JSON.stringify(view.state.values), "view");
   const userId = body.user.id;
-  const channelId = view.state.values.channels_input.multi_channel_select
+  const channelId = view.state.values.input_select_channel.select_channel
     .selected_channel as string;
-
-  console.log(channelId, "channelId");
 
   // const numberOfQuestions = parseInt(payload.text) || DEFAULT_NUM_QUESTIONS;
   // if (numberOfQuestions > MAX_QUESTIONS) {
@@ -38,8 +37,6 @@ const handleSubmitStartQuickQuiz = async ({
     channel: channelId,
     ...questionBlock,
   });
-
-  // await say(questionBlock);
 };
 
 export default handleSubmitStartQuickQuiz;
