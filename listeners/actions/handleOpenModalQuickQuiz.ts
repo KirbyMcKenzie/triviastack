@@ -1,6 +1,6 @@
 import { AllMiddlewareArgs, SlackActionMiddlewareArgs } from "@slack/bolt";
 
-const handleOpenModalFeedback = async ({
+const handleOpenModalQuickQuiz = async ({
   ack,
   body,
   client,
@@ -16,10 +16,10 @@ const handleOpenModalFeedback = async ({
       // View payload
       view: {
         type: "modal",
-        callback_id: `${channelId}_submit_feedback`,
+        callback_id: `start_quick_quiz`,
         title: {
           type: "plain_text",
-          text: "Give Feedback",
+          text: "Start Quick Quiz",
         },
         blocks: [
           {
@@ -31,7 +31,7 @@ const handleOpenModalFeedback = async ({
                 text: "Select channel",
                 emoji: true,
               },
-              action_id: "multi_users_select-action",
+              action_id: "multi_channel_select-action",
             },
             label: {
               type: "plain_text",
@@ -53,4 +53,4 @@ const handleOpenModalFeedback = async ({
   }
 };
 
-export default handleOpenModalFeedback;
+export default handleOpenModalQuickQuiz;

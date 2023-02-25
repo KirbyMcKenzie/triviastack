@@ -38,9 +38,9 @@ const handleAppHomeOpened = async ({
                 type: "plain_text",
                 text: "⚡️ Start Quiz",
               },
-              value: "click_me_123",
+              value: "quick_quiz_open",
               style: "primary",
-              action_id: "actionId-0",
+              action_id: "quick_quiz_open",
             },
             {
               type: "button",
