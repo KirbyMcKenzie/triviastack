@@ -16,51 +16,7 @@ const handleAppHomeOpened = async ({
           type: "header",
           text: {
             type: "plain_text",
-            text: "Quick Trivia",
-            emoji: true,
-          },
-        },
-        {
-          type: "context",
-          elements: [
-            {
-              type: "mrkdwn",
-              text: "Start a game of trivia in a selected channel with your default quiz settings.",
-            },
-          ],
-        },
-        {
-          type: "actions",
-          elements: [
-            {
-              type: "button",
-              text: {
-                type: "plain_text",
-                text: "⚡️ Start Quiz",
-              },
-              value: "quick_quiz_open",
-              style: "primary",
-              action_id: "quick_quiz_open",
-            },
-            {
-              type: "button",
-              text: {
-                type: "plain_text",
-                text: "⚙️  Edit Quick Settings",
-              },
-              value: "click_me_123",
-              action_id: "actionId-1",
-            },
-          ],
-        },
-        {
-          type: "divider",
-        },
-        {
-          type: "header",
-          text: {
-            type: "plain_text",
-            text: "Custom Trivia",
+            text: "Create Quiz",
             emoji: true,
           },
         },
@@ -82,9 +38,9 @@ const handleAppHomeOpened = async ({
                 type: "plain_text",
                 text: "⚡️ Create Quiz",
               },
-              value: "click_me_123",
+              value: "quick_quiz_open",
               style: "primary",
-              action_id: "actionId-0",
+              action_id: "quick_quiz_open",
             },
           ],
         },
