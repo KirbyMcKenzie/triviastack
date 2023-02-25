@@ -24,6 +24,7 @@ const handleOpenModalQuickQuiz = async ({
         blocks: [
           {
             type: "input",
+            block_id: "channels_input",
             element: {
               type: "channels_select",
               placeholder: {
@@ -31,7 +32,7 @@ const handleOpenModalQuickQuiz = async ({
                 text: "Select channel",
                 emoji: true,
               },
-              action_id: "multi_channel_select-action",
+              action_id: "multi_channel_select",
             },
             label: {
               type: "plain_text",
