@@ -17,6 +17,7 @@ const handleNextQuestion = async ({
 
   const answerValue = (body as any).actions[0].value;
   const channelId = body?.channel?.id || "";
+  const userId = body?.user.id;
 
   const quiz = await getCurrentQuizByChannelId(channelId);
   const { id, currentQuestion, questions } = quiz;
@@ -49,6 +50,7 @@ const handleNextQuestion = async ({
     currentQuestion: currentQuestion + 1,
     totalQuestions: questions.length,
     answeredValue: answerValue,
+    userId,
   });
 
   await respond(questionBlock);

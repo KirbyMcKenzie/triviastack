@@ -104,7 +104,7 @@ const handleAppHomeOpened = async ({
           elements: [
             {
               type: "mrkdwn",
-              text: "Schedule trivia to begin at a specified time each day",
+              text: "Schedule trivia to begin at a specified time each day.",
             },
           ],
         },
