@@ -18,6 +18,7 @@ export const receiver = new NextConnectReceiver({
     "commands",
     "im:history",
     "reactions:write",
+    "chat:write.public",
   ],
   installationStore: {
     storeInstallation: async (installation) => {
