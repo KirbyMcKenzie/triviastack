@@ -1,5 +1,7 @@
-import { Question, Quiz } from "../types/quiz";
+import queryString from "query-string";
 import { camelizeKeys } from "humps";
+
+import { Question, Quiz } from "../types/quiz";
 import { supabase } from "../clients/supabase";
 import apiClient from "../clients/api";
 import { shuffle } from "utils/array";
@@ -77,12 +79,23 @@ export const updateQuiz = async (
     .eq("id", id);
 };
 
-export const fetchQuizQuestions = async (
-  numberOfQuestions = 10
-): Promise<Question[]> => {
+export const fetchQuizQuestions = async ({
+  numberOfQuestions = 10,
+  difficulty = undefined,
+  categories = [],
+}): Promise<Question[]> => {
+  const query = queryString.stringify(
+    {
+      limit: numberOfQuestions,
+      difficulty,
+      categories,
+    },
+    { arrayFormat: "comma" }
+  );
+
   const data = await apiClient
-    .get(`https://opentdb.com/api.php?amount=${numberOfQuestions}`)
-    .then((res) => res.data.results);
+    .get(`https://the-trivia-api.com/api/questions?${query}`)
+    .then((res) => res.data);
   return data.map((question: Question) => ({
     ...question,
     answers: shuffle([question.correctAnswer, ...question.incorrectAnswers]),
