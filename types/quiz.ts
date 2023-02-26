@@ -11,7 +11,8 @@ export interface Quiz {
 
 export interface Question {
   category: string;
-  type: "multiple" | "boolean";
+  type: "Multiple Choice" | "boolean";
+  // type: "multiple" | "boolean";
   difficulty: string;
   question: string;
   correctAnswer: string;

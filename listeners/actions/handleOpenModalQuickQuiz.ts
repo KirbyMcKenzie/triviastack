@@ -64,7 +64,7 @@ const handleOpenModalQuickQuiz = async ({
                   text: "🔀  All difficulties",
                   emoji: true,
                 },
-                value: "category-all",
+                value: "all",
               },
               placeholder: {
                 type: "plain_text",
@@ -78,7 +78,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🔀  All difficulties",
                     emoji: true,
                   },
-                  value: "category-all",
+                  value: "all",
                 },
                 {
                   text: {
@@ -86,7 +86,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "Easy",
                     emoji: true,
                   },
-                  value: "difficulty-easy",
+                  value: "easy",
                 },
                 {
                   text: {
@@ -94,7 +94,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "Medium",
                     emoji: true,
                   },
-                  value: "difficulty-medium",
+                  value: "medium",
                 },
                 {
                   text: {
@@ -102,7 +102,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "Hard",
                     emoji: true,
                   },
-                  value: "difficulty-hard",
+                  value: "hard",
                 },
               ],
             },
@@ -130,7 +130,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🎨  Arts & Literature",
                     emoji: true,
                   },
-                  value: "category-arts-literature",
+                  value: "arts_and_literature",
                 },
                 {
                   text: {
@@ -138,7 +138,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🎥  Film & TV",
                     emoji: true,
                   },
-                  value: "category-film-tv",
+                  value: "film_and_tv",
                 },
                 {
                   text: {
@@ -146,7 +146,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🍔  Food & Drink",
                     emoji: true,
                   },
-                  value: "category-food-drink",
+                  value: "food_and_drink",
                 },
                 {
                   text: {
@@ -154,7 +154,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "💡  General Knowledge",
                     emoji: true,
                   },
-                  value: "category-general-knowledge",
+                  value: "general_knowledge",
                 },
                 {
                   text: {
@@ -162,7 +162,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🌏  Geography",
                     emoji: true,
                   },
-                  value: "category-geography",
+                  value: "geography",
                 },
                 {
                   text: {
@@ -170,7 +170,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🏰  History",
                     emoji: true,
                   },
-                  value: "category-history",
+                  value: "history",
                 },
                 {
                   text: {
@@ -178,7 +178,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🎸  Music",
                     emoji: true,
                   },
-                  value: "category-music",
+                  value: "music",
                 },
                 {
                   text: {
@@ -186,7 +186,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🧪  Science",
                     emoji: true,
                   },
-                  value: "category-science",
+                  value: "science",
                 },
                 {
                   text: {
@@ -194,7 +194,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🏛️  Society & Culture",
                     emoji: true,
                   },
-                  value: "category-society--culture",
+                  value: "society_and_culture",
                 },
                 {
                   text: {
@@ -202,7 +202,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "⚽️  Sport & Leisure",
                     emoji: true,
                   },
-                  value: "category-sport",
+                  value: "sport_and_leisure",
                 },
               ],
               options: [
@@ -212,7 +212,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🎨  Arts & Literature",
                     emoji: true,
                   },
-                  value: "category-arts-literature",
+                  value: "arts_and_literature",
                 },
                 {
                   text: {
@@ -220,7 +220,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🎥  Film & TV",
                     emoji: true,
                   },
-                  value: "category-film-tv",
+                  value: "film_and_tv",
                 },
                 {
                   text: {
@@ -228,7 +228,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🍔  Food & Drink",
                     emoji: true,
                   },
-                  value: "category-food-drink",
+                  value: "food_and_drink",
                 },
                 {
                   text: {
@@ -236,7 +236,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "💡  General Knowledge",
                     emoji: true,
                   },
-                  value: "category-general-knowledge",
+                  value: "general_knowledge",
                 },
                 {
                   text: {
@@ -244,7 +244,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🌏  Geography",
                     emoji: true,
                   },
-                  value: "category-geography",
+                  value: "geography",
                 },
                 {
                   text: {
@@ -252,7 +252,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🏰  History",
                     emoji: true,
                   },
-                  value: "category-history",
+                  value: "history",
                 },
                 {
                   text: {
@@ -260,7 +260,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🎸  Music",
                     emoji: true,
                   },
-                  value: "category-music",
+                  value: "music",
                 },
                 {
                   text: {
@@ -268,7 +268,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🧪  Science",
                     emoji: true,
                   },
-                  value: "category-science",
+                  value: "science",
                 },
                 {
                   text: {
@@ -276,7 +276,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "🏛️  Society & Culture",
                     emoji: true,
                   },
-                  value: "category-society--culture",
+                  value: "society_and_culture",
                 },
                 {
                   text: {
@@ -284,7 +284,7 @@ const handleOpenModalQuickQuiz = async ({
                     text: "⚽️  Sport & Leisure",
                     emoji: true,
                   },
-                  value: "category-sport",
+                  value: "sport_and_leisure",
                 },
               ],
             },

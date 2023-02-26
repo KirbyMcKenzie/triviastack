@@ -17,7 +17,8 @@ export interface QuestionBlockProps {
 
 export interface QuestionAnswerBlockProps {
   answers: string[];
-  type: "multiple" | "boolean";
+  type: "Multiple Choice" | "boolean";
+  // type: "multiple" | "boolean";
   answerValue: string | undefined;
   correctAnswer: string | undefined;
   disableButtons?: boolean;
@@ -147,7 +148,7 @@ export const buildQuestionBlock = ({
 
 export const buildQuestionAnswersBlock = ({
   answers = [],
-  type = "multiple",
+  type = "Multiple Choice",
   answerValue,
   correctAnswer,
   disableButtons = false,

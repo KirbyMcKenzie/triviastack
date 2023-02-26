@@ -21,7 +21,9 @@ const handlePlayAgain = async ({
     false
   );
 
-  const questions = await fetchQuizQuestions(previousQuestions.length);
+  const questions = await fetchQuizQuestions({
+    numberOfQuestions: previousQuestions.length,
+  });
   await createNewQuiz(questions, channelId);
 
   const questionBlock = buildQuestionBlock({

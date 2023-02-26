@@ -6,6 +6,8 @@ import {
 import { createNewQuiz, fetchQuizQuestions } from "services/quizService";
 import { buildQuestionBlock } from "utils/blocks";
 
+const DEFAULT_NUM_QUESTIONS = 10;
+
 const handleSubmitStartQuickQuiz = async ({
   ack,
   body,
@@ -15,15 +17,26 @@ const handleSubmitStartQuickQuiz = async ({
   await ack();
   console.log(JSON.stringify(view.state.values), "view");
   const userId = body.user.id;
-  const channelId = view.state.values.input_select_channel.select_channel
+  const values = view.state.values;
+  const channelId = values.input_select_channel.select_channel
     .selected_channel as string;
 
-  // const numberOfQuestions = parseInt(payload.text) || DEFAULT_NUM_QUESTIONS;
-  // if (numberOfQuestions > MAX_QUESTIONS) {
-  //   return await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
-  // }
+  const numberOfQuestions =
+    parseInt(values.input_num_questions.num_questions.value as string) ||
+    DEFAULT_NUM_QUESTIONS;
 
-  const questions = await fetchQuizQuestions(10);
+  const difficulty =
+    values.input_select_difficulty.select_difficulty.selected_option?.value;
+  const categories =
+    values.input_select_categories.select_categories.selected_options;
+
+  const questions = await fetchQuizQuestions({
+    numberOfQuestions,
+    //@ts-ignore
+    difficulty: difficulty === "all" ? undefined : difficulty,
+    //@ts-ignore
+    categories: categories?.map(({ value }) => value) || [],
+  });
   await createNewQuiz(questions, channelId);
 
   const questionBlock = buildQuestionBlock({

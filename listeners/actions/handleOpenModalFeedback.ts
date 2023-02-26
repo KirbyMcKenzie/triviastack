@@ -10,10 +10,8 @@ const handleOpenModalFeedback = async ({
   try {
     // Call views.open with the built-in client
     await client.views.open({
-      // Pass a valid trigger_id within 3 seconds of receiving it
       //@ts-ignore
       trigger_id: body.trigger_id,
-      // View payload
       view: {
         type: "modal",
         callback_id: `${channelId}_submit_feedback`,
@@ -24,19 +22,15 @@ const handleOpenModalFeedback = async ({
         blocks: [
           {
             type: "input",
-            element: {
-              type: "channels_select",
-              placeholder: {
-                type: "plain_text",
-                text: "Select channel",
-                emoji: true,
-              },
-              action_id: "multi_users_select-action",
-            },
+            block_id: "input_feedback",
             label: {
               type: "plain_text",
-              text: "Label",
-              emoji: true,
+              text: "What can we do to improve?",
+            },
+            element: {
+              type: "plain_text_input",
+              action_id: "feedback_input",
+              multiline: true,
             },
           },
         ],

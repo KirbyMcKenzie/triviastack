@@ -21,7 +21,7 @@ const handleQuickQuiz = async ({
     return await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
   }
 
-  const questions = await fetchQuizQuestions(numberOfQuestions);
+  const questions = await fetchQuizQuestions({numberOfQuestions});
   await createNewQuiz(questions, payload.channel_id);
 
   const questionBlock = buildQuestionBlock({
