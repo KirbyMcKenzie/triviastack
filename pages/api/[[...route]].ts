@@ -7,11 +7,7 @@ import { WebClient } from "@slack/web-api";
 import { buildQuestionBlock } from "utils/blocks";
 import { fetchQuizQuestions, createNewQuiz } from "services/quizService";
 
-// Read a token from the environment variables
-const token = process.env.SLACK_TOKEN;
-
 // Initialize
-
 const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   clientId: process.env.SLACK_CLIENT_ID,
@@ -36,7 +32,7 @@ router.get("/api/jobs", async (_req: NextApiRequest, res: NextApiResponse) => {
   // TODO: create quiz then post in channel
   // TODO: repeat as before
 
-  const web = new WebClient(token);
+  const web = new WebClient(process.env.SLACK_BOT_TOKEN);
 
   const questions = await fetchQuizQuestions({ numberOfQuestions: 10 });
   await createNewQuiz(questions, "C0271PJK1A7");
@@ -47,7 +43,7 @@ router.get("/api/jobs", async (_req: NextApiRequest, res: NextApiResponse) => {
     totalQuestions: questions.length,
     // isSuperQuiz: previousQuestions.length === MAX_QUESTIONS,
     isFirstGame: true,
-    // userId: body.user.id,
+    userId: "U027E7FV733",
   });
 
   const result = await web.chat.postMessage({
@@ -56,7 +52,7 @@ router.get("/api/jobs", async (_req: NextApiRequest, res: NextApiResponse) => {
   });
 
   res.status(200).json({
-    health: "Alive and Kickin' ✌️",
+    status: "Jobs in Progress ⚙️",
   });
 });
 
