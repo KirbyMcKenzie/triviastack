@@ -8,27 +8,31 @@ import { buildQuestionBlock } from "utils/blocks";
 
 const DEFAULT_NUM_QUESTIONS = 10;
 
-const handleSubmitStartQuickQuiz = async ({
+const handleSubmitStartGame = async ({
   ack,
   body,
   view,
   client,
 }: SlackViewMiddlewareArgs<SlackViewAction> & AllMiddlewareArgs) => {
   await ack();
-  console.log(JSON.stringify(view.state.values), "view");
   const userId = body.user.id;
-  const values = view.state.values;
-  const channelId = values.input_select_channel.select_channel
+  const {
+    input_num_questions,
+    input_select_difficulty,
+    input_select_categories,
+    input_select_channel,
+  } = view.state.values;
+
+  const channelId = input_select_channel.select_channel
     .selected_channel as string;
 
   const numberOfQuestions =
-    parseInt(values.input_num_questions.num_questions.value as string) ||
+    parseInt(input_num_questions.num_questions.value as string) ||
     DEFAULT_NUM_QUESTIONS;
 
   const difficulty =
-    values.input_select_difficulty.select_difficulty.selected_option?.value;
-  const categories =
-    values.input_select_categories.select_categories.selected_options;
+    input_select_difficulty.select_difficulty.selected_option?.value;
+  const categories = input_select_categories.select_categories.selected_options;
 
   const questions = await fetchQuizQuestions({
     numberOfQuestions,
@@ -52,4 +56,4 @@ const handleSubmitStartQuickQuiz = async ({
   });
 };
 
-export default handleSubmitStartQuickQuiz;
+export default handleSubmitStartGame;
