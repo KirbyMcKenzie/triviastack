@@ -93,8 +93,6 @@ export const fetchQuizQuestions = async ({
     { arrayFormat: "comma" }
   );
 
-  console.log(query, "query");
-
   const data = await apiClient
     .get(`https://the-trivia-api.com/api/questions?${query}`)
     .then((res) => res.data);

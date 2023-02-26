@@ -36,7 +36,7 @@ const handleAppHomeOpened = async ({
               type: "button",
               text: {
                 type: "plain_text",
-                text: "⚡️ Create Quiz",
+                text: "⚡️ Create Game",
               },
               value: "open_create_game",
               style: "primary",
