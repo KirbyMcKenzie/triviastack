@@ -88,10 +88,12 @@ export const fetchQuizQuestions = async ({
     {
       limit: numberOfQuestions,
       difficulty,
-      categories,
+      categories: categories?.length === 10 ? [] : categories,
     },
     { arrayFormat: "comma" }
   );
+
+  console.log(query, "query");
 
   const data = await apiClient
     .get(`https://the-trivia-api.com/api/questions?${query}`)
