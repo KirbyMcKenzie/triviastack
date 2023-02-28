@@ -34,7 +34,10 @@ router.get("/api/jobs", async (_req: NextApiRequest, res: NextApiResponse) => {
 
   const web = new WebClient(process.env.SLACK_BOT_TOKEN);
 
+  // TODO: pull from quick quiz settings
   const questions = await fetchQuizQuestions({ numberOfQuestions: 10 });
+
+  // TODO: pull channelId from installationStore
   await createNewQuiz(questions, "C0271PJK1A7");
 
   const questionBlock = buildQuestionBlock({
@@ -43,7 +46,7 @@ router.get("/api/jobs", async (_req: NextApiRequest, res: NextApiResponse) => {
     totalQuestions: questions.length,
     // isSuperQuiz: previousQuestions.length === MAX_QUESTIONS,
     isFirstGame: true,
-    userId: "U027E7FV733",
+    userId: "U027E7FV733", // TODO: pull from installationStore
   });
 
   const result = await web.chat.postMessage({
