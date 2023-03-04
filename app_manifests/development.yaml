@@ -1,5 +1,5 @@
 display_information:
-  name: triviabot (Dev)
+  name: triviabot (dev)
   description: Local development environment
   background_color: "#321b29"
 features:
@@ -8,7 +8,7 @@ features:
     messages_tab_enabled: false
     messages_tab_read_only_enabled: false
   bot_user:
-    display_name: triviabot (Dev)
+    display_name: triviabot (dev)
     always_online: true
   slash_commands:
     - command: /trivia

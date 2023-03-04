@@ -1,30 +1,40 @@
 display_information:
   name: triviabot
 features:
+  app_home:
+    home_tab_enabled: true
+    messages_tab_enabled: false
+    messages_tab_read_only_enabled: false
   bot_user:
     display_name: triviabot
-    always_online: false
+    always_online: true
   slash_commands:
     - command: /trivia
-      url: https://trivia-snowy.vercel.app/api/slack/events
+      url: https://triviabot.io/api/slack/events
       description: Start new game of trivia!
       should_escape: true
 oauth_config:
+  redirect_urls:
+    - https://triviabot.io/api/slack/oauth_redirect
   scopes:
     bot:
+      - channels:history
       - chat:write
       - commands
-      - channels:history
       - im:history
+      - reactions:write
+      - chat:write.public
+      - incoming-webhook
 settings:
   event_subscriptions:
-    request_url: https://trivia-snowy.vercel.app/api/slack/events
+    request_url: https://triviabot.io/api/slack/events
     bot_events:
+      - app_home_opened
       - message.channels
       - message.im
   interactivity:
     is_enabled: true
-    request_url: https://trivia-snowy.vercel.app/api/slack/events
+    request_url: https://triviabot.io/api/slack/events
   org_deploy_enabled: false
   socket_mode_enabled: false
   token_rotation_enabled: false
