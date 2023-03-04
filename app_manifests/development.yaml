@@ -1,20 +1,28 @@
 display_information:
-  name: triviabot [Dev]
+  name: triviabot (Dev)
+  description: Local development environment
+  background_color: "#321b29"
 features:
+  app_home:
+    home_tab_enabled: true
+    messages_tab_enabled: false
+    messages_tab_read_only_enabled: false
   bot_user:
-    display_name: triviabot [Dev]
-    always_online: false
+    display_name: triviabot (Dev)
+    always_online: true
   slash_commands:
     - command: /trivia
       url: https://ffbb09e78413.au.ngrok.io/api/slack/events
       description: Start new game of trivia!
       should_escape: true
 oauth_config:
+  redirect_urls:
+    - https://ffbb09e78413.au.ngrok.io/api/slack/oauth_redirect
   scopes:
     bot:
+      - channels:history
       - chat:write
       - commands
-      - channels:history
       - im:history
       - reactions:write
       - chat:write.public
@@ -22,6 +30,7 @@ settings:
   event_subscriptions:
     request_url: https://ffbb09e78413.au.ngrok.io/api/slack/events
     bot_events:
+      - app_home_opened
       - message.channels
       - message.im
   interactivity:
