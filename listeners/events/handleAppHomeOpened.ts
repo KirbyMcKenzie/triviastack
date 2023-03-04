@@ -75,7 +75,7 @@ const handleAppHomeOpened = async ({
               },
               value: "noop",
               style: "primary",
-              action_id: "noop",
+              action_id: "open_create_schedule",
             },
           ],
         },
