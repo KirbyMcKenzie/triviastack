@@ -31,21 +31,24 @@ const handleOpenModalCreateSchedule = async ({
           emoji: true,
         },
         blocks: [
+          // TODO: Maybe update to select with 15 min
           {
-            type: "section",
-            block_id: "section1",
-            text: {
-              type: "mrkdwn",
-              text: "Pick a time for trivia to begin each day.",
-            },
-            accessory: {
+            type: "input",
+            block_id: "input_time",
+            element: {
               type: "timepicker",
-              action_id: "timepicker123",
-              initial_time: "10:00",
+              initial_time: "09:30",
               placeholder: {
                 type: "plain_text",
-                text: "Select a time",
+                text: "Select time",
+                emoji: true,
               },
+              action_id: "select_time",
+            },
+            label: {
+              type: "plain_text",
+              text: "Select Time",
+              emoji: true,
             },
           },
           {
@@ -53,15 +56,24 @@ const handleOpenModalCreateSchedule = async ({
           },
           // TODO: See if possible to get current users timezone
           {
-            type: "section",
-            block_id: "section2",
-            text: {
-              type: "mrkdwn",
-              text: "Select the timezone for the schedule",
-            },
-            accessory: {
+            type: "input",
+            block_id: "input_timezone",
+            element: {
+              action_id: "select_timezone",
               type: "static_select",
-              action_id: "timepicker123",
+              initial_option: {
+                value: "(UTC+10:00) Canberra, Melbourne, Sydney",
+                text: {
+                  type: "plain_text",
+                  text: "(UTC+10:00) Canberra, Melbourne, Sydney",
+                  emoji: true,
+                },
+              },
+              placeholder: {
+                type: "plain_text",
+                text: "Select an item",
+                emoji: true,
+              },
               options: [
                 {
                   value: "(UTC+09:30) Darwin",
@@ -88,6 +100,11 @@ const handleOpenModalCreateSchedule = async ({
                   },
                 },
               ],
+            },
+            label: {
+              type: "plain_text",
+              text: "Select Timezone",
+              emoji: true,
             },
           },
         ],

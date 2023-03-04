@@ -12,14 +12,20 @@ const handleSubmitCreateSchedule = async ({
 }: SlackViewMiddlewareArgs<SlackViewAction> & AllMiddlewareArgs) => {
   await ack();
 
-  console.log(view, "view");
-  // const userId = body.user.id;
-  // const {
-  //   input_num_questions,
-  //   input_select_difficulty,
-  //   input_select_categories,
-  //   input_select_channel,
-  // } = view.state.values;
+  const userId = body.user.id;
+  const { input_time, input_timezone } = view.state.values;
+
+  const {
+    select_time: { selected_time },
+  } = input_time;
+
+  const {
+    select_timezone: { selected_option: selected_timezone },
+  } = input_timezone;
+
+  console.log(userId, "userId");
+  console.log(selected_time, "input_time::selected_time");
+  console.log(selected_timezone?.value, "input_timezone::value");
 
   // await client.chat.postMessage({
   //   channel: channelId,
