@@ -3,6 +3,8 @@ import {
   SlackEventMiddlewareArgs,
 } from "@slack/bolt/dist/types";
 
+const isDev = process.env.NODE_ENV === "development";
+
 const handleAppHomeOpened = async ({
   event,
   client,
@@ -75,7 +77,7 @@ const handleAppHomeOpened = async ({
               },
               value: "noop",
               style: "primary",
-              action_id: "open_create_schedule",
+              action_id: isDev ? "open_create_schedule" : "noop",
             },
           ],
         },
