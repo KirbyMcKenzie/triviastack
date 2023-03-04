@@ -1,4 +1,3 @@
-import { SlackUser } from "types/user";
 import { supabase } from "../clients/supabase";
 
 export interface CreateSchedule {

@@ -1,4 +1,5 @@
 import { AllMiddlewareArgs, SlackActionMiddlewareArgs } from "@slack/bolt";
+import { timezones } from "utils/datetime";
 
 const handleOpenModalCreateSchedule = async ({
   ack,
@@ -61,45 +62,27 @@ const handleOpenModalCreateSchedule = async ({
             element: {
               action_id: "select_timezone",
               type: "static_select",
-              initial_option: {
-                value: "(UTC+10:00) Canberra, Melbourne, Sydney",
-                text: {
-                  type: "plain_text",
-                  text: "(UTC+10:00) Canberra, Melbourne, Sydney",
-                  emoji: true,
-                },
-              },
+              // initial_option: {
+              //   value: "(UTC+10:00) Canberra, Melbourne, Sydney",
+              //   text: {
+              //     type: "plain_text",
+              //     text: "(UTC+10:00) Canberra, Melbourne, Sydney",
+              //     emoji: true,
+              //   },
+              // },
               placeholder: {
                 type: "plain_text",
                 text: "Select an item",
                 emoji: true,
               },
-              options: [
-                {
-                  value: "(UTC+09:30) Darwin",
-                  text: {
-                    type: "plain_text",
-                    text: "(UTC+09:30) Darwin",
-                    emoji: true,
-                  },
+              options: timezones.map(({ label, value }) => ({
+                value,
+                text: {
+                  type: "plain_text",
+                  text: label,
+                  emoji: true,
                 },
-                {
-                  value: "(UTC+10:00) Brisbane",
-                  text: {
-                    type: "plain_text",
-                    text: "(UTC+10:00) Brisbane",
-                    emoji: true,
-                  },
-                },
-                {
-                  value: "(UTC+10:00) Canberra, Melbourne, Sydney",
-                  text: {
-                    type: "plain_text",
-                    text: "(UTC+10:00) Canberra, Melbourne, Sydney",
-                    emoji: true,
-                  },
-                },
-              ],
+              })),
             },
             label: {
               type: "plain_text",
