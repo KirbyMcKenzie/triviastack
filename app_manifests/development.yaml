@@ -6,7 +6,7 @@ features:
     always_online: false
   slash_commands:
     - command: /trivia
-      url: https://0747f0481d08.au.ngrok.io/api/slack/events
+      url: https://ffbb09e78413.au.ngrok.io/api/slack/events
       description: Start new game of trivia!
       should_escape: true
 oauth_config:
@@ -16,15 +16,17 @@ oauth_config:
       - commands
       - channels:history
       - im:history
+      - reactions:write
+      - chat:write.public
 settings:
   event_subscriptions:
-    request_url: https://0747f0481d08.au.ngrok.io/api/slack/events
+    request_url: https://ffbb09e78413.au.ngrok.io/api/slack/events
     bot_events:
       - message.channels
       - message.im
   interactivity:
     is_enabled: true
-    request_url: https://0747f0481d08.au.ngrok.io/api/slack/events
+    request_url: https://ffbb09e78413.au.ngrok.io/api/slack/events
   org_deploy_enabled: false
   socket_mode_enabled: false
   token_rotation_enabled: false
