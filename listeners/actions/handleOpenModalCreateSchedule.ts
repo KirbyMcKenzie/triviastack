@@ -14,7 +14,7 @@ const handleOpenModalCreateSchedule = async ({
       trigger_id: body.trigger_id,
       view: {
         type: "modal",
-        callback_id: `${channelId}_submit_feedback`,
+        callback_id: `submit_create_schedule`,
         title: {
           type: "plain_text",
           text: "Create Schedule",
@@ -51,6 +51,7 @@ const handleOpenModalCreateSchedule = async ({
           {
             type: "divider",
           },
+          // TODO: See if possible to get current users timezone
           {
             type: "section",
             block_id: "section2",
@@ -61,26 +62,30 @@ const handleOpenModalCreateSchedule = async ({
             accessory: {
               type: "static_select",
               action_id: "timepicker123",
-              // placeholder: {
-              //   type: "plain_text",
-              //   text: "Select a time",
-              // },
-              initial_option: {
-                value: "utc+10",
-                text: {
-                  type: "plain_text",
-                  text: "(UTC+10:00) Canberra, Melbourne, Sydney",
-                  emoji: true,
-                },
-              },
               options: [
                 {
+                  value: "(UTC+09:30) Darwin",
                   text: {
                     type: "plain_text",
-                    text: "🔀  All difficulties",
+                    text: "(UTC+09:30) Darwin",
                     emoji: true,
                   },
-                  value: "all",
+                },
+                {
+                  value: "(UTC+10:00) Brisbane",
+                  text: {
+                    type: "plain_text",
+                    text: "(UTC+10:00) Brisbane",
+                    emoji: true,
+                  },
+                },
+                {
+                  value: "(UTC+10:00) Canberra, Melbourne, Sydney",
+                  text: {
+                    type: "plain_text",
+                    text: "(UTC+10:00) Canberra, Melbourne, Sydney",
+                    emoji: true,
+                  },
                 },
               ],
             },
