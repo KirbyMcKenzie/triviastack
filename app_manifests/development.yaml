@@ -1,11 +1,11 @@
 display_information:
-  name: Trivia [Dev]
+  name: triviabot [Dev]
 features:
   bot_user:
-    display_name: Trivia [Dev]
+    display_name: triviabot [Dev]
     always_online: false
   slash_commands:
-    - command: /dev-trivia
+    - command: /trivia
       url: https://0747f0481d08.au.ngrok.io/api/slack/events
       description: Start new game of trivia!
       should_escape: true

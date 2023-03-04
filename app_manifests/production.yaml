@@ -1,8 +1,8 @@
 display_information:
-  name: Trivia
+  name: triviabot
 features:
   bot_user:
-    display_name: Trivia
+    display_name: triviabot
     always_online: false
   slash_commands:
     - command: /trivia
