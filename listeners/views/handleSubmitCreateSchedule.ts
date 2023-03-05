@@ -1,13 +1,17 @@
-//@ts-nocheck
 import {
   AllMiddlewareArgs,
   SlackViewAction,
   SlackViewMiddlewareArgs,
 } from "@slack/bolt/dist/types";
+import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
 import { createSchedule } from "services/scheduleService";
 
-const getDatetimeString = (time, timezone) => {
-  const now = new Date(); // Get the current date and time in the user's timezone
+// TODO: rework the fuck out of this
+const getDatetimeString = (time: string, timezone: string) => {
+  const now = new Date(
+    new Date().toLocaleString("en-US", { timeZone: timezone })
+  ); // Get the current date and time in the user's timezone
+  const utcDate = zonedTimeToUtc(new Date(), timezone);
   const [hour, minute] = time.split(":"); // Split the time parameter into hours and minutes
 
   // Create a new Date object in the timezone provided by the user
@@ -16,8 +20,9 @@ const getDatetimeString = (time, timezone) => {
   );
 
   // Set the hours and minutes of the target date to the provided time
-  targetDate.setHours(hour);
-  targetDate.setMinutes(minute);
+  targetDate.setHours(parseInt(hour));
+  targetDate.setMinutes(parseInt(minute));
+  targetDate.setSeconds(0);
 
   // Check if the target time has already passed for today
   if (now.getTime() > targetDate.getTime()) {
@@ -51,41 +56,19 @@ const handleSubmitCreateSchedule = async ({
   console.log(selected_time, "selected_time");
   console.log(selected_timezone?.value, "selected_timezone");
 
-  const datetime = getDatetimeString("18:30", "Australia/Sydney");
-
-  console.log(datetime, "datetime::datetime");
-  console.log(
-    new Date(datetime).toLocaleString("en-AU", {
-      timeZone: "Australia/Sydney",
-    }),
-    "backtoSydneyTime::datetime"
+  const datetime = getDatetimeString(
+    selected_time as string,
+    selected_timezone?.value as string
   );
 
-  // 9:30 am Sunday, in Melbourne VIC is 10:30 pm Saturday, Coordinated Universal Time (UTC)
-  // 9:30 am Sunday, in Wellington is 8:30 pm Saturday, Coordinated Universal Time (UTC)
-  // 9:30 am Saturday, in New York, NY, USA is 2:30 pm Saturday, Coordinated Universal Time (UTC)
-
-  // TODO: finsd next occurance of shceulde time
-
-  // if time today is past now, set date and time to tomorrow
-  // if not past today, set to later today
-
-  // // const nextOccurrence = findNextOccurrence("09:30", "Australia/Sydney");
-  // const nextOccurrenceNZ = findNextOccurrence("09:30", "Pacific/Auckland");
-  // // const nextOccurrenceNY = findNextOccurrence("09:30", "America/New_York");
-
-  // // console.log(nextOccurrence, "nextOccurrence");
-  // console.log(nextOccurrenceNZ, "nextOccurrenceNZ");
-  // // console.log(nextOccurrenceNY, "nextOccurrenceNY");
-
-  // await createSchedule({
-  //   createdBy: userId,
-  //   time: selected_time as string,
-  //   timezone: selected_timezone?.value as string,
-  //   channelId: "42069",
-  //   teamId: teamId as string,
-  //   nextJobDatetime: nextDt.toISOString(),
-  // });
+  await createSchedule({
+    createdBy: userId,
+    time: selected_time as string,
+    timezone: selected_timezone?.value as string,
+    channelId: "42069",
+    teamId: teamId as string,
+    nextJobDatetime: datetime,
+  });
 
   // await client.chat.postMessage({
   //   channel: channelId,
