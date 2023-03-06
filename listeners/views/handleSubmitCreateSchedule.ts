@@ -11,7 +11,6 @@ const getDatetimeString = (time: string, timezone: string) => {
   const now = new Date(
     new Date().toLocaleString("en-US", { timeZone: timezone })
   ); // Get the current date and time in the user's timezone
-  const utcDate = zonedTimeToUtc(new Date(), timezone);
   const [hour, minute] = time.split(":"); // Split the time parameter into hours and minutes
 
   // Create a new Date object in the timezone provided by the user
@@ -43,7 +42,9 @@ const handleSubmitCreateSchedule = async ({
 
   const userId = body.user.id;
   const teamId = body.team?.id;
-  const { input_time, input_timezone } = view.state.values;
+  const { input_time, input_timezone, input_channel } = view.state.values;
+
+  const channelId = input_channel.select_channel.selected_channel as string;
 
   const {
     select_time: { selected_time },
@@ -65,7 +66,7 @@ const handleSubmitCreateSchedule = async ({
     createdBy: userId,
     time: selected_time as string,
     timezone: selected_timezone?.value as string,
-    channelId: "42069",
+    channelId: channelId,
     teamId: teamId as string,
     nextJobDatetime: datetime,
   });

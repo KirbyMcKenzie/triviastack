@@ -32,7 +32,20 @@ const handleOpenModalCreateSchedule = async ({
           emoji: true,
         },
         blocks: [
-          // TODO: Maybe update to select with 15 min
+          {
+            type: "input",
+            block_id: "input_channel",
+            element: {
+              type: "channels_select",
+              action_id: "select_channel",
+            },
+            label: {
+              type: "plain_text",
+              text: "Channel",
+              emoji: true,
+            },
+          },
+          // TODO: Maybe update to select with 15 min increments
           {
             type: "input",
             block_id: "input_time",
