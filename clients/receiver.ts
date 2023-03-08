@@ -10,7 +10,7 @@ export const receiver = new NextConnectReceiver({
   clientId: process.env.SLACK_CLIENT_ID,
   clientSecret: process.env.SLACK_CLIENT_SECRET,
   processBeforeResponse: true,
-  logLevel: LogLevel.DEBUG,
+  logLevel: LogLevel.INFO,
   stateSecret: "my-state-secret", // TODO: Change this
   scopes: [
     "channels:history",
