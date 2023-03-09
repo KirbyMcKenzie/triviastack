@@ -1,4 +1,4 @@
-import { SlackActionMiddlewareArgs } from "@slack/bolt";
+import { AllMiddlewareArgs, SlackActionMiddlewareArgs } from "@slack/bolt";
 import {
   getCurrentQuizByChannelId,
   updateQuiz,
@@ -10,14 +10,16 @@ import { buildQuizCompleteBlock, buildQuestionBlock } from "utils/blocks";
 const handleNextQuestion = async ({
   ack,
   body,
-  say,
+  logger,
   respond,
-}: SlackActionMiddlewareArgs) => {
+}: SlackActionMiddlewareArgs & AllMiddlewareArgs) => {
   await ack();
 
   const answerValue = (body as any).actions[0].value;
   const channelId = body?.channel?.id || "";
   const userId = body?.user.id;
+
+  logger.info(`[ACTION] Next question called by ${userId}`);
 
   const quiz = await getCurrentQuizByChannelId(channelId);
   const { id, currentQuestion, questions } = quiz;

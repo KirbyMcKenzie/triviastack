@@ -4,9 +4,12 @@ const handleOpenModalFeedback = async ({
   ack,
   body,
   client,
+  logger,
 }: SlackActionMiddlewareArgs & AllMiddlewareArgs) => {
   await ack();
   const channelId = body.channel?.id;
+  logger.info(`[ACTION] Open feedback modal called by ${body.user.id}`);
+
   try {
     // Call views.open with the built-in client
     await client.views.open({

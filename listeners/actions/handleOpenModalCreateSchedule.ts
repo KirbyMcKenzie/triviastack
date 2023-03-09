@@ -5,8 +5,11 @@ const handleOpenModalCreateSchedule = async ({
   ack,
   body,
   client,
+  logger,
 }: SlackActionMiddlewareArgs & AllMiddlewareArgs) => {
   await ack();
+  const userId = body.user.id || "an unknown user";
+  logger.info(`[ACTION] Create schedule modal opened by ${userId}`);
   const channelId = body.channel?.id;
   try {
     // Call views.open with the built-in client

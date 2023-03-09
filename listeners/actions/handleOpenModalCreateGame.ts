@@ -6,7 +6,8 @@ const handleOpenModalCreateGame = async ({
   client,
   logger,
 }: SlackActionMiddlewareArgs & AllMiddlewareArgs) => {
-  logger.info("handleOpenModalCreateGame called");
+  const userId = body.user.id || "an unknown user";
+  logger.info(`[ACTION] Create game modal opened by ${userId}`);
   await ack();
   try {
     // Call views.open with the built-in client

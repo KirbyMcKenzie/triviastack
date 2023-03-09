@@ -1,4 +1,4 @@
-import { SlackActionMiddlewareArgs } from "@slack/bolt";
+import { AllMiddlewareArgs, SlackActionMiddlewareArgs } from "@slack/bolt";
 import {
   createNewQuiz,
   fetchQuizQuestions,
@@ -11,10 +11,12 @@ const MAX_QUESTIONS = 50;
 const handlePlayAgain = async ({
   ack,
   body,
+  logger,
   say,
-}: SlackActionMiddlewareArgs) => {
+}: SlackActionMiddlewareArgs & AllMiddlewareArgs) => {
   await ack();
   const channelId = body?.channel?.id || "";
+  logger.info(`[ACTION] Play again called by ${body.user.id}`);
 
   const { questions: previousQuestions } = await getCurrentQuizByChannelId(
     channelId,
