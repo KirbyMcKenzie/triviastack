@@ -24,26 +24,24 @@ export const receiver = new NextConnectReceiver({
     // TODO: could we scan for extra data at this point?
     // TODO: could we start onboarding here?
     storeInstallation: async (installation) => {
-      console.log(
-        `[INFO] bolt-app [RECEIVER] storeInstallation called for ${installation.team?.id}`
-      );
-      console.log("storeInstallation called");
       if (installation.team !== undefined) {
         return await createInstallationStore(
           installation.team.id,
           installation
         );
       }
-      // TODO: Log and alert
+      console.log(
+        `[ERROR] bolt-app [RECEIVER] storeInstallation failed for  ${installation.team.id}`
+      );
       throw new Error("Failed saving installation data to installationStore");
     },
     fetchInstallation: async (installQuery) => {
-      console.log(
-        `[INFO]  bolt-app [RECEIVER] fetchInstallation called for ${installQuery.teamId} by ${installQuery.userId}`
-      );
       if (installQuery.teamId !== undefined) {
         return await getInstallationStore(installQuery.teamId);
       }
+      console.log(
+        `[ERROR] bolt-app [RECEIVER] fetchInstallation failed for  ${installQuery.teamId}`
+      );
       throw new Error("Failed fetching installation");
     },
     // TODO: implement this with soft delete
