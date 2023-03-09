@@ -31,7 +31,7 @@ export const receiver = new NextConnectReceiver({
         );
       }
       console.log(
-        `[ERROR] bolt-app [RECEIVER] storeInstallation failed for  ${installation.team.id}`
+        `[ERROR] bolt-app [RECEIVER] storeInstallation failed for ${installation.user.id}`
       );
       throw new Error("Failed saving installation data to installationStore");
     },
