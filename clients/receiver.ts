@@ -21,7 +21,12 @@ export const receiver = new NextConnectReceiver({
     "chat:write.public",
   ],
   installationStore: {
+    // TODO: could we scan for extra data at this point?
+    // TODO: could we start onboarding here?
     storeInstallation: async (installation) => {
+      console.log(
+        `[INFO] bolt-app [RECEIVER] storeInstallation called for ${installation.team?.id}`
+      );
       console.log("storeInstallation called");
       if (installation.team !== undefined) {
         return await createInstallationStore(
@@ -33,7 +38,9 @@ export const receiver = new NextConnectReceiver({
       throw new Error("Failed saving installation data to installationStore");
     },
     fetchInstallation: async (installQuery) => {
-      console.log("fetchInstallation called");
+      console.log(
+        `[INFO]  bolt-app [RECEIVER] fetchInstallation called for ${installQuery.teamId} by ${installQuery.userId}`
+      );
       if (installQuery.teamId !== undefined) {
         return await getInstallationStore(installQuery.teamId);
       }
