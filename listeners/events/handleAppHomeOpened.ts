@@ -6,11 +6,15 @@ import {
 const isDev = process.env.NODE_ENV === "development";
 
 const handleAppHomeOpened = async ({
-  event,
   client,
+  event,
+  logger,
 }: SlackEventMiddlewareArgs<"app_home_opened"> & AllMiddlewareArgs) => {
+  const userId = event.user;
+  logger.info(`[EVENT] App home opened by ${userId}`);
+
   await client.views.publish({
-    user_id: event.user,
+    user_id: userId,
     view: {
       type: "home",
       blocks: [
