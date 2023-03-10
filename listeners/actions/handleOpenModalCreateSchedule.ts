@@ -10,7 +10,6 @@ const handleOpenModalCreateSchedule = async ({
   await ack();
   const userId = body.user.id || "an unknown user";
   logger.info(`[ACTION] Create schedule modal opened by ${userId}`);
-  const channelId = body.channel?.id;
   try {
     // Call views.open with the built-in client
     await client.views.open({
@@ -78,6 +77,7 @@ const handleOpenModalCreateSchedule = async ({
             element: {
               action_id: "select_timezone",
               type: "static_select",
+              // TODO: figure out why this no work
               // initial_option: {
               //   value: "(UTC+10:00) Canberra, Melbourne, Sydney",
               //   text: {

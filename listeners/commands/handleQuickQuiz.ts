@@ -1,4 +1,7 @@
-import { SlackCommandMiddlewareArgs } from "@slack/bolt/dist/types";
+import {
+  AllMiddlewareArgs,
+  SlackCommandMiddlewareArgs,
+} from "@slack/bolt/dist/types";
 import { createNewQuiz, fetchQuizQuestions } from "services/quizService";
 import {
   buildErrorMaxQuestionsExceeded,
@@ -10,18 +13,20 @@ const MAX_QUESTIONS = 50;
 
 const handleQuickQuiz = async ({
   ack,
+  logger,
   say,
   respond,
   payload,
-}: SlackCommandMiddlewareArgs) => {
+}: SlackCommandMiddlewareArgs & AllMiddlewareArgs) => {
   await ack();
+  logger.info(`[COMMAND] Quick quiz triggered by ${payload.user_id}`);
 
   const numberOfQuestions = parseInt(payload.text) || DEFAULT_NUM_QUESTIONS;
   if (numberOfQuestions > MAX_QUESTIONS) {
     return await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
   }
 
-  const questions = await fetchQuizQuestions({numberOfQuestions});
+  const questions = await fetchQuizQuestions({ numberOfQuestions });
   await createNewQuiz(questions, payload.channel_id);
 
   const questionBlock = buildQuestionBlock({
