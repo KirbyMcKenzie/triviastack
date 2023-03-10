@@ -11,8 +11,9 @@ const DEFAULT_NUM_QUESTIONS = 10;
 const handleSubmitStartGame = async ({
   ack,
   body,
-  view,
   client,
+  logger,
+  view,
 }: SlackViewMiddlewareArgs<SlackViewAction> & AllMiddlewareArgs) => {
   await ack();
   const userId = body.user.id;
@@ -22,6 +23,8 @@ const handleSubmitStartGame = async ({
     input_select_categories,
     input_select_channel,
   } = view.state.values;
+
+  logger.info(`[VIEW] Submit new feedback called by ${userId}`);
 
   const channelId = input_select_channel.select_channel
     .selected_channel as string;

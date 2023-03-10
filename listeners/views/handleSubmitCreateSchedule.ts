@@ -6,7 +6,7 @@ import {
 import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
 import { createSchedule } from "services/scheduleService";
 
-// TODO: rework the fuck out of this
+// TODO: rework the fuck out of this haha
 const getDatetimeString = (time: string, timezone: string) => {
   const now = new Date(
     new Date().toLocaleString("en-US", { timeZone: timezone })
@@ -36,6 +36,7 @@ const getDatetimeString = (time: string, timezone: string) => {
 const handleSubmitCreateSchedule = async ({
   ack,
   body,
+  logger,
   view,
 }: SlackViewMiddlewareArgs<SlackViewAction> & AllMiddlewareArgs) => {
   await ack();
@@ -43,6 +44,7 @@ const handleSubmitCreateSchedule = async ({
   const userId = body.user.id;
   const teamId = body.team?.id;
   const { input_time, input_timezone, input_channel } = view.state.values;
+  logger.info(`[VIEW] Submit create scheduled called by ${userId}`);
 
   const channelId = input_channel.select_channel.selected_channel as string;
 

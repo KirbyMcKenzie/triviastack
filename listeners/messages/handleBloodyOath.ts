@@ -5,8 +5,13 @@ import {
 
 const handleBloodyOath = async ({
   client,
+  message,
+  logger,
   payload,
 }: SlackEventMiddlewareArgs<"message"> & AllMiddlewareArgs) => {
+  const user = (message as any).user;
+  logger.info(`[MESSAGE] Bloody Oath called by ${user.id}`);
+
   await client.reactions.add({
     name: "flag-au",
     channel: payload.channel,

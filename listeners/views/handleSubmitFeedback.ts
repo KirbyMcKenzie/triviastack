@@ -8,8 +8,9 @@ import { createFeedback } from "services/feedbackService";
 const handleSubmitFeedback = async ({
   ack,
   body,
-  view,
   client,
+  logger,
+  view,
 }: SlackViewMiddlewareArgs<SlackViewAction> & AllMiddlewareArgs) => {
   await ack();
   const user = body.user;
@@ -17,6 +18,9 @@ const handleSubmitFeedback = async ({
   const channelId = view.callback_id.split("_")[0];
   const feedback = view.state.values.input_feedback.feedback_input
     .value as string;
+
+  logger.info(`[VIEW] Submit new feedback called by ${user.id}`);
+
   await client.chat.postEphemeral({
     channel: channelId,
     user: user.id,
