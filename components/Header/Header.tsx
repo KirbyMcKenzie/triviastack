@@ -134,7 +134,7 @@ function Header() {
               </a>
             </Link>
           </div>
-          <span className="font-bold">triviabot.io</span>
+          <span className="font-bold text-lg">triviabot</span>
           <nav className="flex flex-grow">
             <ul className="flex flex-grow justify-end flex-wrap items-center">
               {/* <li>
