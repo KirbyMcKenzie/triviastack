@@ -4,15 +4,8 @@ import type { NextPage } from "next";
 
 const Home: NextPage = () => {
   return (
-    <div
-      style={{
-        padding: 12,
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
-    >
-      <h1 style={{ fontSize: 72, fontWeight: 800 }}>triviabot</h1>
+    <div className="p-4 flex items-center flex-col">
+      <h1 className="text-3xl font-bold mb-4">{"triviabot"}</h1>
       <a
         href="https://slack.com/oauth/v2/authorize?scope=channels%3Ahistory%2Cchat%3Awrite%2Ccommands%2Cim%3Ahistory%2Creactions%3Awrite%2Cchat%3Awrite.public&amp;state=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbnN0YWxsT3B0aW9ucyI6eyJzY29wZXMiOlsiY2hhbm5lbHM6aGlzdG9yeSIsImNoYXQ6d3JpdGUiLCJjb21tYW5kcyIsImltOmhpc3RvcnkiLCJyZWFjdGlvbnM6d3JpdGUiLCJjaGF0OndyaXRlLnB1YmxpYyJdfSwibm93IjoiMjAyMy0wMy0wNFQwOTowMzoxNi4zNjRaIiwiaWF0IjoxNjc3OTIwNTk2fQ.gnh6HKeOik5ViNC3aD6BiR4odVUCs_e0vF0bPFz1RdE&amp;client_id=2239800642963.4264761473666"
         // @ts-ignore
