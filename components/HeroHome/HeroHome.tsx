@@ -43,7 +43,7 @@ function HeroHome() {
           {/* Section header */}
           <div className="text-center pb-12 md:pb-16">
             <h1
-              className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4 max-w-[800px] mx-auto"
+              className="text-5xl md:text-6xl font-extrabold leading-relaxed tracking-normal mb-4 max-w-[800px] mx-auto"
               data-aos="zoom-y-out"
             >
               Keep your team engaged with{" "}
