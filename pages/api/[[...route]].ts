@@ -20,7 +20,7 @@ registerListeners(app);
 
 const router = receiver.start();
 
-router.get("/api", (_req: NextApiRequest, res: NextApiResponse) => {
+router.get("/api/health", (_req: NextApiRequest, res: NextApiResponse) => {
   res.status(200).json({
     health: "Alive and Kickin' ✌️",
   });
