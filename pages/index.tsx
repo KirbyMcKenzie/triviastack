@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 // import { createClient } from "@supabase/supabase-js";
+import Footer from "components/Footer/Footer";
 import Header from "components/Header/Header";
 import HeroHome from "components/HeroHome/HeroHome";
 import type { NextPage } from "next";
@@ -21,10 +22,9 @@ const Home: NextPage = () => {
         <Newsletter /> */}
         </main>
 
-        {/* <Banner />
+        {/* {/* <Banner /> */}
 
-      {/*  Site footer */}
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </>
   );
