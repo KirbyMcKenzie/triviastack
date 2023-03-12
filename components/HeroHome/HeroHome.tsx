@@ -53,12 +53,12 @@ function HeroHome() {
             </h1>
             <div className="max-w-3xl mx-auto">
               <p
-                className="text-xl text-gray-600 mb-8"
+                className="text-xl text-gray-600 mb-8 mx-[122px]"
                 data-aos="zoom-y-out"
                 data-aos-delay="150"
               >
-                Quick and easy trivia for your team! Join the excitement and
-                start playing today, no credit card required.
+                Discover a new way to have fun with your team on Slack. Start
+                playing for free today, no credit card required.
               </p>
               <div
                 className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center"
