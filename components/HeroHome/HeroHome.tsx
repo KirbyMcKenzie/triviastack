@@ -95,6 +95,7 @@ function HeroHome() {
                   autoPlay={true}
                   loop={true}
                   muted={true}
+                  controls={true}
                   className="rounded-lg"
                   src="/hero-video.mp4"
                 />
