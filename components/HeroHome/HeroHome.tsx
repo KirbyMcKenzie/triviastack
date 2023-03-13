@@ -28,8 +28,8 @@ function HeroHome() {
                 data-aos="zoom-y-out"
                 data-aos-delay="150"
               >
-                Discover a new way to have fun with your team on Slack. Start
-                playing for free today, no credit card required.
+                Discover a new way to have fun with your team on Slack.
+                {/* Start playing for free today, no credit card required. */}
               </p>
               <div
                 className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center"
