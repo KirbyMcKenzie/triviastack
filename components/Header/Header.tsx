@@ -17,7 +17,7 @@ function Header() {
   return (
     <header
       className={`fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out ${
-        !top && "bg-white backdrop-blur-sm shadow-lg"
+        !top && "bg-slate backdrop-blur-sm shadow-lg"
       }`}
     >
       <div className="max-w-6xl mx-auto px-5 sm:px-6">
@@ -28,13 +28,13 @@ function Header() {
             <Link href="/">
               <a className="block" aria-label="Cruip">
                 <svg
-                  width="36"
-                  height="36"
+                  width="42"
+                  height="42"
                   viewBox="0 0 32 32"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <rect width="32" height="32" rx="8" fill="black" />
+                  <rect width="32" height="32" rx="8" fill="#070C1E" />
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
@@ -77,7 +77,7 @@ function Header() {
                     d="M15.9492 15.6149L6.07917 11.4864L11.8584 5.72917L15.9492 15.6149Z"
                     fill="#D048E9"
                   />
-                  <g filter="url(#filter0_d_202_82)">
+                  <g filter="url(#filter0_d_203_26)">
                     <path
                       d="M15.0938 19.6912L10.6705 20.7341L11.979 16.382L15.0938 19.6912Z"
                       fill="white"
@@ -95,7 +95,7 @@ function Header() {
                   />
                   <defs>
                     <filter
-                      id="filter0_d_202_82"
+                      id="filter0_d_203_26"
                       x="6.67041"
                       y="10.646"
                       width="18.2627"
@@ -120,12 +120,12 @@ function Header() {
                       <feBlend
                         mode="normal"
                         in2="BackgroundImageFix"
-                        result="effect1_dropShadow_202_82"
+                        result="effect1_dropShadow_203_26"
                       />
                       <feBlend
                         mode="normal"
                         in="SourceGraphic"
-                        in2="effect1_dropShadow_202_82"
+                        in2="effect1_dropShadow_203_26"
                         result="shape"
                       />
                     </filter>
@@ -134,7 +134,7 @@ function Header() {
               </a>
             </Link>
           </div>
-          <span className="font-bold text-lg">triviabot</span>
+          <span className="font-bold text-xl">Triviabot</span>
           <nav className="flex flex-grow">
             <ul className="flex flex-grow justify-end flex-wrap items-center">
               {/* <li>

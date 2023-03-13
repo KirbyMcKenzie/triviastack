@@ -12,7 +12,7 @@ const Home: NextPage = () => {
       <Head>
         <title>triviabot</title>
       </Head>
-      <div className="flex flex-col min-h-screen overflow-hidden">
+      <div className="flex flex-col min-h-screen overflow-hidden bg-slate-900 text-white">
         <Header />
         <main className="flex-grow">
           <HeroHome />
