@@ -14,7 +14,7 @@ function HeroHome() {
           {/* Section header */}
           <div className="text-center pb-12 md:pb-16">
             <h1
-              className="text-5xl md:text-6xl font-extrabold leading-relaxed tracking-normal mb-4 max-w-[800px] mx-auto"
+              className="text-5xl md:text-6xl font-extrabold leading-tight md:leading-snug md:tracking-normal mb-4 max-w-[800px] mx-auto"
               data-aos="zoom-y-out"
             >
               Keep your team engaged with{" "}
@@ -24,7 +24,7 @@ function HeroHome() {
             </h1>
             <div className="max-w-3xl mx-auto">
               <p
-                className="text-xl text-slate-400 mb-8 mx-[122px]"
+                className="text-xl text-slate-400 mb-8 max-w-[500px] mx-auto px-4 md:px-0"
                 data-aos="zoom-y-out"
                 data-aos-delay="150"
               >

@@ -34,7 +34,7 @@ function Header() {
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <rect width="32" height="32" rx="8" fill="#070C1E" />
+                  <rect width="32" height="32" rx="8" fill="#0B1126" />
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
