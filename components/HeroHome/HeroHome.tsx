@@ -44,7 +44,7 @@ function HeroHome() {
                     color: "#000",
                     backgroundColor: "#fff",
                     border: "1px solid #ddd",
-                    borderRadius: 48,
+                    borderRadius: 12,
                     display: "inline-flex",
                     fontFamily: "font-family:Lato, sans-serif",
                     fontSize: "16px",
@@ -52,7 +52,7 @@ function HeroHome() {
                     paddingRight: 20,
                     fontWeight: 600,
                     height: 54,
-                    width: 210,
+                    width: 186,
                     justifyContent: "center",
                     textDecoration: "none",
                   }}
@@ -86,16 +86,17 @@ function HeroHome() {
           </div>
           <div>
             <div
-              className="relative flex justify-center mb-8"
+              className="relative flex justify-center"
               data-aos="zoom-y-out"
               data-aos-delay="450"
             >
-              <div className="flex flex-col justify-center max-w-4xl">
+              <div className="flex flex-col justify-center max-w-4xl min-w-[800px] min-h-[600px] bg-slate-800 rounded-lg">
                 <video
                   autoPlay={true}
                   loop={true}
                   muted={true}
                   controls={true}
+                  playsInline={true}
                   className="rounded-lg"
                   src="/hero-video.mp4"
                 />
