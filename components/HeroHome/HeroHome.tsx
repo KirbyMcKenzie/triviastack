@@ -90,7 +90,7 @@ function HeroHome() {
               data-aos="zoom-y-out"
               data-aos-delay="450"
             >
-              <div className="flex flex-col justify-center max-w-4xl min-w-[800px] min-h-[600px] bg-slate-800 rounded-lg">
+              <div className="flex flex-col justify-center max-w-4xl md:min-w-[800px] md:min-h-[600px] bg-slate-800 rounded-lg">
                 <video
                   autoPlay={true}
                   loop={true}
