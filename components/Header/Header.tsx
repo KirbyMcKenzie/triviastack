@@ -21,7 +21,7 @@ function Header() {
       }`}
     >
       <div className="max-w-6xl mx-auto px-5 sm:px-6">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-14 md:h-16">
           {/* Site branding */}
           <div className="flex-shrink-0 mr-2">
             {/* Logo */}
