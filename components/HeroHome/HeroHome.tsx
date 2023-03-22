@@ -1,4 +1,5 @@
 import ButtonAddToSlack from "components/ButtonAddToSlack/ButtonAddToSlack";
+import TextGradient from "components/TextGradient/TextGradient";
 import React, { useState } from "react";
 
 function HeroHome() {
@@ -10,17 +11,15 @@ function HeroHome() {
           {/* Section header */}
           <div className="text-center pb-12 md:pb-16">
             <h1
-              className="text-5xl md:text-6xl font-extrabold leading-tight md:leading-tight md:tracking-normal mb-4 max-w-[800px] mx-auto"
+              className="text-4xl md:text-6xl font-extrabold leading-tight md:leading-tight md:tracking-normal mb-4 max-w-[800px] mx-auto"
               data-aos="zoom-y-out"
             >
               Keep your team engaged with{" "}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-yellow-400">
-                Trivia for Slack
-              </span>
+              <TextGradient>Trivia for Slack</TextGradient>
             </h1>
             <div className="max-w-3xl mx-auto">
               <p
-                className="text-xl text-slate-400 mb-8 max-w-[500px] mx-auto px-4 md:px-0"
+                className="text-lg md:text-xl text-slate-400 mb-8 max-w-[500px] mx-auto px-4 md:px-0"
                 data-aos="zoom-y-out"
                 data-aos-delay="150"
               >
