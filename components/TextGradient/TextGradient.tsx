@@ -24,7 +24,9 @@ const TextGradient: FC<Props> = ({
 }) => {
   return (
     <span
-      className={`bg-clip-text text-transparent bg-gradient-to-r from-${from}-500 to-${to}-400`}
+      className={
+        "bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-yellow-400"
+      }
     >
       {children}
     </span>
