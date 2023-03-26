@@ -1,14 +1,12 @@
+import React, { FC } from "react";
 import ButtonAddToSlack from "components/ButtonAddToSlack/ButtonAddToSlack";
 import TextGradient from "components/TextGradient/TextGradient";
-import React, { useState } from "react";
 
-function HeroHome() {
+const HeroHome: FC = () => {
   return (
     <section>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        {/* Hero content */}
         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
-          {/* Section header */}
           <div className="text-center pb-12 md:pb-16">
             <h1
               className="text-4xl md:text-6xl font-extrabold leading-tight md:leading-tight md:tracking-normal mb-4 max-w-[800px] mx-auto"
@@ -39,7 +37,7 @@ function HeroHome() {
             data-aos="zoom-y-out"
             data-aos-delay="450"
           >
-            <div className="flex flex-col justify-center max-w-4xl md:min-w-[800px] md:min-h-[600px] bg-slate-800 rounded-lg">
+            <div className="flex flex-col justify-center max-w-4xl md:min-w-[800px] md:min-h-[600px] rounded-lg">
               <video
                 autoPlay={true}
                 loop={true}
@@ -55,6 +53,6 @@ function HeroHome() {
       </div>
     </section>
   );
-}
+};
 
 export default HeroHome;

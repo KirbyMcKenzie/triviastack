@@ -17,8 +17,36 @@ const Home: NextPage = () => {
         }}
       >
         <Header />
-        <main className="flex-grow">
+        <main className="flex-grow max-w-8 mx-auto px-5 text-center">
           <HeroHome />
+          <section className="mb-16">
+            <h2 className="text-2xl md:text-4xl font-extrabold leading-tight md:leading-tight md:tracking-normal mb-3">
+              ⚡️ Quick Trivia
+            </h2>
+            <p className="max-w-xl mx-auto text-lg">
+              Instantly create a trivia in a channel using the /trivia command.
+              You can customize your instant trivia settings in the Triviabot
+              app home.{" "}
+            </p>
+          </section>
+          <section className="my-16">
+            <h2 className="text-2xl md:text-4xl font-extrabold leading-tight md:leading-tight md:tracking-normal mb-3">
+              😎 Create your own Trivia
+            </h2>
+            <p className="max-w-xl mx-auto text-lg">
+              Choose your own adventure, select the difficulty level,
+              categories, or the number of questions to make each game unique.
+            </p>
+          </section>
+          <section className="my-16">
+            <h2 className="text-2xl md:text-4xl font-extrabold leading-tight md:leading-tight md:tracking-normal mb-3">
+              ⏳ Daily trivia (coming soon)
+            </h2>
+            <p className="max-w-xl mx-auto text-lg">
+              Start a game at the same time everyday. It&apos;s a great way to
+              bond with your team and build a sense of friendly competition.
+            </p>
+          </section>
         </main>
         <Footer />
       </div>
