@@ -47,6 +47,16 @@ const Home: NextPage = () => {
               bond with your team and build a sense of friendly competition.
             </p>
           </section>
+          <section className="my-16">
+            <h2 className="text-2xl md:text-4xl font-extrabold leading-tight md:leading-tight md:tracking-normal mb-3">
+              🪄 Easy to use
+            </h2>
+            <p className="max-w-xl mx-auto text-lg">
+              No need to download any software or navigate confusing interfaces.
+              Triviabot integrates seamlessly with Slack, making it easy to use
+              for anyone in your organization.
+            </p>
+          </section>
         </main>
         <Footer />
       </div>
