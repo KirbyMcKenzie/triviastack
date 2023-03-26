@@ -7,7 +7,7 @@ const Support: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Triviabot - Support</title>
+        <title>Triviabot - Privacy Policy</title>
       </Head>
       <div className="flex flex-col min-h-screen overflow-hidden bg-slate-900 text-white">
         <Header />
