@@ -7,7 +7,6 @@ import { WebClient } from "@slack/web-api";
 import { buildQuestionBlock } from "utils/blocks";
 import { fetchQuizQuestions, createNewQuiz } from "services/quizService";
 
-// Initialize
 const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   clientId: process.env.SLACK_CLIENT_ID,

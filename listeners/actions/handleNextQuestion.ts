@@ -45,8 +45,6 @@ const handleNextQuestion = async ({
     return;
   }
 
-  await updateQuizCurrentQuestion(id, currentQuestion + 1);
-
   const questionBlock = buildQuestionBlock({
     question: nextQuestion,
     currentQuestion: currentQuestion + 1,
@@ -56,6 +54,7 @@ const handleNextQuestion = async ({
   });
 
   await respond(questionBlock);
+  await updateQuizCurrentQuestion(id, currentQuestion + 1);
 };
 
 export default handleNextQuestion;
