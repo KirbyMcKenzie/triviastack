@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import ButtonAddToSlack from "components/ButtonAddToSlack/ButtonAddToSlack";
-import TextGradient from "components/TextGradient/TextGradient";
+import ButtonAddToSlack from "components/ButtonAddToSlack";
+import TextGradient from "components/TextGradient";
 
 const HeroHome: FC = () => {
   return (
@@ -24,7 +24,7 @@ const HeroHome: FC = () => {
                 Discover a new way to have fun with your team on Slack
               </p>
               <div
-                className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center"
+                className="max-w-xs mx-auto mt-10 sm:max-w-none sm:flex sm:justify-center"
                 data-aos="zoom-y-out"
                 data-aos-delay="300"
               >
