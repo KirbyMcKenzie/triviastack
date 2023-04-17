@@ -24,7 +24,7 @@ const handleSubmitStartGame = async ({
     input_select_channel,
   } = view.state.values;
 
-  logger.info(`[VIEW] Submit new feedback called by ${userId}`);
+  logger.info(`[VIEW] Submit start game by ${userId}`);
 
   const channelId = input_select_channel.select_channel
     .selected_channel as string;
