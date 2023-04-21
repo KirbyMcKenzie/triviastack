@@ -1,12 +1,14 @@
 display_information:
-  name: triviabot
+  name: Triviabot
+  description: Quick and simple trivia to keep your team engaged
+  background_color: "#000000"
 features:
   app_home:
     home_tab_enabled: true
     messages_tab_enabled: false
     messages_tab_read_only_enabled: false
   bot_user:
-    display_name: triviabot
+    display_name: Triviabot
     always_online: true
   slash_commands:
     - command: /trivia
