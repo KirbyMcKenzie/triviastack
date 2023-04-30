@@ -35,7 +35,7 @@ const Home: NextPage = () => {
           </section>
           <section className="my-16">
             <h2 className="text-2xl md:text-4xl font-extrabold leading-tight md:leading-tight md:tracking-normal mb-3">
-              ⏳ Daily trivia (coming soon)
+              ⏳ Daily trivia
             </h2>
             <p className="max-w-xl mx-auto text-lg">
               Start a game at the same time everyday. It&apos;s a great way to
