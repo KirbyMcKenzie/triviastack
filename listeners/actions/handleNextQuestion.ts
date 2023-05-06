@@ -34,6 +34,7 @@ const handleNextQuestion = async ({
 
   if (currentQuestion === questions.length) {
     //@ts-ignore
+    // TODO: double check if this is still working
     await updateQuiz(id, { is_active: false });
 
     const score = updatedQuestions.filter(

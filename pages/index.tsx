@@ -10,7 +10,12 @@ const Home: NextPage = () => {
       <Head>
         <title>Triviabot</title>
       </Head>
-      <div className="flex flex-col min-h-screen overflow-hidden text-white">
+      <div
+        className="flex flex-col min-h-screen overflow-hidden text-white"
+        style={{
+          background: "linear-gradient(180deg, #000000 0%, #111729 62.5%)",
+        }}
+      >
         <Header />
         <main className="flex-grow max-w-8 mx-auto px-5 text-center">
           <HeroHome />
