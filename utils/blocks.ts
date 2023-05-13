@@ -97,7 +97,9 @@ export const buildQuestionBlock = ({
                 type: "mrkdwn",
                 text: `<@${userId}> answered with *${decode(answeredValue)}*\n${
                   answeredValue !== question.correctAnswer
-                    ? `Correct answer: *${decode(question.correctAnswer)}*`
+                    ? `Correct answer: *${decode(
+                        question.correctAnswer.trim()
+                      )}*`
                     : ""
                 }`,
               },
