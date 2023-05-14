@@ -54,7 +54,11 @@ const handleNextQuestion = async ({
     userId,
   });
 
-  await respond(questionBlock).catch((error) => logger.error(`[ACTION] next question respond question block - ${error}`));
+  logger.info(`[ACTION] next question block: ${questionBlock}`);
+
+  await respond(questionBlock).catch((error) =>
+    logger.error(`[ACTION] next question respond question block - ${error}`)
+  );
   await updateQuizCurrentQuestion(id, currentQuestion + 1);
 };
 
