@@ -12,6 +12,7 @@ const Home: NextPage = () => {
       </Head>
       <div
         className="flex flex-col min-h-screen overflow-hidden text-white"
+        // TODO: Move to tw config
         style={{
           background: "linear-gradient(180deg, #000000 0%, #111729 62.5%)",
         }}
