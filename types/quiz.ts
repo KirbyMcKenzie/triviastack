@@ -1,4 +1,3 @@
-// TODO: investigate type generation from SB
 export interface Quiz {
   id: string;
   channelId: string;
@@ -12,7 +11,6 @@ export interface Quiz {
 export interface Question {
   category: string;
   type: "Multiple Choice" | "boolean";
-  // type: "multiple" | "boolean";
   difficulty: string;
   question: string;
   correctAnswer: string;

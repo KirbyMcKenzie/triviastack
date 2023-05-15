@@ -8,8 +8,6 @@ import handleOpenModalCreateGame from "./handleOpenModalCreateGame";
 import handlePlayAgain from "./handlePlayAgain";
 import handleOpenModalCreateSchedule from "./handleOpenModalCreateSchedule";
 
-// TODO: figure out if theres a way to introduce logging at this level
-// or even for all listeners?
 const registerActions = (app: App) => {
   app.action(/answer_question/, handleAnswerQuestion);
   app.action(/dismiss/, handleDismiss);
