@@ -27,7 +27,6 @@ const handleQuickQuiz = async ({
   }
 
   const questions = await fetchQuizQuestions({ numberOfQuestions });
-  await createNewQuiz(questions, payload.channel_id);
 
   const questionBlock = buildQuestionBlock({
     question: questions[0],
@@ -38,6 +37,7 @@ const handleQuickQuiz = async ({
   });
 
   await say(questionBlock);
+  await createNewQuiz(questions, payload.channel_id);
 };
 
 export default handleQuickQuiz;
