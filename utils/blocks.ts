@@ -18,7 +18,6 @@ export interface QuestionBlockProps {
 export interface QuestionAnswerBlockProps {
   answers: string[];
   type: "Multiple Choice" | "boolean";
-  // type: "multiple" | "boolean";
   answerValue: string | undefined;
   correctAnswer: string | undefined;
   disableButtons?: boolean;
@@ -98,8 +97,8 @@ export const buildQuestionBlock = ({
                 text: `<@${userId}> answered with *${decode(answeredValue)}*\n${
                   answeredValue !== question.correctAnswer
                     ? `Correct answer: *${decode(
-                        question.correctAnswer.trim()
-                      )}*`
+                        question.correctAnswer
+                      )?.trim()}*`
                     : ""
                 }`,
               },
@@ -195,7 +194,7 @@ export const buildQuestionAnswersBlock = ({
     },
 
     action_id: disableButtons ? `noop${index}` : `answer_question${index}`,
-    value: answer,
+    value: decode(answer),
   }));
 };
 
