@@ -15,6 +15,14 @@ const handleNextQuestion = async ({
 }: SlackActionMiddlewareArgs & AllMiddlewareArgs) => {
   await ack();
 
+
+
+  // get first unansweredQuestion
+    // if none, finish the game
+  // respond with latest question
+  
+
+
   const answerValue = (body as any).actions[0].value;
   const channelId = body?.channel?.id || "";
   const userId = body?.user.id;
