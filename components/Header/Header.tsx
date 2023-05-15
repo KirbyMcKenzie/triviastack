@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 function Header() {
   const [top, setTop] = useState(true);
 
-  // detect whether user has scrolled the page down by 10px
   useEffect(() => {
     const scrollHandler = () => {
       window.pageYOffset > 10 ? setTop(false) : setTop(true);
