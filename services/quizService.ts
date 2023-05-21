@@ -95,10 +95,8 @@ export const fetchQuizQuestions = async ({
 
   const data = await apiClient
     .get(`https://the-trivia-api.com/api/questions?${query}`)
-    .then((res) => console.log(res, "res") || res.data);
+    .then((res) => res.data);
 
-  // TODO: remove
-  // console.log(data, "fetchQuizQuestions data");
   return data.map((question: Question) => ({
     ...question,
     answers: shuffle([question.correctAnswer, ...question.incorrectAnswers]),
