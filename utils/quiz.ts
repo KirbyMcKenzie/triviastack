@@ -24,7 +24,7 @@ export const getGameOverEmoji = (score: number, max: number): string => {
 
   switch (true) {
     case percent >= 100:
-      return getRandomCollectionItem(["💯💯💯", "🏆🏆🏆", "💎💎💎"]);
+      return getRandomCollectionItem(["💯", "🏆", "💎"]);
     case percent < 100 && percent >= 80:
       return getRandomCollectionItem(["🔥", "💃", "🕺", "🤩", "🧐", "🥇"]);
     case percent < 80 && percent >= 60:
@@ -77,40 +77,40 @@ export const GOOD_SCORE_RESPONSES = [
 ];
 
 export const OKAY_SCORE_RESPONSES = [
-  "Okay, not bad! You're getting there!",
+  "Okay, not bad!",
   "Decent effort! Keep practicing!",
   "Not too shabby! Keep it up!",
   "Nice try! Keep going!",
-  "You're making progress! Okay score!",
-  "Not bad at all! Keep it up!",
-  "You're on the right path! Okay score!",
+  "Not bad, but not good",
+  "You're on the right path!",
   "Good effort! Okay score!",
-  "Well done! You're improving! Okay score!",
-  "You're getting better! Okay score!",
+  "Well done! You're improving!",
+  "You're getting better!",
+  "There's more room for improvement",
 ];
 
 export const POOR_SCORE_RESPONSES = [
-  "Hmm, a little off this time.",
+  "Okay.. a little off this time.",
   "Keep trying! You'll improve!",
   "Don't worry! You'll get better!",
-  "You can do it! Poor score!",
   "Mistakes happen! Keep going!",
-  "Don't give up! Poor score!",
-  "Keep practicing! Poor score!",
-  "It's okay! You'll bounce back!",
-  "Stay positive! Poor score!",
-  "You're learning! Poor score!",
+  "Don't give up!",
+  "Keep practicing!",
+  "It's okay, you'll bounce back!",
+  "Yeah not good, but you will improve!",
 ];
 
 export const AWFUL_SCORE_RESPONSES = [
   "Oh damn, didn't even get one correct",
-  "Thats embarrassing",
+  "Thats honestly just embarrassing",
   "oof",
-  "Yikes",
+  "Yikes.",
+  "Clearly not cheating",
   "What a train wreck!",
   "Did you forget how to play?",
   "Better luck next time!",
   "(╯°□°)╯︵ ┻━┻",
+  "😭😭😭😭😭😭😭",
 ];
 
 export const SCORE_RESPONSES = {
