@@ -86,7 +86,7 @@ export const fetchQuizQuestions = async ({
 }): Promise<Question[]> => {
   const query = queryString.stringify(
     {
-      limit: numberOfQuestions,
+      limit: numberOfQuestions + 10,
       difficulty,
       categories: categories?.length === 10 ? [] : categories,
     },
@@ -97,8 +97,15 @@ export const fetchQuizQuestions = async ({
     .get(`https://the-trivia-api.com/api/questions?${query}`)
     .then((res) => res.data);
 
-  return data.map((question: Question) => ({
-    ...question,
-    answers: shuffle([question.correctAnswer, ...question.incorrectAnswers]),
-  }));
+  return data
+    .filter(
+      (question: Question) =>
+        question.correctAnswer.length <= 32 &&
+        question.incorrectAnswers.every((answer) => answer.length <= 32)
+    )
+    .map((question: Question) => ({
+      ...question,
+      answers: shuffle([question.correctAnswer, ...question.incorrectAnswers]),
+    }))
+    .slice(0, numberOfQuestions);
 };
