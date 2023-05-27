@@ -79,6 +79,7 @@ export const updateQuiz = async (
     .eq("id", id);
 };
 
+// TODO: Rework this to not get twice as many questions as needed
 export const fetchQuizQuestions = async ({
   numberOfQuestions = 10,
   difficulty = undefined,
@@ -86,7 +87,7 @@ export const fetchQuizQuestions = async ({
 }): Promise<Question[]> => {
   const query = queryString.stringify(
     {
-      limit: numberOfQuestions + 10,
+      limit: numberOfQuestions * 2,
       difficulty,
       categories: categories?.length === 10 ? [] : categories,
     },
