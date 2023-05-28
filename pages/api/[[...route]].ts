@@ -26,38 +26,40 @@ router.get("/api/health", (_req: NextApiRequest, res: NextApiResponse) => {
 });
 
 // TODO: come back to this
-// router.get("/api/jobs", async (_req: NextApiRequest, res: NextApiResponse) => {
-//   // TODO: create schedule
-//   // TODO: every 15min, this endpoint is hit
-//   // TODO:  check schedule for new quizzes
-//   // TODO: create quiz then post in channel
-//   // TODO: repeat as before
+router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
+  // TODO: create schedule
+  // TODO: every 15min, this endpoint is hit
+  // TODO:  check schedule for new quizzes
+  // TODO: create quiz then post in channel
+  // TODO: repeat as before
 
-//   const web = new WebClient(process.env.SLACK_BOT_TOKEN);
+  console.log(req, "new job request");
 
-//   // TODO: pull from quick quiz settings
-//   const questions = await fetchQuizQuestions({ numberOfQuestions: 10 });
+  // const web = new WebClient(process.env.SLACK_BOT_TOKEN);
 
-//   // TODO: pull channelId from installationStore
-//   await createNewQuiz(questions, "C0271PJK1A7");
+  // // TODO: pull from quick quiz settings
+  // const questions = await fetchQuizQuestions({ numberOfQuestions: 10 });
 
-//   const questionBlock = buildQuestionBlock({
-//     question: questions[0],
-//     currentQuestion: 1,
-//     totalQuestions: questions.length,
-//     // isSuperQuiz: previousQuestions.length === MAX_QUESTIONS,
-//     isFirstGame: true,
-//     userId: "U027E7FV733", // TODO: pull from installationStore
-//   });
+  // // TODO: pull channelId from installationStore
+  // await createNewQuiz(questions, "C0271PJK1A7");
 
-//   const result = await web.chat.postMessage({
-//     channel: "C0271PJK1A7",
-//     ...questionBlock,
-//   });
+  // const questionBlock = buildQuestionBlock({
+  //   question: questions[0],
+  //   currentQuestion: 1,
+  //   totalQuestions: questions.length,
+  //   // isSuperQuiz: previousQuestions.length === MAX_QUESTIONS,
+  //   isFirstGame: true,
+  //   userId: "U027E7FV733", // TODO: pull from installationStore
+  // });
 
-//   res.status(200).json({
-//     status: "Jobs in Progress ⚙️",
-//   });
-// });
+  // const result = await web.chat.postMessage({
+  //   channel: "C0271PJK1A7",
+  //   ...questionBlock,
+  // });
+
+  res.status(200).json({
+    status: "Jobs in Progress ⚙️",
+  });
+});
 
 export default router;

@@ -17,7 +17,11 @@ export interface Job {
   error?: string;
 }
 
-export type NewJob = Omit<Job, "id" | "status" | "updatedAt" | "createdAt">;
+export interface NewJob {
+  type: JobType;
+  payload?: unknown;
+  createdBy: string;
+}
 
 export const createNewJob = async ({
   type,

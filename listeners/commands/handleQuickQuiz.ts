@@ -2,6 +2,7 @@ import {
   AllMiddlewareArgs,
   SlackCommandMiddlewareArgs,
 } from "@slack/bolt/dist/types";
+import { createNewJob } from "services/jobService";
 import { createNewQuiz, fetchQuizQuestions } from "services/quizService";
 import {
   buildErrorMaxQuestionsExceeded,
@@ -38,6 +39,14 @@ const handleQuickQuiz = async ({
 
   await say(questionBlock);
   await createNewQuiz(questions, payload.channel_id);
+  await createNewJob({
+    createdBy: payload.user_id,
+    type: "CREATE_QUIZ",
+    payload: {
+      channel_id: payload.channel_id,
+      number_of_questions: numberOfQuestions,
+    },
+  });
 };
 
 export default handleQuickQuiz;
