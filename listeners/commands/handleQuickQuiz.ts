@@ -9,6 +9,8 @@ import {
   buildQuestionBlock,
 } from "utils/blocks";
 
+const isDev = process.env.NODE_ENV === "development";
+
 const DEFAULT_NUM_QUESTIONS = 10;
 const MAX_QUESTIONS = 50;
 
@@ -27,26 +29,29 @@ const handleQuickQuiz = async ({
     return await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
   }
 
-  const questions = await fetchQuizQuestions({ numberOfQuestions });
+  if (isDev) {
+    return await createNewJob({
+      createdBy: payload.user_id,
+      type: "CREATE_QUIZ",
+      payload: {
+        channel_id: payload.channel_id,
+        number_of_questions: numberOfQuestions,
+      },
+    });
+  } else {
+    const questions = await fetchQuizQuestions({ numberOfQuestions });
 
-  const questionBlock = buildQuestionBlock({
-    question: questions[0],
-    currentQuestion: 1,
-    totalQuestions: questions.length,
-    userId: payload.user_id,
-    isSuperQuiz: numberOfQuestions === MAX_QUESTIONS,
-  });
+    const questionBlock = buildQuestionBlock({
+      question: questions[0],
+      currentQuestion: 1,
+      totalQuestions: questions.length,
+      userId: payload.user_id,
+      isSuperQuiz: numberOfQuestions === MAX_QUESTIONS,
+    });
 
-  await say(questionBlock);
-  await createNewQuiz(questions, payload.channel_id);
-  await createNewJob({
-    createdBy: payload.user_id,
-    type: "CREATE_QUIZ",
-    payload: {
-      channel_id: payload.channel_id,
-      number_of_questions: numberOfQuestions,
-    },
-  });
+    await say(questionBlock);
+    await createNewQuiz(questions, payload.channel_id);
+  }
 };
 
 export default handleQuickQuiz;
