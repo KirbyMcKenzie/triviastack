@@ -9,7 +9,7 @@ import {
   buildQuestionBlock,
 } from "utils/blocks";
 
-const isDev = process.env.NODE_ENV === "development";
+const useNewQuizFlow = process.env.USE_NEW_QUIZ_FLOW === "enabled";
 
 const DEFAULT_NUM_QUESTIONS = 10;
 const MAX_QUESTIONS = 50;
@@ -29,7 +29,7 @@ const handleQuickQuiz = async ({
     return await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
   }
 
-  if (isDev) {
+  if (useNewQuizFlow) {
     return await createNewJob({
       createdBy: payload.user_id,
       type: "CREATE_QUIZ",
