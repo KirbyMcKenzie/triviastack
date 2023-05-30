@@ -27,6 +27,7 @@ router.get("/api/health", (_req: NextApiRequest, res: NextApiResponse) => {
 });
 
 // TODO: currently not returning any errors
+// TODO: add proper logging
 router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
   // TODO: create schedule
   // TODO: every 15min, this endpoint is hit
@@ -34,26 +35,12 @@ router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
   // TODO: create quiz then post in channel
   // TODO: repeat as before
 
-  const requestBody = camelizeKeys(req.body);
+  const { record } = camelizeKeys(req.body);
+  const { createdBy } = record;
+  const { channelId, numberOfQuestions } = record.payload;
 
-  console.log(requestBody, "new job request");
-  console.log(requestBody.record.payload, "new job payload");
-
-  console.log(requestBody.record.payload.numberOfQuestions, "-=-=- got here 1");
-
-  const questions = await fetchQuizQuestions({
-    numberOfQuestions: requestBody.record.payload.numberOfQuestions,
-  });
-
-  console.log("-=-=- got here 2");
-
-  const web = new WebClient(process.env.SLACK_BOT_TOKEN);
-
-  console.log(web, "web");
-
-  // // TODO: pull from quick quiz settings
-  // const questions = await fetchQuizQuestions({ numberOfQuestions: 10 });
-  const newQuizResult = await createNewQuiz(questions, "C04ALQ1EJ7P");
+  const questions = await fetchQuizQuestions({ numberOfQuestions });
+  const newQuizResult = await createNewQuiz(questions, channelId);
 
   console.log(newQuizResult, "result::newQuizResult");
 
@@ -63,11 +50,13 @@ router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
     totalQuestions: questions.length,
     // isSuperQuiz: previousQuestions.length === MAX_QUESTIONS,
     isFirstGame: true,
-    userId: "U027E7FV733", // TODO: pull from installationStore
+    userId: createdBy,
   });
 
+  const web = new WebClient(process.env.SLACK_BOT_TOKEN);
+
   const result = await web.chat.postMessage({
-    channel: "C04ALQ1EJ7P",
+    channel: channelId,
     ...questionBlock,
   });
 
