@@ -7,6 +7,7 @@ import { WebClient } from "@slack/web-api";
 import { buildQuestionBlock } from "utils/blocks";
 import { fetchQuizQuestions, createNewQuiz } from "services/quizService";
 import { camelizeKeys } from "humps";
+import { getInstallationStore } from "services/installationStoreService";
 
 const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
@@ -36,13 +37,12 @@ router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
   // TODO: repeat as before
 
   const { record } = camelizeKeys(req.body);
-  const { createdBy } = record;
+  const { createdBy, teamId } = record;
   const { channelId, numberOfQuestions } = record.payload;
 
   const questions = await fetchQuizQuestions({ numberOfQuestions });
   const newQuizResult = await createNewQuiz(questions, channelId);
-
-  console.log(newQuizResult, "result::newQuizResult");
+  const { bot } = await getInstallationStore(teamId);
 
   const questionBlock = buildQuestionBlock({
     question: questions[0],
@@ -53,10 +53,7 @@ router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
     userId: createdBy,
   });
 
-  // TODO: update this to get SLACK_BOT_TOKEN from install store
-  const web = new WebClient(process.env.SLACK_BOT_TOKEN);
-
-  const result = await web.chat.postMessage({
+  const result = await new WebClient(bot?.token).chat.postMessage({
     channel: channelId,
     ...questionBlock,
   });
