@@ -32,6 +32,7 @@ const handleQuickQuiz = async ({
   if (useNewQuizFlow) {
     return await createNewJob({
       createdBy: payload.user_id,
+      teamId: payload.team_id,
       type: "CREATE_QUIZ",
       payload: {
         channel_id: payload.channel_id,

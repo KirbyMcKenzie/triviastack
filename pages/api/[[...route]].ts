@@ -53,6 +53,7 @@ router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
     userId: createdBy,
   });
 
+  // TODO: update this to get SLACK_BOT_TOKEN from install store
   const web = new WebClient(process.env.SLACK_BOT_TOKEN);
 
   const result = await web.chat.postMessage({
