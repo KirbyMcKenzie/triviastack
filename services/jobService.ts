@@ -43,3 +43,10 @@ export const createNewJob = async ({
   error && console.log(error, "[SQL ERROR]");
   return camelizeKeys(data) as unknown as Job;
 };
+
+export const updateJob = async ({
+  id,
+  ...job
+}: Partial<Job>): Promise<void> => {
+  await supabase.from("jobs").update({ job }).eq("id", id);
+};

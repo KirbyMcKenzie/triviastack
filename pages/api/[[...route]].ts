@@ -8,6 +8,7 @@ import { buildQuestionBlock } from "utils/blocks";
 import { fetchQuizQuestions, createNewQuiz } from "services/quizService";
 import { camelizeKeys } from "humps";
 import { getInstallationStore } from "services/installationStoreService";
+import { updateJob } from "services/jobService";
 
 const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
@@ -37,28 +38,34 @@ router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
   // TODO: repeat as before
 
   const { record } = camelizeKeys(req.body);
-  const { createdBy, teamId } = record;
+  const { createdBy, teamId, id } = record;
   const { channelId, numberOfQuestions } = record.payload;
 
   const questions = await fetchQuizQuestions({ numberOfQuestions });
-  const newQuizResult = await createNewQuiz(questions, channelId);
+  await createNewQuiz(questions, channelId);
   const { bot } = await getInstallationStore(teamId);
 
   const questionBlock = buildQuestionBlock({
     question: questions[0],
     currentQuestion: 1,
-    totalQuestions: questions.length,
+    totalQuestions: numberOfQuestions,
     // isSuperQuiz: previousQuestions.length === MAX_QUESTIONS,
     isFirstGame: true,
     userId: createdBy,
   });
 
-  const result = await new WebClient(bot?.token).chat.postMessage({
-    channel: channelId,
-    ...questionBlock,
-  });
-
-  console.log(result, "result::postMessage");
+  await new WebClient(bot?.token).chat
+    .postMessage({
+      channel: channelId,
+      ...questionBlock,
+    })
+    .then(async () => {
+      await updateJob({
+        id,
+        status: "completed",
+        updatedAt: new Date().toISOString(),
+      });
+    });
 
   res.status(200).json({
     status: "Jobs in Progress ⚙️",
