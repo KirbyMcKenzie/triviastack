@@ -38,8 +38,15 @@ router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
   // TODO: repeat as before
 
   const { record } = camelizeKeys(req.body);
-  const { createdBy, teamId, id } = record;
-  const { channelId, numberOfQuestions } = record.payload;
+  const { createdBy, teamId, id, status, payload } = record;
+  const { channelId, numberOfQuestions } = payload;
+
+  console.log(`[JOBS] Job record updated - id: ${id}`);
+
+  if (status === "completed" || status === "failed") {
+    console.log(`[JOBS] Job record ignored with status: ${status} - id: ${id}`);
+    return await res.status(204);
+  }
 
   const questions = await fetchQuizQuestions({ numberOfQuestions });
   await createNewQuiz(questions, channelId);
@@ -54,12 +61,15 @@ router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
     userId: createdBy,
   });
 
+  // TODO: add catch for fail
   await new WebClient(bot?.token).chat
     .postMessage({
       channel: channelId,
       ...questionBlock,
     })
     .then(async () => {
+      console.log(`[JOBS] New quic created, updating job status - id: ${id}`);
+
       await updateJob({
         id,
         status: "completed",
@@ -67,6 +77,7 @@ router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
       });
     });
 
+  // TODO: refine
   res.status(200).json({
     status: "Jobs in Progress ⚙️",
   });

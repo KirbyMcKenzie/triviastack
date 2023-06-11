@@ -30,6 +30,7 @@ const handleQuickQuiz = async ({
   }
 
   if (useNewQuizFlow) {
+    logger.info(`[COMMAND] Creating new quiz via job`);
     return await createNewJob({
       createdBy: payload.user_id,
       teamId: payload.team_id,
@@ -40,6 +41,8 @@ const handleQuickQuiz = async ({
       },
     });
   } else {
+    logger.info(`[COMMAND] Creating new quiz via old workflow`);
+
     const questions = await fetchQuizQuestions({ numberOfQuestions });
 
     const questionBlock = buildQuestionBlock({

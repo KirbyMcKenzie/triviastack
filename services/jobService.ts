@@ -1,5 +1,5 @@
 import { supabase } from "clients/supabase";
-import { camelizeKeys } from "humps";
+import { camelizeKeys, decamelizeKeys } from "humps";
 
 export type JobType = "CREATE_QUIZ";
 
@@ -44,9 +44,10 @@ export const createNewJob = async ({
   return camelizeKeys(data) as unknown as Job;
 };
 
-export const updateJob = async ({
-  id,
-  ...job
-}: Partial<Job>): Promise<void> => {
-  await supabase.from("jobs").update({ job }).eq("id", id);
+export const updateJob = async (job: Partial<Job>): Promise<void> => {
+  const { error } = await supabase
+    .from("jobs")
+    .update({ ...decamelizeKeys(job) })
+    .eq("id", job.id);
+  error && console.log(error, "[SQL ERROR]");
 };
