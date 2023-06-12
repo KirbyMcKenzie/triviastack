@@ -7,7 +7,7 @@ export interface Job {
   id: string;
   type: JobType;
   payload?: unknown;
-  status: "pending" | "in_progress" | "completed" | "failed";
+  status: "pending" | "success" | "failed";
   createdAt: string;
   updatedAt: string;
   startedAt?: string;

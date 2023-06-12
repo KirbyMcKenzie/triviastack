@@ -38,14 +38,25 @@ router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
   // TODO: repeat as before
 
   const { record } = camelizeKeys(req.body);
-  const { createdBy, teamId, id, status, payload } = record;
+  const { createdBy, teamId, id, status, payload, retryCount } = record;
   const { channelId, numberOfQuestions } = payload;
 
   console.log(`[JOBS] Job record updated - id: ${id}`);
 
-  if (status === "completed" || status === "failed") {
+  if (status === "success" || status === "failed") {
     console.log(`[JOBS] Job record ignored with status: ${status} - id: ${id}`);
     return await res.status(204);
+  }
+
+  if (retryCount >= 3) {
+    // TODO: message user to inform of error
+    console.log(`[JOBS] Job retry count exceed, marking as failed - id: ${id}`);
+    await updateJob({
+      id,
+      status: "failed",
+      updatedAt: new Date().toISOString(),
+    });
+    return await res.status(500);
   }
 
   const questions = await fetchQuizQuestions({ numberOfQuestions });
@@ -56,24 +67,33 @@ router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
     question: questions[0],
     currentQuestion: 1,
     totalQuestions: numberOfQuestions,
-    // isSuperQuiz: previousQuestions.length === MAX_QUESTIONS,
+    isSuperQuiz: numberOfQuestions === 50,
     isFirstGame: true,
     userId: createdBy,
   });
 
-  // TODO: add catch for fail
   await new WebClient(bot?.token).chat
     .postMessage({
       channel: channelId,
       ...questionBlock,
     })
     .then(async () => {
-      console.log(`[JOBS] New quic created, updating job status - id: ${id}`);
+      console.log(`[JOBS] Job successful, updating job status - id: ${id}`);
 
       await updateJob({
         id,
-        status: "completed",
+        status: "success",
         updatedAt: new Date().toISOString(),
+      });
+    })
+    .catch(async (error) => {
+      console.log(`[JOBS] Job failed, updating job status - id: ${id}`);
+
+      await updateJob({
+        id,
+        error: error,
+        updatedAt: new Date().toISOString(),
+        retryCount: retryCount + 1,
       });
     });
 
