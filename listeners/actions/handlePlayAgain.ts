@@ -6,7 +6,7 @@ import {
 } from "services/quizService";
 import { buildQuestionBlock } from "utils/blocks";
 
-const MAX_QUESTIONS = 50;
+const MAX_QUESTIONS = 30;
 
 const handlePlayAgain = async ({
   ack,

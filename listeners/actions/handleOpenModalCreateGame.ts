@@ -45,7 +45,7 @@ const handleOpenModalCreateGame = async ({
               type: "number_input",
               is_decimal_allowed: false,
               initial_value: "10",
-              max_value: "50",
+              max_value: "30",
               min_value: "1",
               action_id: "num_questions",
             },

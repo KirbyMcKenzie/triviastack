@@ -67,7 +67,7 @@ router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
     question: questions[0],
     currentQuestion: 1,
     totalQuestions: numberOfQuestions,
-    isSuperQuiz: numberOfQuestions === 50,
+    isSuperQuiz: numberOfQuestions === 30,
     isFirstGame: true,
     userId: createdBy,
   });

@@ -8,7 +8,6 @@ import { shuffle } from "utils/array";
 
 // TODO: Type this file properly
 // TODO: Add logging & error handling
-
 export const createNewQuiz = async (
   questions: Question[],
   channel_id: string
@@ -79,7 +78,6 @@ export const updateQuiz = async (
     .eq("id", id);
 };
 
-// TODO: Rework this to not get twice as many questions as needed
 export const fetchQuizQuestions = async ({
   numberOfQuestions = 10,
   difficulty = undefined,

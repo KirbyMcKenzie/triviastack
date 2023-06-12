@@ -54,7 +54,7 @@ export const receiver = new NextConnectReceiver({
         </style>
         </head>
         <body>
-        <h2>Thank you!</h2>
+        <h2>Installation successful!</h2>
         <p>Redirecting to the Slack App... click <a href="${escapeHtml(
           redirectUrl
         )}">here</a>. If you use the browser version of Slack, click <a href="${escapeHtml(

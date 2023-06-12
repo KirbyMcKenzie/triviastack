@@ -12,7 +12,7 @@ import {
 const useNewQuizFlow = process.env.USE_NEW_QUIZ_FLOW === "enabled";
 
 const DEFAULT_NUM_QUESTIONS = 10;
-const MAX_QUESTIONS = 50;
+const MAX_QUESTIONS = 30;
 
 const handleQuickQuiz = async ({
   ack,
