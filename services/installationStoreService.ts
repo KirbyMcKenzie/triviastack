@@ -6,12 +6,12 @@ export const createInstallationStore = async (
   teamId: string,
   installation: Installation
 ): Promise<void> => {
-  const { error } = await supabase.from("installationStores").upsert(
+  const { error } = await supabase.from("installations").upsert(
     {
       team_id: teamId,
       installation,
-    },
-    { onConflict: "team_id" }
+    }
+    // { onConflict: "team_id" }
   );
   error && console.log(error, "[SQL ERROR]");
 };
@@ -20,7 +20,7 @@ export const getInstallationStore = async (
   teamId: string
 ): Promise<Installation> => {
   const { data } = await supabase
-    .from("installationStores")
+    .from("installations")
     .select()
     .eq("team_id", teamId);
   //@ts-ignore
