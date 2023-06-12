@@ -20,9 +20,10 @@ export const receiver = new NextConnectReceiver({
     "reactions:write",
     "chat:write.public",
   ],
+  installerOptions: {
+    directInstall: true,
+  },
   installationStore: {
-    // TODO: could we scan for extra data at this point?
-    // TODO: could we start onboarding here?
     storeInstallation: async (installation) => {
       if (installation.team !== undefined) {
         return await createInstallationStore(

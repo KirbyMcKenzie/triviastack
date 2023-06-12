@@ -101,7 +101,6 @@ export const POOR_SCORE_RESPONSES = [
 ];
 
 export const AWFUL_SCORE_RESPONSES = [
-  "Oh damn, didn't even get one correct",
   "Thats honestly just embarrassing",
   "oof",
   "Yikes.",
