@@ -54,12 +54,12 @@ export const receiver = new NextConnectReceiver({
         </style>
         </head>
         <body>
-        <h2>Installation successful!</h2>
-        <p>Redirecting to the Slack App... click <a href="${escapeHtml(
+        <h2>Installation Successful</h2>
+        <p>Redirecting to the Slack App... if Slack doesn't open, <a href="${escapeHtml(
           redirectUrl
-        )}">here</a>. If you use the browser version of Slack, click <a href="${escapeHtml(
+        )}">click this link</a>. If you prefer to use Slack in the browser, <a href="${escapeHtml(
           browserUrl
-        )}" target="_blank">this link</a> instead.</p>
+        )}" target="_blank">click this link</a> instead.</p>
         </body>
         </html>`;
         callbackRes.writeHead(200, {
