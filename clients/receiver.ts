@@ -4,6 +4,7 @@ import {
   getInstallationStore,
 } from "services/installationStoreService";
 import NextConnectReceiver from "utils/NextConnectReceiver";
+import { WebClient } from "@slack/web-api";
 
 export const receiver = new NextConnectReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET || "invalid",
@@ -75,7 +76,20 @@ export const receiver = new NextConnectReceiver({
         return await createInstallationStore(
           installation.team.id,
           installation
-        );
+        ).then(async () => {
+          await new WebClient(process.env.SLACK_BOT_TOKEN).chat.postMessage({
+            channel: process.env.SLACK_CHANNEL_APP_INSTALL || "No Channel Set",
+            blocks: [
+              {
+                type: "section",
+                text: {
+                  type: "mrkdwn",
+                  text: `🎉 *New Install* - ${installation.team?.name}`,
+                },
+              },
+            ],
+          });
+        });
       }
       console.log(
         `[ERROR] bolt-app [RECEIVER] storeInstallation failed for ${installation.user.id}`
