@@ -76,20 +76,21 @@ export const receiver = new NextConnectReceiver({
         return await createInstallationStore(
           installation.team.id,
           installation
-        ).then(async () => {
-          await new WebClient(process.env.SLACK_BOT_TOKEN).chat.postMessage({
-            channel: process.env.SLACK_CHANNEL_APP_INSTALL || "No Channel Set",
-            blocks: [
-              {
-                type: "section",
-                text: {
-                  type: "mrkdwn",
-                  text: `🎉 *New Install* - ${installation.team?.name}`,
-                },
-              },
-            ],
-          });
-        });
+        );
+        // .then(async () => {
+        //   await new WebClient(process.env.SLACK_BOT_TOKEN).chat.postMessage({
+        //     channel: process.env.SLACK_CHANNEL_APP_INSTALL || "No Channel Set",
+        //     blocks: [
+        //       {
+        //         type: "section",
+        //         text: {
+        //           type: "mrkdwn",
+        //           text: `🎉 *New Install* - ${installation.team?.name}`,
+        //         },
+        //       },
+        //     ],
+        //   });
+        // });
       }
       console.log(
         `[ERROR] bolt-app [RECEIVER] storeInstallation failed for ${installation.user.id}`
