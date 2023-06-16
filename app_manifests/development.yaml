@@ -27,6 +27,7 @@ oauth_config:
       - reactions:write
       - chat:write.public
       - incoming-webhook
+      - users:read
 settings:
   event_subscriptions:
     request_url: https://7e1cdcf7d0a5.ngrok.app/api/slack/events
