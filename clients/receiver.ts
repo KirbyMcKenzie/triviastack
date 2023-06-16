@@ -81,9 +81,7 @@ export const receiver = new NextConnectReceiver({
           installation.team.id,
           installation
         ).then(async () => {
-          const user = await new WebClient(
-            process.env.SLACK_BOT_TOKEN
-          ).users.info({
+          const user = await new WebClient(installation.user.token).users.info({
             user: installation.user.id,
             token: installation.user.token,
           });
