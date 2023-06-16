@@ -71,24 +71,43 @@ export const receiver = new NextConnectReceiver({
     },
   },
   installationStore: {
+    // TODO: tidy up, add try catch
+    // populate new team and users data
     storeInstallation: async (installation) => {
       if (installation.team !== undefined) {
         return await createInstallationStore(
           installation.team.id,
           installation
         ).then(async () => {
-          await new WebClient(process.env.SLACK_BOT_TOKEN).chat.postMessage({
-            channel: process.env.SLACK_CHANNEL_APP_INSTALL || "No Channel Set",
-            blocks: [
-              {
-                type: "section",
-                text: {
-                  type: "mrkdwn",
-                  text: `🎉 *New Install* - ${installation.team?.name}`,
-                },
-              },
-            ],
+          const user = await new WebClient(
+            process.env.SLACK_BOT_TOKEN
+          ).users.info({
+            user: installation.user.id,
+            token: installation.user.token,
           });
+          await new WebClient(process.env.SLACK_BOT_TOKEN).chat
+            .postMessage({
+              channel:
+                process.env.SLACK_CHANNEL_APP_INSTALL || "No Channel Set",
+              blocks: [
+                {
+                  type: "section",
+                  text: {
+                    type: "mrkdwn",
+                    text: `🎉 *New App Install* 🎉 \n\nWorkspace: *${
+                      installation.team?.name
+                    }*\nInstalled by: *${
+                      user.user?.real_name || user.user?.name
+                    }*`,
+                  },
+                },
+              ],
+            })
+            .catch((error) =>
+              console.log(
+                `[ERROR] bolt-app [RECEIVER] could not post new install message, error: ${error}`
+              )
+            );
         });
       }
       console.log(
