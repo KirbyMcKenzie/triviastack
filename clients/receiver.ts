@@ -81,7 +81,9 @@ export const receiver = new NextConnectReceiver({
           installation.team.id,
           installation
         ).then(async () => {
-          const user = await new WebClient(installation.user.token).users.info({
+          const user = await new WebClient(
+            installation.bot?.token
+          ).users.info({
             user: installation.user.id,
             token: installation.user.token,
           });
@@ -97,7 +99,7 @@ export const receiver = new NextConnectReceiver({
                     text: `🎉 *New App Install* 🎉 \n\nWorkspace: *${
                       installation.team?.name
                     }*\nInstalled by: *${
-                      user.user?.real_name || user.user?.name
+                      user?.user?.real_name || user?.user?.name
                     }*`,
                   },
                 },
