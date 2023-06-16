@@ -20,6 +20,8 @@ export const receiver = new NextConnectReceiver({
     "im:history",
     "reactions:write",
     "chat:write.public",
+    "users:read",
+    "team:read",
   ],
   installerOptions: {
     directInstall: true,

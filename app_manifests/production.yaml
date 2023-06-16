@@ -26,8 +26,8 @@ oauth_config:
       - im:history
       - reactions:write
       - chat:write.public
-      - incoming-webhook
       - users:read
+      - team:read
 settings:
   event_subscriptions:
     request_url: https://triviabot.io/api/slack/events
