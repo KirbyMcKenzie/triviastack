@@ -1,5 +1,5 @@
 import { supabase } from "clients/supabase";
-import { camelizeKeys } from "humps";
+import { camelizeKeys, decamelizeKeys } from "humps";
 
 export interface User {
   id: string;
@@ -8,16 +8,22 @@ export interface User {
   displayName: string;
   createdAt: string;
   updatedAt: string;
-  timezone: string;
+  timezone?: string;
   isBot: boolean;
   isAdmin: boolean;
   isOwner: boolean;
   isPrimaryOwner: boolean;
-  title: boolean;
+  title?: string;
 }
 
-export const createUser = async (user: User): Promise<User> => {
-  const { data, error } = await supabase.from("jobs").insert(user).select();
+export type NewUser = Omit<User, "updatedAt" | "createdAt">;
+
+// TODO: Probably don't need to return the new users here
+export const createUser = async (user: NewUser): Promise<User> => {
+  const { data, error } = await supabase
+    .from("users")
+    .insert(decamelizeKeys(user))
+    .select();
   error && console.log(error, "[SQL ERROR]");
   return camelizeKeys(data) as unknown as User;
 };
