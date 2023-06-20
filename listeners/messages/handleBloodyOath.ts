@@ -10,7 +10,7 @@ const handleBloodyOath = async ({
   payload,
 }: SlackEventMiddlewareArgs<"message"> & AllMiddlewareArgs) => {
   const user = (message as any).user;
-  logger.info(`[MESSAGE] Bloody Oath called by ${user.id}`);
+  logger.info(`[MESSAGE] Bloody Oath called by ${user}`);
 
   await client.reactions.add({
     name: "flag-au",

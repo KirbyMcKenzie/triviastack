@@ -9,7 +9,7 @@ const handleYoza = async ({
   say,
 }: SlackEventMiddlewareArgs<"message"> & AllMiddlewareArgs) => {
   const user = (message as any).user;
-  logger.info(`[MESSAGE] Yoza called by ${user.id}`);
+  logger.info(`[MESSAGE] Yoza called by ${user}`);
   await say(`Yoza <@${user}> 😼`);
 };
 
