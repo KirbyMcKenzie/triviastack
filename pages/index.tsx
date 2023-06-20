@@ -39,7 +39,7 @@ const Home: NextPage = () => {
               categories, or the number of questions to make each game unique.
             </p>
           </section>
-          <section className="my-16">
+          {/* <section className="my-16">
             <h2 className="text-2xl md:text-4xl font-extrabold leading-tight md:leading-tight md:tracking-normal mb-3">
               ⏳ Daily trivia
             </h2>
@@ -47,7 +47,7 @@ const Home: NextPage = () => {
               Start a game at the same time everyday. It&apos;s a great way to
               bond with your team and build a sense of friendly competition.
             </p>
-          </section>
+          </section> */}
           <section className="my-16">
             <h2 className="text-2xl md:text-4xl font-extrabold leading-tight md:leading-tight md:tracking-normal mb-3">
               🪄 Easy to use
