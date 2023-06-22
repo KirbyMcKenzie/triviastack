@@ -23,6 +23,7 @@ const handleQuickQuiz = async ({
   respond,
   payload,
 }: SlackCommandMiddlewareArgs & AllMiddlewareArgs) => {
+  await ack();
   logger.info(`[COMMAND] Quick quiz triggered by ${payload.user_id}`);
 
   const isDirectMessage = payload.channel_name === "directmessage";
@@ -76,7 +77,6 @@ const handleQuickQuiz = async ({
     });
 
     await createNewQuiz(questions, payload.channel_id);
-    await ack();
   }
 };
 
