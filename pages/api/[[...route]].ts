@@ -16,6 +16,7 @@ const app = new App({
   clientSecret: process.env.SLACK_CLIENT_SECRET,
   receiver: receiver,
   developerMode: false,
+  processBeforeResponse: true,
 });
 
 registerListeners(app);

@@ -8,6 +8,7 @@ import {
   buildErrorMaxQuestionsExceeded,
   buildQuestionBlock,
 } from "utils/blocks";
+import { getRandomCollectionItem } from "utils/random";
 
 const useNewQuizFlow = process.env.USE_NEW_QUIZ_FLOW === "enabled";
 
@@ -18,6 +19,7 @@ const handleQuickQuiz = async ({
   ack,
   logger,
   say,
+  client,
   respond,
   payload,
 }: SlackCommandMiddlewareArgs & AllMiddlewareArgs) => {
@@ -46,6 +48,18 @@ const handleQuickQuiz = async ({
   } else {
     logger.info(`[COMMAND] Creating new quiz via old workflow`);
 
+    const result = await say({
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: getRandomCollectionItem(["*⚡️ Generating your trivia...*"]),
+          },
+        },
+      ],
+    });
+
     const questions = await fetchQuizQuestions({ numberOfQuestions });
 
     const questionBlock = buildQuestionBlock({
@@ -56,7 +70,12 @@ const handleQuickQuiz = async ({
       isSuperQuiz: numberOfQuestions === MAX_QUESTIONS,
     });
 
-    await say(questionBlock);
+    await client.chat.update({
+      channel: payload.channel_id,
+      blocks: questionBlock.blocks,
+      ts: result.ts as string,
+    });
+
     await createNewQuiz(questions, payload.channel_id);
   }
 };
