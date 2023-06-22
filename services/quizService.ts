@@ -11,17 +11,13 @@ import { shuffle } from "utils/array";
 export const createNewQuiz = async (
   questions: Question[],
   channel_id: string
-): Promise<Quiz> => {
-  const { data, error } = await supabase
-    .from("quizzes")
-    .insert({
-      questions: questions,
-      channel_id: channel_id,
-      is_active: true,
-    })
-    .select();
+): Promise<void> => {
+  const { error } = await supabase.from("quizzes").insert({
+    questions: questions,
+    channel_id: channel_id,
+    is_active: true,
+  });
   error && console.log(error, "[SQL ERROR]");
-  return camelizeKeys(data) as unknown as Quiz;
 };
 
 export const getCurrentQuizByChannelId = async (
