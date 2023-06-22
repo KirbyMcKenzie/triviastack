@@ -3,26 +3,21 @@ import { camelizeKeys } from "humps";
 import { supabase } from "../clients/supabase";
 
 export const createInstallationStore = async (
-  teamId: string,
   installation: Installation
 ): Promise<void> => {
-  const { error } = await supabase.from("installations").upsert(
-    {
-      team_id: teamId,
-      installation,
-    }
-    // { onConflict: "team_id" }
-  );
+  const { error } = await supabase.from("teams").upsert({
+    id: installation.team?.id,
+    name: installation.team?.name,
+    installed_by: installation.user.id,
+    installation,
+  });
   error && console.log(error, "[SQL ERROR]");
 };
 
 export const getInstallationStore = async (
   teamId: string
 ): Promise<Installation> => {
-  const { data } = await supabase
-    .from("installations")
-    .select()
-    .eq("team_id", teamId);
+  const { data } = await supabase.from("teams").select().eq("id", teamId);
   //@ts-ignore
   return camelizeKeys(data[0].installation) as unknown as Installation;
 };

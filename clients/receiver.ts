@@ -19,6 +19,7 @@ export const receiver = new NextConnectReceiver({
     "chat:write",
     "commands",
     "im:history",
+    "im:write",
     "reactions:write",
     "chat:write.public",
     "users:read",
@@ -78,10 +79,7 @@ export const receiver = new NextConnectReceiver({
     // populate new team and users data
     storeInstallation: async (installation) => {
       if (installation.team !== undefined) {
-        return await createInstallationStore(
-          installation.team.id,
-          installation
-        ).then(async () => {
+        return await createInstallationStore(installation).then(async () => {
           const { user } = await new WebClient(
             installation.bot?.token
           ).users.info({
@@ -90,6 +88,7 @@ export const receiver = new NextConnectReceiver({
           });
 
           console.log("Attempting to create new users");
+          // TODO: upsert this
           await createUser({
             id: installation.user.id,
             teamId: installation.team?.id || "",
@@ -132,6 +131,7 @@ export const receiver = new NextConnectReceiver({
       throw new Error("Failed saving installation data to installationStore");
     },
     fetchInstallation: async (installQuery) => {
+      console.log("Fetching installation");
       if (installQuery.teamId !== undefined) {
         return await getInstallationStore(installQuery.teamId);
       }
