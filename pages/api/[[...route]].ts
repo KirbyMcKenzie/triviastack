@@ -17,6 +17,8 @@ const app = new App({
   receiver: receiver,
   developerMode: false,
   processBeforeResponse: true,
+  // @ts-ignore
+  unhandledRequestTimeoutMillis: 30000,
 });
 
 registerListeners(app);

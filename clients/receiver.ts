@@ -13,6 +13,8 @@ export const receiver = new NextConnectReceiver({
   clientSecret: process.env.SLACK_CLIENT_SECRET,
   processBeforeResponse: true,
   logLevel: LogLevel.INFO,
+  // @ts-ignore
+  unhandledRequestTimeoutMillis: 30000,
   stateSecret: "my-state-secret", // TODO: Change this
   scopes: [
     "channels:history",
