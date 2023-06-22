@@ -23,10 +23,13 @@ const handleNextQuestion = async ({
   const answerValue = (body as any).actions[0].value;
   const channelId = body?.channel?.id || "";
   const userId = body?.user.id;
+  const isDirectMessage = body?.channel?.name === "directmessage";
 
   logger.info(`[ACTION] Next question called by ${userId}`);
 
-  const quiz = await getCurrentQuizByChannelId(channelId);
+  const quiz = await getCurrentQuizByChannelId(
+    isDirectMessage ? userId : channelId
+  );
   const { id, currentQuestion, questions } = quiz;
 
   const nextQuestion = questions[currentQuestion];

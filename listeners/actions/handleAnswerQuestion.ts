@@ -16,10 +16,13 @@ const handleAnswerQuestion = async ({
   const answeredById = body.user.id;
   const answerValue = (body as any).actions[0].value;
   const channelId = body?.channel?.id || "";
+  const isDirectMessage = body?.channel?.name === "directmessage";
 
   logger.info(`[ACTION] Answer question called by ${answeredById}`);
 
-  const quiz = await getCurrentQuizByChannelId(channelId);
+  const quiz = await getCurrentQuizByChannelId(
+    isDirectMessage ? answeredById : channelId
+  );
   const { id, currentQuestion, questions } = quiz;
 
   const answeredQuestion = questions[currentQuestion - 1];

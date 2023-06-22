@@ -17,9 +17,10 @@ const handlePlayAgain = async ({
   await ack();
   const channelId = body?.channel?.id || "";
   logger.info(`[ACTION] Play again called by ${body.user.id}`);
+  const isDirectMessage = body?.channel?.name === "directmessage";
 
   const { questions: previousQuestions } = await getCurrentQuizByChannelId(
-    channelId,
+    isDirectMessage ? body.user.id : channelId,
     false
   );
 
