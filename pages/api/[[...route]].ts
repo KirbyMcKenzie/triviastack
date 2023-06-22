@@ -60,7 +60,10 @@ router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const questions = await fetchQuizQuestions({ numberOfQuestions });
-  await createNewQuiz(questions, channelId);
+  await createNewQuiz(
+    questions,
+    channelName === "directmessage" ? createdBy : channelId
+  );
   const { bot } = await getInstallationStore(teamId);
 
   const questionBlock = buildQuestionBlock({
