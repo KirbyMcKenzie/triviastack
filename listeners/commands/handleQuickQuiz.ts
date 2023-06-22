@@ -36,6 +36,7 @@ const handleQuickQuiz = async ({
       teamId: payload.team_id,
       type: "CREATE_QUIZ",
       payload: {
+        channel_name: payload.channel_name,
         channel_id: payload.channel_id,
         number_of_questions: numberOfQuestions,
       },
@@ -53,6 +54,7 @@ const handleQuickQuiz = async ({
       isSuperQuiz: numberOfQuestions === MAX_QUESTIONS,
     });
 
+    // TODO: see if possible to handle You conversations here too
     await say(questionBlock);
     await createNewQuiz(questions, payload.channel_id);
   }

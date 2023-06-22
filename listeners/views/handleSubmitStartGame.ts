@@ -54,8 +54,8 @@ const handleSubmitStartGame = async ({
   });
 
   await client.chat.postMessage({
-    channel: channelId,
     ...questionBlock,
+    channel: channelId,
   });
 };
 
