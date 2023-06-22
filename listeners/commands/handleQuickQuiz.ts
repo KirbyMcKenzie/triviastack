@@ -24,12 +24,14 @@ const handleQuickQuiz = async ({
   await ack();
   logger.info(`[COMMAND] Quick quiz triggered by ${payload.user_id}`);
 
+  const isDirectMessage = payload.channel_name === "directmessage";
+
   const numberOfQuestions = parseInt(payload.text) || DEFAULT_NUM_QUESTIONS;
   if (numberOfQuestions > MAX_QUESTIONS) {
     return await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
   }
 
-  if (useNewQuizFlow) {
+  if (useNewQuizFlow || isDirectMessage) {
     logger.info(`[COMMAND] Creating new quiz via job`);
     return await createNewJob({
       createdBy: payload.user_id,
@@ -54,7 +56,6 @@ const handleQuickQuiz = async ({
       isSuperQuiz: numberOfQuestions === MAX_QUESTIONS,
     });
 
-    // TODO: see if possible to handle You conversations here too
     await say(questionBlock);
     await createNewQuiz(questions, payload.channel_id);
   }
