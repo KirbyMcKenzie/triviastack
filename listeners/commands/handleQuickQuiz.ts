@@ -33,7 +33,7 @@ const handleQuickQuiz = async ({
 
   if (useNewQuizFlow || isDirectMessage) {
     logger.info(`[COMMAND] Creating new quiz via job`);
-    return await createNewJob({
+    await createNewJob({
       createdBy: payload.user_id,
       teamId: payload.team_id,
       type: "CREATE_QUIZ",

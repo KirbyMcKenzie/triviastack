@@ -30,18 +30,14 @@ export const createNewJob = async ({
   payload,
   createdBy,
   teamId,
-}: NewJob): Promise<Job> => {
-  const { data, error } = await supabase
-    .from("jobs")
-    .insert({
-      type: type,
-      created_by: createdBy,
-      team_id: teamId,
-      payload: payload,
-    })
-    .select();
-  error && console.log(error, "[SQL ERROR]");
-  return camelizeKeys(data) as unknown as Job;
+}: NewJob): Promise<void> => {
+  const { error } = await supabase.from("jobs").insert({
+    type: type,
+    created_by: createdBy,
+    team_id: teamId,
+    payload: payload,
+  });
+  if (error) console.log(error, "[SQL ERROR]");
 };
 
 export const updateJob = async (job: Partial<Job>): Promise<void> => {
