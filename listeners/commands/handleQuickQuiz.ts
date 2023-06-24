@@ -27,23 +27,28 @@ const handleQuickQuiz = async ({
   logger.info(`[COMMAND] Quick quiz triggered by ${payload.user_id}`);
 
   const isDirectMessage = payload.channel_name === "directmessage";
+  let ts;
 
   const numberOfQuestions = parseInt(payload.text) || DEFAULT_NUM_QUESTIONS;
   if (numberOfQuestions > MAX_QUESTIONS) {
     return await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
   }
 
-  const loadingMessage = await say({
-    blocks: [
-      {
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: "*⚡️ Generating your trivia...*",
+  if (!isDirectMessage) {
+    const loadingMessage = await say({
+      channel: isDirectMessage ? payload.user_id : payload.channel_id,
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: "*⚡️ Generating your trivia...*",
+          },
         },
-      },
-    ],
-  });
+      ],
+    });
+    ts = loadingMessage.ts;
+  }
 
   if (useNewQuizFlow || isDirectMessage) {
     logger.info(`[COMMAND] Creating new quiz via job`);
@@ -55,7 +60,7 @@ const handleQuickQuiz = async ({
         channel_name: payload.channel_name,
         channel_id: payload.channel_id,
         number_of_questions: numberOfQuestions,
-        ts: loadingMessage.ts,
+        ts: ts,
       },
     });
   } else {
