@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { receiver } from "clients/receiver";
 import { registerListeners } from "listeners";
+// TODO: larger dependency, can we lazy import?
 import { WebClient } from "@slack/web-api";
 import { buildQuestionBlock } from "utils/blocks";
 import { fetchQuizQuestions, createNewQuiz } from "services/quizService";
@@ -76,6 +77,7 @@ router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
     userId: createdBy,
   });
 
+  // TODO: call as postMessage if ts is null
   await new WebClient(bot?.token).chat
     .update({
       ...questionBlock,
