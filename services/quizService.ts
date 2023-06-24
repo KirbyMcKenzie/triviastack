@@ -82,17 +82,23 @@ export const fetchQuizQuestions = async ({
   const query = queryString.stringify(
     {
       limit: numberOfQuestions * 2,
-      difficulty,
       categories: categories?.length === 10 ? [] : categories,
+      difficulty,
     },
     { arrayFormat: "comma" }
   );
 
-  const data = await apiClient
-    .get(`https://the-trivia-api.com/api/questions?${query}`)
-    .then((res) => res.data);
+  const data = await fetch(
+    `https://the-trivia-api.com/api/questions?${query}`
+  ).then((response) => {
+    if (response.ok) {
+      return response.json(); // Parse response body as JSON
+    } else {
+      throw new Error("Error: " + response.status);
+    }
+  });
 
-  return data
+  return camelizeKeys(data)
     .filter(
       (question: Question) =>
         question.correctAnswer.length <= 32 &&
