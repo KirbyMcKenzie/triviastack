@@ -79,7 +79,7 @@ const handleQuickQuiz = async ({
     await client.chat.update({
       channel: payload.channel_id,
       blocks: questionBlock.blocks,
-      ts: loadingMessage.ts as string,
+      ts: ts as string,
     });
 
     await createNewQuiz(questions, payload.channel_id);
