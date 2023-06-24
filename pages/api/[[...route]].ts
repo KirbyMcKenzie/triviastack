@@ -17,8 +17,6 @@ const app = new App({
   receiver: receiver,
   developerMode: false,
   processBeforeResponse: true,
-  // @ts-ignore
-  unhandledRequestTimeoutMillis: 30000,
 });
 
 registerListeners(app);
@@ -42,7 +40,7 @@ router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { record } = camelizeKeys(req.body);
   const { createdBy, teamId, id, status, payload, retryCount } = record;
-  const { channelId, channelName, numberOfQuestions } = payload;
+  const { channelId, channelName, numberOfQuestions, ts } = payload;
 
   console.log(`[JOBS] Job record updated - id: ${id}`);
 
@@ -79,9 +77,10 @@ router.post("/api/jobs", async (req: NextApiRequest, res: NextApiResponse) => {
   });
 
   await new WebClient(bot?.token).chat
-    .postMessage({
+    .update({
       ...questionBlock,
       channel: channelName === "directmessage" ? createdBy : channelId,
+      ts,
     })
     .then(async () => {
       console.log(`[JOBS] Job successful, updating job status - id: ${id}`);

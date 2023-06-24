@@ -33,6 +33,18 @@ const handleQuickQuiz = async ({
     return await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
   }
 
+  const loadingMessage = await say({
+    blocks: [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: "*⚡️ Generating your trivia...*",
+        },
+      },
+    ],
+  });
+
   if (useNewQuizFlow || isDirectMessage) {
     logger.info(`[COMMAND] Creating new quiz via job`);
     await createNewJob({
@@ -43,22 +55,11 @@ const handleQuickQuiz = async ({
         channel_name: payload.channel_name,
         channel_id: payload.channel_id,
         number_of_questions: numberOfQuestions,
+        ts: loadingMessage.ts,
       },
     });
   } else {
     logger.info(`[COMMAND] Creating new quiz via old workflow`);
-
-    const result = await say({
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: getRandomCollectionItem(["*⚡️ Generating your trivia...*"]),
-          },
-        },
-      ],
-    });
 
     const questions = await fetchQuizQuestions({ numberOfQuestions });
 
@@ -73,7 +74,7 @@ const handleQuickQuiz = async ({
     await client.chat.update({
       channel: payload.channel_id,
       blocks: questionBlock.blocks,
-      ts: result.ts as string,
+      ts: loadingMessage.ts as string,
     });
 
     await createNewQuiz(questions, payload.channel_id);
