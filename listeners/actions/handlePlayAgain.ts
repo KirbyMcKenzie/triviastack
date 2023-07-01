@@ -2,13 +2,14 @@ import { AllMiddlewareArgs, SlackActionMiddlewareArgs } from "@slack/bolt";
 import {
   createNewQuiz,
   fetchQuizQuestions,
-  getCurrentQuizByChannelId,
+  getQuizById,
 } from "services/quizService";
 import { buildQuestionBlock } from "utils/blocks";
 
 const MAX_QUESTIONS = 30;
 
 const handlePlayAgain = async ({
+  action,
   ack,
   body,
   logger,
@@ -17,23 +18,26 @@ const handlePlayAgain = async ({
   await ack();
   const channelId = body?.channel?.id || "";
   logger.info(`[ACTION] Play again called by ${body.user.id}`);
-  const isDirectMessage = body?.channel?.name === "directmessage";
 
-  const { questions: previousQuestions } = await getCurrentQuizByChannelId(
-    isDirectMessage ? body.user.id : channelId,
-    false
-  );
+  console.log(action, "action");
+
+  const quizId = (action as any).action_id.split("_")[2];
+
+  console.log(quizId, "quizId");
+
+  const previousQuiz = await getQuizById(quizId);
 
   const questions = await fetchQuizQuestions({
-    numberOfQuestions: previousQuestions.length,
+    numberOfQuestions: previousQuiz.questions.length,
   });
-  await createNewQuiz(questions, channelId);
+  const quiz = await createNewQuiz(questions, channelId);
 
   const questionBlock = buildQuestionBlock({
+    quizId: quiz.id,
     question: questions[0],
     currentQuestion: 1,
     totalQuestions: questions.length,
-    isSuperQuiz: previousQuestions.length === MAX_QUESTIONS,
+    isSuperQuiz: previousQuiz.questions.length === MAX_QUESTIONS,
     isFirstGame: false,
     userId: body.user.id,
   });

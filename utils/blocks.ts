@@ -207,7 +207,11 @@ export const buildQuestionAnswersBlock = ({
   }));
 };
 
-export const buildQuizCompleteBlock = (score: number, total: number) => ({
+export const buildQuizCompleteBlock = (
+  quizId: string,
+  score: number,
+  total: number
+) => ({
   blocks: [
     {
       type: "divider",
@@ -236,7 +240,7 @@ export const buildQuizCompleteBlock = (score: number, total: number) => ({
             text: "Play again",
             emoji: true,
           },
-          action_id: "play_again",
+          action_id: `play_again_${quizId}`,
         },
         {
           type: "button",
