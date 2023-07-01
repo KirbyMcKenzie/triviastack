@@ -44,9 +44,10 @@ const handleSubmitStartGame = async ({
     //@ts-ignore
     categories: categories?.map(({ value }) => value) || [],
   });
-  await createNewQuiz(questions, channelId);
+  const quiz = await createNewQuiz(questions, channelId);
 
   const questionBlock = buildQuestionBlock({
+    quizId: quiz.id,
     question: questions[0],
     currentQuestion: 1,
     totalQuestions: questions.length,

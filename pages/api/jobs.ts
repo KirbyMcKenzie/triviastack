@@ -30,13 +30,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const questions = await fetchQuizQuestions({ numberOfQuestions });
-  await createNewQuiz(
+  const quiz = await createNewQuiz(
     questions,
     channelName === "directmessage" ? createdBy : channelId
   );
   const { bot } = await getInstallationStore(teamId);
 
   const questionBlock = buildQuestionBlock({
+    quizId: quiz.id,
     question: questions[0],
     currentQuestion: 1,
     totalQuestions: numberOfQuestions,

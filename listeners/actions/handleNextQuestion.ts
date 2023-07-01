@@ -1,36 +1,33 @@
 import { AllMiddlewareArgs, SlackActionMiddlewareArgs } from "@slack/bolt";
 import {
-  getCurrentQuizByChannelId,
+  getQuizById,
   updateQuiz,
   updateQuizCurrentQuestion,
 } from "services/quizService";
 import { Question } from "types/quiz";
 import { buildQuizCompleteBlock, buildQuestionBlock } from "utils/blocks";
 
+// TODO: refactor flow
+// get first unansweredQuestion
+// if none, finish the game
+// respond with latest question
 const handleNextQuestion = async ({
   ack,
+  action,
   body,
   logger,
   respond,
 }: SlackActionMiddlewareArgs & AllMiddlewareArgs) => {
   await ack();
 
-  // TODO: refactor flow
-  // get first unansweredQuestion
-  // if none, finish the game
-  // respond with latest question
-
   const answerValue = (body as any).actions[0].value;
-  const channelId = body?.channel?.id || "";
   const userId = body?.user.id;
-  const isDirectMessage = body?.channel?.name === "directmessage";
+  const quizId = (action as any).action_id.split("_")[2];
 
   logger.info(`[ACTION] Next question called by ${userId}`);
 
-  const quiz = await getCurrentQuizByChannelId(
-    isDirectMessage ? userId : channelId
-  );
-  const { id, currentQuestion, questions } = quiz;
+  const quiz = await getQuizById(quizId);
+  const { currentQuestion, questions } = quiz;
 
   const nextQuestion = questions[currentQuestion];
   const previousQuestion = questions[currentQuestion - 1];
@@ -43,18 +40,20 @@ const handleNextQuestion = async ({
   if (currentQuestion === questions.length) {
     //@ts-ignore
     // TODO: double check if this is still working
-    await updateQuiz(id, { is_active: false });
+    await updateQuiz(quizId, { is_active: false });
 
     const score = updatedQuestions.filter(
       ({ isCorrect }: Question) => isCorrect
     ).length;
 
-    const quizCompleteBlock = buildQuizCompleteBlock(score, questions.length);
+    // TODO: add quiz id to pass to play_again block
+    const quizCompleteBlock = buildQuizCompleteBlock(quizId, score, questions.length);
     await respond(quizCompleteBlock);
     return;
   }
 
   const questionBlock = buildQuestionBlock({
+    quizId,
     question: nextQuestion,
     currentQuestion: currentQuestion + 1,
     totalQuestions: questions.length,
@@ -68,7 +67,7 @@ const handleNextQuestion = async ({
     // logger.error(`[ACTION] next question respond question block - ${error}`)
     console.log(error)
   );
-  await updateQuizCurrentQuestion(id, currentQuestion + 1);
+  await updateQuizCurrentQuestion(quizId, currentQuestion + 1);
 };
 
 export default handleNextQuestion;
