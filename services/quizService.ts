@@ -3,7 +3,6 @@ import { camelizeKeys } from "humps";
 
 import { Question, Quiz } from "../types/quiz";
 import { supabase } from "../clients/supabase";
-import apiClient from "../clients/api";
 import { shuffle } from "utils/array";
 
 // TODO: Type this file properly
