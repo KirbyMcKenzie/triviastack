@@ -4,6 +4,7 @@ import { getGameOverEmoji, getGameOverResponse } from "./quiz";
 import { titleCase } from "./string";
 
 export interface QuestionBlockProps {
+  quizId: string;
   question: Question;
   currentQuestion: number;
   totalQuestions: number;
@@ -16,6 +17,7 @@ export interface QuestionBlockProps {
 }
 
 export interface QuestionAnswerBlockProps {
+  quizId: string;
   answers: string[];
   type: "Multiple Choice" | "boolean";
   answerValue: string | undefined;
@@ -24,6 +26,7 @@ export interface QuestionAnswerBlockProps {
 }
 
 export const buildQuestionBlock = ({
+  quizId,
   question,
   currentQuestion,
   totalQuestions,
@@ -80,6 +83,7 @@ export const buildQuestionBlock = ({
     {
       type: "actions",
       elements: buildQuestionAnswersBlock({
+        quizId,
         type: question.type,
         answers: question.answers,
         answerValue: answeredValue,
@@ -118,7 +122,7 @@ export const buildQuestionBlock = ({
                       : "Next Question",
                   emoji: true,
                 },
-                action_id: "next_question",
+                action_id: `next_question_${quizId}`,
               },
             ],
           },
@@ -148,6 +152,7 @@ export const buildQuestionBlock = ({
 });
 
 export const buildQuestionAnswersBlock = ({
+  quizId,
   answers = [],
   type = "Multiple Choice",
   answerValue,
@@ -172,7 +177,9 @@ export const buildQuestionAnswersBlock = ({
           emoji: true,
         },
 
-        action_id: disableButtons ? `noop${index}` : `answer_question${index}`,
+        action_id: disableButtons
+          ? `noop_${quizId}_${index}`
+          : `answer_question_${quizId}_${index}`,
         value: answer,
       }));
   }
@@ -193,7 +200,9 @@ export const buildQuestionAnswersBlock = ({
       emoji: true,
     },
 
-    action_id: disableButtons ? `noop${index}` : `answer_question${index}`,
+    action_id: disableButtons
+      ? `noop_${quizId}_${index}`
+      : `answer_question_${quizId}_${index}`,
     value: decode(answer),
   }));
 };

@@ -12,7 +12,6 @@ const handleQuickQuiz = async ({
   ack,
   logger,
   say,
-  client,
   respond,
   payload,
 }: SlackCommandMiddlewareArgs & AllMiddlewareArgs) => {
