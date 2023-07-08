@@ -15,7 +15,6 @@ const handleQuickQuiz = async ({
   respond,
   payload,
 }: SlackCommandMiddlewareArgs & AllMiddlewareArgs) => {
-  await ack();
   logger.info(`[COMMAND] Quick quiz triggered by ${payload.user_id}`);
 
   const numberOfQuestions = parseInt(payload.text) || DEFAULT_NUM_QUESTIONS;
@@ -23,24 +22,24 @@ const handleQuickQuiz = async ({
     return await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
   }
 
-  const isDirectMessage = payload.channel_name === "directmessage";
+  // const isDirectMessage = payload.channel_name === "directmessage";
   let ts;
 
-  if (!isDirectMessage) {
-    const loadingMessage = await say({
-      channel: isDirectMessage ? payload.user_id : payload.channel_id,
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: "*⚡️ Generating your trivia...*",
-          },
-        },
-      ],
-    });
-    ts = loadingMessage.ts;
-  }
+  // if (!isDirectMessage) {
+  //   const loadingMessage = await say({
+  //     channel: isDirectMessage ? payload.user_id : payload.channel_id,
+  //     blocks: [
+  //       {
+  //         type: "section",
+  //         text: {
+  //           type: "mrkdwn",
+  //           text: "*⚡️ Generating your trivia...*",
+  //         },
+  //       },
+  //     ],
+  //   });
+  //   ts = loadingMessage.ts;
+  // }
 
   logger.info(`[COMMAND] Creating new quiz via job`);
   await createNewJob({
@@ -54,6 +53,8 @@ const handleQuickQuiz = async ({
       ts: ts,
     },
   });
+
+  await ack();
 };
 
 export default handleQuickQuiz;
