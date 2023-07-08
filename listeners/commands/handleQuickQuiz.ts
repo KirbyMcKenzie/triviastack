@@ -41,6 +41,8 @@ const handleQuickQuiz = async ({
     ts = loadingMessage.ts;
   }
 
+  await ack();
+
   logger.info(`[COMMAND] Creating new quiz via job`);
   return await createNewJob({
     createdBy: payload.user_id,
@@ -53,8 +55,6 @@ const handleQuickQuiz = async ({
       ts: ts,
     },
   });
-
-  await ack();
 };
 
 export default handleQuickQuiz;
