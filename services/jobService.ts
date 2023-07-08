@@ -1,7 +1,7 @@
 import { supabase } from "clients/supabase";
 import { camelizeKeys, decamelizeKeys } from "humps";
 
-export type JobType = "CREATE_QUIZ";
+export type JobType = "CREATE_QUIZ" | "NEW_APP_INSTALL";
 
 export interface Job {
   id: string;

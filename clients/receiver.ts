@@ -4,8 +4,7 @@ import {
   getInstallationStore,
 } from "services/installationStoreService";
 import NextConnectReceiver from "utils/NextConnectReceiver";
-import { WebClient } from "@slack/web-api";
-import { createUser } from "services/userService";
+import { createNewJob } from "services/jobService";
 
 export const receiver = new NextConnectReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET || "invalid",
@@ -82,49 +81,14 @@ export const receiver = new NextConnectReceiver({
     storeInstallation: async (installation) => {
       if (installation.team !== undefined) {
         return await createInstallationStore(installation).then(async () => {
-          const { user } = await new WebClient(
-            installation.bot?.token
-          ).users.info({
-            user: installation.user.id,
-            token: installation.user.token,
+          await createNewJob({
+            createdBy: installation.user.id,
+            teamId: installation.team?.id as string,
+            type: "NEW_APP_INSTALL",
+            payload: {
+              installation,
+            },
           });
-
-          console.log("Attempting to create new users");
-          // TODO: upsert this
-          await createUser({
-            id: installation.user.id,
-            teamId: installation.team?.id || "",
-            displayName: user?.name || "",
-            name: user?.real_name || "",
-            title: user?.profile?.title,
-            timezone: user?.tz,
-            isAdmin: !!user?.is_admin,
-            isBot: !!user?.is_bot,
-            isOwner: !!user?.is_owner,
-            isPrimaryOwner: !!user?.is_primary_owner,
-          });
-
-          await new WebClient(process.env.SLACK_BOT_TOKEN).chat
-            .postMessage({
-              channel:
-                process.env.SLACK_CHANNEL_APP_INSTALL || "No Channel Set",
-              blocks: [
-                {
-                  type: "section",
-                  text: {
-                    type: "mrkdwn",
-                    text: `🎉 *New App Install* 🎉 \n\nWorkspace: *${
-                      installation.team?.name
-                    }*\nInstalled by: *${user?.real_name || user?.name}*`,
-                  },
-                },
-              ],
-            })
-            .catch((error) =>
-              console.log(
-                `[ERROR] bolt-app [RECEIVER] could not post new install message, error: ${error}`
-              )
-            );
         });
       }
       console.log(

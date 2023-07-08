@@ -1,16 +1,14 @@
 import { camelizeKeys } from "humps";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getInstallationStore } from "services/installationStoreService";
 import { updateJob } from "services/jobService";
-import { fetchQuizQuestions, createNewQuiz } from "services/quizService";
-import { buildQuestionBlock } from "utils/blocks";
-import { WebClient } from "@slack/web-api";
+import { handleCreateQuiz } from "jobs/handleCreateQuiz";
+import { handleNewAppInstall } from "jobs/handleNewAppInstall";
+
+export type JobType = "CREATE_QUIZ" | "NEW_APP_INSTALL";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { record } = camelizeKeys(req.body);
-  const { createdBy, teamId, id, status, payload, retryCount } = record;
-  const { channelId, channelName, numberOfQuestions, ts } = payload;
-
+  const { id, status, retryCount, type } = record;
   console.log(`[JOBS] Job record updated - id: ${id}`);
 
   if (status === "success" || status === "failed") {
@@ -29,104 +27,30 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return await res.status(500);
   }
 
-  const questions = await fetchQuizQuestions({ numberOfQuestions });
-  const quiz = await createNewQuiz(
-    questions,
-    channelName === "directmessage" ? createdBy : channelId
-  );
-  const { bot } = await getInstallationStore(teamId);
+  try {
+    switch (type) {
+      case "CREATE_QUIZ":
+        await handleCreateQuiz(record);
+        break;
+      case "NEW_APP_INSTALL":
+        await handleNewAppInstall(record);
+        break;
 
-  const questionBlock = buildQuestionBlock({
-    quizId: quiz.id,
-    question: questions[0],
-    currentQuestion: 1,
-    totalQuestions: numberOfQuestions,
-    isSuperQuiz: numberOfQuestions === 30,
-    isFirstGame: true,
-    userId: createdBy,
-  });
+      default:
+        console.log(`[JOBS] Unknown job type: ${type}`);
+        break;
+    }
+    return await res.status(200);
+  } catch (error) {
+    console.log(`[JOBS] Job failed, updating job status - id: ${id}`);
 
-  if (ts) {
-    // TODO: call as postMessage if ts is null
-    await new WebClient(bot?.token).chat
-      .update({
-        ...questionBlock,
-        channel: channelName === "directmessage" ? createdBy : channelId,
-        ts,
-      })
-      .then(async () => {
-        console.log(`[JOBS] Job successful, updating job status - id: ${id}`);
-
-        await updateJob({
-          id,
-          status: "success",
-          updatedAt: new Date().toISOString(),
-        });
-      })
-      .catch(async (error) => {
-        console.log(`[JOBS] Job failed, updating job status - id: ${id}`);
-
-        await updateJob({
-          id,
-          error: error,
-          updatedAt: new Date().toISOString(),
-          retryCount: retryCount + 1,
-        });
-      });
-  } else {
-    // TODO: call as postMessage if ts is null
-    await new WebClient(bot?.token).chat
-      .postMessage({
-        ...questionBlock,
-        channel: channelName === "directmessage" ? createdBy : channelId,
-      })
-      .then(async () => {
-        console.log(`[JOBS] Job successful, updating job status - id: ${id}`);
-
-        await updateJob({
-          id,
-          status: "success",
-          updatedAt: new Date().toISOString(),
-        });
-      })
-      .catch(async (error) => {
-        console.log(`[JOBS] Job failed, updating job status - id: ${id}`);
-
-        await updateJob({
-          id,
-          error: error,
-          updatedAt: new Date().toISOString(),
-          retryCount: retryCount + 1,
-        });
-      });
-  }
-
-  // TODO: call as postMessage if ts is null
-  await new WebClient(bot?.token).chat
-    .update({
-      ...questionBlock,
-      channel: channelName === "directmessage" ? createdBy : channelId,
-      ts,
-    })
-    .then(async () => {
-      console.log(`[JOBS] Job successful, updating job status - id: ${id}`);
-
-      await updateJob({
-        id,
-        status: "success",
-        updatedAt: new Date().toISOString(),
-      });
-    })
-    .catch(async (error) => {
-      console.log(`[JOBS] Job failed, updating job status - id: ${id}`);
-
-      await updateJob({
-        id,
-        error: error,
-        updatedAt: new Date().toISOString(),
-        retryCount: retryCount + 1,
-      });
+    await updateJob({
+      id,
+      error: error as any,
+      updatedAt: new Date().toISOString(),
+      retryCount: retryCount + 1,
     });
+  }
 
   return await res.status(200);
 };
