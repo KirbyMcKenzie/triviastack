@@ -22,7 +22,7 @@ const handleQuickQuiz = async ({
     return await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
   }
 
-  // const isDirectMessage = payload.channel_name === "directmessage";
+  const isDirectMessage = payload.channel_name === "directmessage";
   let ts;
 
   if (!isDirectMessage) {
