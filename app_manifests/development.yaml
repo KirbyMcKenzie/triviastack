@@ -1,5 +1,5 @@
 display_information:
-  name: Triviabot (dev)
+  name: TriviaStack (dev)
   description: Quick and simple trivia to keep your team engaged
   background_color: "#000000"
 features:
@@ -8,7 +8,7 @@ features:
     messages_tab_enabled: false
     messages_tab_read_only_enabled: false
   bot_user:
-    display_name: Triviabot (dev)
+    display_name: TriviaStack (dev)
     always_online: true
   slash_commands:
     - command: /trivia

@@ -140,7 +140,7 @@ export const buildQuestionBlock = ({
                   elements: [
                     {
                       type: "mrkdwn",
-                      text: "😵‍💫 There was an issue processing that click. Please try again, and <https://triviabot.app/support|contact support> if the issue persists.",
+                      text: "😵‍💫 There was an issue processing that click. Please try again, and <https://triviastack.com/support|contact support> if the issue persists.",
                     },
                   ],
                 },

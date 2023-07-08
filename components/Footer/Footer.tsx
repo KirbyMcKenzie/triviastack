@@ -9,7 +9,7 @@ function Footer() {
           <ul className="flex mb-4 md:order-1 md:ml-4 md:mb-0">
             <li>
               <Link
-                href="https://twitter.com/triviabot_io"
+                href="https://twitter.com/triviastack"
                 aria-label="Twitter"
               >
                 <a
@@ -34,7 +34,7 @@ function Footer() {
             <a
               className="hover:underline font-medium"
               target="blank"
-              href="https://kirby.co.nz?ref=triviabot"
+              href="https://kirby.co.nz?ref=triviastack"
             >
               Kirby McKenzie
             </a>

@@ -29,7 +29,7 @@ function Header() {
               </a>
             </Link>
           </div>
-          <span className="font-bold text-xl">Triviabot</span>
+          <span className="font-bold text-xl">TriviaStack</span>
           <nav className="flex flex-grow">
             {/* <ul className="flex flex-grow justify-end flex-wrap items-center">
               <li>

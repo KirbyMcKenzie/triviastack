@@ -8,7 +8,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Triviabot</title>
+        <title>TriviaStack</title>
       </Head>
       <div
         className="flex flex-col min-h-screen overflow-hidden text-white"
@@ -26,7 +26,7 @@ const Home: NextPage = () => {
             </h2>
             <p className="max-w-xl mx-auto text-lg">
               Instantly create a trivia in a channel using the /trivia command.
-              You can customize your instant trivia settings in the Triviabot
+              You can customize your instant trivia settings in the TriviaStack
               app home.{" "}
             </p>
           </section>
@@ -54,8 +54,8 @@ const Home: NextPage = () => {
             </h2>
             <p className="max-w-xl mx-auto text-lg">
               No need to download any software or navigate confusing interfaces.
-              Triviabot integrates seamlessly with Slack, making it easy to use
-              for anyone in your organization.
+              TriviaStack integrates seamlessly with Slack, making it easy to
+              use for anyone in your organization.
             </p>
           </section>
         </main>
