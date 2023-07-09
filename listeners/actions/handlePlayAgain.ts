@@ -18,6 +18,7 @@ const handlePlayAgain = async ({
   await ack();
   const channelId = body?.channel?.id || "";
   const teamId = body.team?.id || "";
+  const createdBy = body.user.id;
   logger.info(`[ACTION] Play again called by ${body.user.id}`);
 
   console.log(action, "action");
@@ -31,7 +32,7 @@ const handlePlayAgain = async ({
   const questions = await fetchQuizQuestions({
     numberOfQuestions: previousQuiz.questions.length,
   });
-  const quiz = await createNewQuiz(teamId, channelId, questions);
+  const quiz = await createNewQuiz({ teamId, channelId, questions, createdBy });
 
   const questionBlock = buildQuestionBlock({
     quizId: quiz.id,

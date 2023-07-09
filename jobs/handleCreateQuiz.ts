@@ -16,11 +16,12 @@ export const handleCreateQuiz = async (record: Record<string, any>) => {
   console.log(teamId, "teamId");
 
   const questions = await fetchQuizQuestions({ numberOfQuestions });
-  const quiz = await createNewQuiz(
+  const quiz = await createNewQuiz({
+    channelId: channelName === "directmessage" ? createdBy : channelId,
     teamId,
-    channelName === "directmessage" ? createdBy : channelId,
-    questions
-  );
+    createdBy,
+    questions,
+  });
   const { bot } = await getInstallationStore(teamId);
 
   const questionBlock = buildQuestionBlock({

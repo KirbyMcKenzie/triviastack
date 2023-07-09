@@ -7,16 +7,26 @@ import { shuffle } from "utils/array";
 
 // TODO: Type this file properly
 // TODO: Add logging & error handling
-export const createNewQuiz = async (
-  teamId: string,
-  channelId: string,
-  questions: Question[]
-): Promise<Quiz> => {
+
+export type NewQuiz = {
+  teamId: string;
+  channelId: string;
+  createdBy: string;
+  questions: Question[];
+};
+
+export const createNewQuiz = async ({
+  teamId,
+  channelId,
+  createdBy,
+  questions,
+}: NewQuiz): Promise<Quiz> => {
   const { data, error } = await supabase
     .from("quizzes")
     .insert({
       team_id: teamId,
       channel_id: channelId,
+      created_by: createdBy,
       is_active: true,
       questions,
     })

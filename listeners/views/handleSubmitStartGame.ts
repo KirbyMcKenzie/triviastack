@@ -27,6 +27,7 @@ const handleSubmitStartGame = async ({
   logger.info(`[VIEW] Submit start game by ${userId}`);
 
   const teamId = body.team?.id || "";
+  const createdBy = body.user?.id;
   const channelId = input_select_channel.select_channel
     .selected_channel as string;
 
@@ -45,7 +46,7 @@ const handleSubmitStartGame = async ({
     //@ts-ignore
     categories: categories?.map(({ value }) => value) || [],
   });
-  const quiz = await createNewQuiz(teamId, channelId, questions);
+  const quiz = await createNewQuiz({ teamId, channelId, questions, createdBy });
 
   const questionBlock = buildQuestionBlock({
     quizId: quiz.id,
