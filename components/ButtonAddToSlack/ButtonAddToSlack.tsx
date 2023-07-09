@@ -9,7 +9,7 @@ export interface Props {
 const ButtonAddToSlack: FC<Props> = ({ height = 54, width = 184 }) => {
   return (
     <a
-      href="https://triviastack.io/api/slack/install"
+      href="https://triviastack.com/api/slack/install"
       className="inline-flex items-center justify-center no-underline font-semibold px-4 bg-white text-black rounded-full"
       style={{ height, width }}
     >
