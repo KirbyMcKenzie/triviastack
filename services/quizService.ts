@@ -8,15 +8,17 @@ import { shuffle } from "utils/array";
 // TODO: Type this file properly
 // TODO: Add logging & error handling
 export const createNewQuiz = async (
-  questions: Question[],
-  channel_id: string
+  teamId: string,
+  channelId: string,
+  questions: Question[]
 ): Promise<Quiz> => {
   const { data, error } = await supabase
     .from("quizzes")
     .insert({
-      questions: questions,
-      channel_id: channel_id,
+      team_id: teamId,
+      channel_id: channelId,
       is_active: true,
+      questions,
     })
     .select();
   error && console.log(error, "[SQL ERROR]");

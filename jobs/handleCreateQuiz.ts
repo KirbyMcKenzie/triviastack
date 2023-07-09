@@ -13,10 +13,13 @@ export const handleCreateQuiz = async (record: Record<string, any>) => {
   const { channelId, channelName, numberOfQuestions, ts } = payload;
   console.log(`[JOBS] handleCreateQuiz triggered by ${createdBy}`);
 
+  console.log(teamId, "teamId");
+
   const questions = await fetchQuizQuestions({ numberOfQuestions });
   const quiz = await createNewQuiz(
-    questions,
-    channelName === "directmessage" ? createdBy : channelId
+    teamId,
+    channelName === "directmessage" ? createdBy : channelId,
+    questions
   );
   const { bot } = await getInstallationStore(teamId);
 

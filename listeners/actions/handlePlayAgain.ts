@@ -17,6 +17,7 @@ const handlePlayAgain = async ({
 }: SlackActionMiddlewareArgs & AllMiddlewareArgs) => {
   await ack();
   const channelId = body?.channel?.id || "";
+  const teamId = body.team?.id || "";
   logger.info(`[ACTION] Play again called by ${body.user.id}`);
 
   console.log(action, "action");
@@ -30,7 +31,7 @@ const handlePlayAgain = async ({
   const questions = await fetchQuizQuestions({
     numberOfQuestions: previousQuiz.questions.length,
   });
-  const quiz = await createNewQuiz(questions, channelId);
+  const quiz = await createNewQuiz(teamId, channelId, questions);
 
   const questionBlock = buildQuestionBlock({
     quizId: quiz.id,
