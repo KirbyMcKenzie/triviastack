@@ -38,25 +38,25 @@ export const getGameOverEmoji = (score: number, max: number): string => {
   }
 };
 export const PERFECT_SCORE_RESPONSES = [
-  "Great job! Perfect score!",
+  "Perfect score!",
+  "Oh wow! Perfect score!",
+  "💯💯💯💯💯💯💯",
   "Incredible! Couldn't be better!",
   "Flawless! You're a pro!",
   "Wow! You nailed it!",
   "Amazing work! You're unstoppable!",
   "Outstanding! Perfect score!",
-  "Impressive! You're a natural!",
-  "Brilliant! Flawless victory!",
-  "Excellent! You aced it!",
+  "Flawless victory!",
+  "Ace!",
   "Perfection! Well done!",
 ];
 
 export const GREAT_SCORE_RESPONSES = [
-  "Nice work! You're mastering this!",
   "Fantastic! You're on fire!",
   "Impressive! Keep it up!",
   "Well done! Great score!",
-  "Terrific effort! Keep going!",
-  "Bravo! You're doing amazing!",
+  "Bravo!",
+  "Great score!",
   "Awesome job! Great score!",
   "Superb performance! Keep it up!",
   "You're crushing it! Great score!",
@@ -64,37 +64,28 @@ export const GREAT_SCORE_RESPONSES = [
 ];
 
 export const GOOD_SCORE_RESPONSES = [
-  "Good job! Excellent progress!",
-  "Well done! You're getting the hang of it!",
-  "Nice work! Getting better!",
+  "Good job!",
+  "Well done!",
   "Keep it up! Good score!",
-  "Solid effort! You're improving!",
   "Thumbs up! Good job!",
-  "You're doing great! Good score!",
-  "Well played! Good job!",
-  "You're on the right track! Good score!",
-  "Impressive! You're making progress!",
+  "Well played!",
+  "Well played",
 ];
 
 export const OKAY_SCORE_RESPONSES = [
   "Okay, not bad!",
   "Decent effort! Keep practicing!",
-  "Not too shabby! Keep it up!",
+  "Not too shabby!",
   "Nice try! Keep going!",
   "Not bad, but not good",
   "You're on the right path!",
-  "Good effort! Okay score!",
-  "Well done! You're improving!",
-  "You're getting better!",
+  "An okay score",
   "There's more room for improvement",
 ];
 
 export const POOR_SCORE_RESPONSES = [
+  "A poor score.",
   "Okay.. a little off this time.",
-  "Keep trying! You'll improve!",
-  "Don't worry! You'll get better!",
-  "Mistakes happen! Keep going!",
-  "Don't give up!",
   "Keep practicing!",
   "It's okay, you'll bounce back!",
   "Yeah not good, but you will improve!",
