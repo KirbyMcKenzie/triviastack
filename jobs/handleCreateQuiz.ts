@@ -65,21 +65,4 @@ export const handleCreateQuiz = async (record: Record<string, any>) => {
         });
       });
   }
-
-  // // TODO: call as postMessage if ts is null
-  // await new WebClient(bot?.token).chat
-  //   .update({
-  //     ...questionBlock,
-  //     channel: channelName === "directmessage" ? createdBy : channelId,
-  //     ts,
-  //   })
-  //   .then(async () => {
-  //     console.log(`[JOBS] Job successful, updating job status - id: ${id}`);
-
-  //     await updateJob({
-  //       id,
-  //       status: "success",
-  //       updatedAt: new Date().toISOString(),
-  //     });
-  //   });
 };
