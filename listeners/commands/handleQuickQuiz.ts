@@ -19,7 +19,9 @@ const handleQuickQuiz = async ({
 
   const numberOfQuestions = parseInt(payload.text) || DEFAULT_NUM_QUESTIONS;
   if (numberOfQuestions > MAX_QUESTIONS) {
-    return await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
+    await respond(buildErrorMaxQuestionsExceeded(MAX_QUESTIONS));
+    await ack();
+    return;
   }
 
   const isDirectMessage = payload.channel_name === "directmessage";
