@@ -1,7 +1,7 @@
 name: cron-health-check
 on:
   schedule:
-    - cron: "* * * * *"
+    - cron: '* * * * *'
 jobs:
   cron:
     runs-on: ubuntu-latest
