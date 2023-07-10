@@ -1,0 +1,10 @@
+name: cron-health-check
+on:
+  schedule:
+    - cron: "* * * * *"
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: create dev trivia questions
+        run: curl -X POST https://triviastack.com/api/health
