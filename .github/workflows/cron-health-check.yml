@@ -7,4 +7,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check service health
-        run: curl -X POST https://triviastack.com/api/health
+        run: curl https://www.triviastack.com/api/health
