@@ -18,7 +18,7 @@ const Home: NextPage = () => {
         }}
       >
         <Header />
-        <main className="flex-grow max-w-8 mx-auto px-5 text-center">
+        <main className="flex-grow mx-auto px-5 text-center">
           <HeroHome />
           <section className="mb-16">
             <h2 className="text-2xl md:text-4xl font-extrabold leading-tight md:leading-tight md:tracking-normal mb-3">
