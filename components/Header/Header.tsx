@@ -1,3 +1,4 @@
+import ButtonAddToSlack from "components/ButtonAddToSlack";
 import Logo from "components/Logo/Logo";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
@@ -18,10 +19,10 @@ function Header() {
   return (
     <header className="fixed left-0 top-6 right-0 z-30">
       <div
-        className="w-[700px] mx-auto px-5 sm:px-6 border border-slate-300 rounded-full bg-slate backdrop-blur-xl md:bg-opacity-90"
+        className="w-[700px] mx-auto px-4 border border-slate-200 rounded-full bg-slate backdrop-blur-xl md:bg-opacity-90"
         style={{ backgroundColor: "rgba(255, 255, 255, .6)" }}
       >
-        <div className="flex items-center justify-between h-14 md:h-16">
+        <div className="flex items-center justify-between py-2 ">
           <Link href="/">
             <a className="flex items-center">
               <Logo />
@@ -36,6 +37,9 @@ function Header() {
                     Support
                   </a>
                 </Link>
+              </li>
+              <li>
+                <ButtonAddToSlack height={42} width={160} />
               </li>
             </ul>
           </nav>

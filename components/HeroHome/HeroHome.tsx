@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import ButtonAddToSlack from "components/ButtonAddToSlack";
+import DemoButton from "components/DemoButton";
 
 const HeroHome: FC = () => {
   return (
@@ -26,7 +27,14 @@ const HeroHome: FC = () => {
                 data-aos="zoom-y-out"
                 data-aos-delay="300"
               >
-                <ButtonAddToSlack />
+                <div className="mr-4">
+                  <ButtonAddToSlack
+                    logoColor="white"
+                    color="white"
+                    backgroundColor="#2758E7"
+                  />
+                </div>
+                <DemoButton />
               </div>
             </div>
           </div>
