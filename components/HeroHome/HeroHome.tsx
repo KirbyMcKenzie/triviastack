@@ -1,27 +1,25 @@
 import React, { FC } from "react";
 import ButtonAddToSlack from "components/ButtonAddToSlack";
-import TextGradient from "components/TextGradient";
 
 const HeroHome: FC = () => {
   return (
     <section>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
           <div className="text-center pb-12 md:pb-16">
             <h1
-              className="text-4xl md:text-6xl font-extrabold leading-tight md:leading-tight md:tracking-normal mb-4 max-w-[800px] mx-auto"
+              className="text-4xl md:text-7xl font-black leading-tight md:leading-tight md:tracking-tight mb-4 max-w-[860px] mx-auto"
               data-aos="zoom-y-out"
             >
-              Keep your team engaged with{" "}
-              <TextGradient>Trivia for Slack</TextGradient>
+              Keep your team engaged with Trivia for Slack
             </h1>
             <div className="max-w-3xl mx-auto">
               <p
-                className="text-lg md:text-xl text-slate-400 mb-8 max-w-[500px] mx-auto px-4 md:px-0"
+                className="text-2xl font-normal md:text-2xl text-slate-700 mb-8 max-w-[500px] mx-auto px-4 md:px-0"
                 data-aos="zoom-y-out"
                 data-aos-delay="150"
               >
-                Discover a new way to have fun with your team on Slack
+                Fun and engaging trivia with new questions added everyday
               </p>
               <div
                 className="max-w-xs mx-auto mt-10 sm:max-w-none sm:flex sm:justify-center"
