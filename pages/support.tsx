@@ -9,9 +9,9 @@ const Support: NextPage = () => {
       <Head>
         <title>TriviaStack - Support</title>
       </Head>
-      <div className="flex flex-col min-h-screen overflow-hidden bg-slate-900 text-white">
+      <div className="flex flex-col min-h-screen overflow-hidden ">
         <Header />
-        <main className="flex-grow max-w-4xl mx-auto px-8 mt-24">
+        <main className="flex-grow max-w-4xl mx-auto px-8 mt-32">
           <h1 className="text-3xl font-bold mb-8">Support</h1>
           <div>
             We&apos;re here to help you get the most out of your trivia
@@ -23,7 +23,7 @@ const Support: NextPage = () => {
             If you run into any problems or have questions, feel free to email
             us at{" "}
             <a
-              className="text-blue-300 font-medium hover:underline"
+              className="text-blue-600 hover:underline"
               href="mailto:support@triviastack.com"
             >
               support@triviastack.com
@@ -36,7 +36,7 @@ const Support: NextPage = () => {
             improvement, a feature request, or just to share your thoughts,
             we&apos;re all ears. Drop us a line at{" "}
             <a
-              className="text-blue-300 font-medium hover:underline"
+              className="text-blue-600 hover:underline"
               href="mailto:feedback@triviastack.com"
             >
               feedback@triviastack.com
@@ -48,7 +48,7 @@ const Support: NextPage = () => {
           <div>
             For the latest updates, news, and announcements, follow us on{" "}
             <a
-              className="text-blue-300 font-medium hover:underline"
+              className="text-blue-600 hover:underline"
               href="https://twitter.com/triviastack"
               target="#"
             >
