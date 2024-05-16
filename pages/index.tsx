@@ -14,52 +14,67 @@ const Home: NextPage = () => {
       </Head>
       <div className="flex flex-col min-h-screen">
         <Header />
-        <main className="flex-grow mx-auto px-5 text-center">
+        <main className="flex-grow mx-auto max-w-[1200px] px-5 text-center">
           <HeroHome />
 
           <div className="my-24">
             <FeatureSection
-              title="Start a Game in Seconds"
-              subtitle="Simply select a game mode, pick some categories and jump right in."
+              title="New Categories Every Week"
+              subtitle="Keep up with events and current affairs, with an ever changing set of categories and questions."
               contentNode={
-                <div className="flex flex-col justify-center max-w-6xl shadow-3xl rounded-3xl">
-                  <video
-                    autoPlay={true}
-                    loop={true}
-                    muted={true}
-                    controls={true}
-                    playsInline={true}
-                    className="rounded-3xl"
-                    src="/create-trivia-modal.mp4"
+                <div className=" bg-blue-600  rounded-3xl p-5 relative shadow-2xl">
+                  <Image
+                    alt="Create trivia modal"
+                    src="/select-categories.png"
+                    height={526}
+                    width={474}
                   />
                 </div>
-                // <div className="shadow shadow-white bg-blue-600 rounded-3xl p-6 relative">
-                //   <Image
-                //     alt="Create trivia modal"
-                //     src="/create-trivia-modal.png"
-                //     height={338}
-                //     width={350}
-                //   />
-
-                //   {/* <div className="h-4 bg-blue-600 absolute left-0 right-0 blur-md" /> */}
-                // </div>
               }
             />
           </div>
+          {/* <div className="my-24">
+            <FeatureSection
+              title="Easy Setup"
+              subtitle="Looking good over there mate, it's time to have a think about it"
+              contentNode={<div>hey haha</div>}
+            />
+          </div> */}
 
-          <div className="my-24">
-            <FeatureSection
-              title="Easy Setup"
-              subtitle="Looking good over there mate, it's time to have a think about it"
-              contentNode={<div>hey haha</div>}
-            />
-          </div>
-          <div className="my-24">
-            <FeatureSection
-              title="Easy Setup"
-              subtitle="Looking good over there mate, it's time to have a think about it"
-              contentNode={<div>hey haha</div>}
-            />
+          <h2 className="text-6xl font-extrabold b-20">
+            {"Explore Game Modes"}
+          </h2>
+          <p className="mt-4 text-blue-600 text-xl font-normal tracking-wider">
+            {
+              "Whether you're remote, hybrid or in-office, there's a mode that suits your team"
+            }
+          </p>
+
+          <div className="flex flex-col md:flex-row md:space-x-4 row mb-40">
+            <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-12">
+              <div className="text-8xl">{"🎉"}</div>
+              <h3 className="text-4xl font-extrabold my-8">{"Team Trivia"}</h3>
+              <p className="text-xl font-normal">
+                Answer questions together as a team, anyone in the channel can
+                participate.
+              </p>
+            </div>
+            <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-12 min-h-96">
+              <div className="text-8xl">{"🏆"}</div>
+              <h3 className="text-4xl font-extrabold my-8">{"Head to Head"}</h3>
+              <p className="text-xl font-normal">
+                Score points based on the difficulty of the questions. Those
+                with the highest points win.
+              </p>
+            </div>
+            <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-12">
+              <div className="text-8xl">{"💃"}</div>
+              <h3 className="text-4xl font-extrabold my-8">{"Solo"}</h3>
+              <p className="text-xl font-normal">
+                Play in your direct message at your own pace. Perfect for
+                practice or small breaks.
+              </p>
+            </div>
           </div>
 
           {/* <section className="mb-16">
