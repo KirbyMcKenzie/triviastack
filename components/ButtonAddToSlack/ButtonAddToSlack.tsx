@@ -24,7 +24,7 @@ const ButtonAddToSlack: FC<Props> = ({
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        style={{ height: 20, width: 20, marginRight: 12 }}
+        style={{ height: 20, width: 20, marginRight: 8 }}
         viewBox="0 0 122.8 122.8"
       >
         <path

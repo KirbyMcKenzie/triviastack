@@ -19,7 +19,7 @@ function Header() {
   return (
     <header className="fixed left-0 top-6 right-0 z-30">
       <div
-        className="w-[700px] mx-auto px-4 border border-slate-200 rounded-full bg-slate backdrop-blur-xl md:bg-opacity-90"
+        className="md:max-w-[700px] mx-6 md:mx-auto px-4 border border-slate-200 rounded-full bg-slate backdrop-blur-xl md:bg-opacity-90"
         style={{ backgroundColor: "rgba(255, 255, 255, .6)" }}
       >
         <div className="flex items-center justify-between py-2 ">
@@ -31,7 +31,7 @@ function Header() {
           </Link>
           <nav className="flex flex-grow">
             <ul className="flex flex-grow justify-end flex-wrap items-center">
-              <li>
+              <li className="md:flex hidden">
                 <Link href="/support">
                   <a className="font-medium  hover:text-blue-600 px-5 py-3 flex items-center transition duration-150 ease-in-out">
                     Support

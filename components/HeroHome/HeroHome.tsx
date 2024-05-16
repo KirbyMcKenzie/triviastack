@@ -23,7 +23,7 @@ const HeroHome: FC = () => {
                 Fun and engaging trivia with new questions added everyday
               </p>
               <div
-                className="max-w-xs mx-auto mt-10 sm:max-w-none sm:flex sm:justify-center"
+                className="flex justify-center mt-10 sm:flex sm:justify-center row"
                 data-aos="zoom-y-out"
                 data-aos-delay="300"
               >
@@ -36,6 +36,10 @@ const HeroHome: FC = () => {
                 </div>
                 <DemoButton />
               </div>
+
+              <p className="mt-4 text-slate-500">
+                {"🤑 Install for free, no credit card required."}
+              </p>
             </div>
           </div>
           <div
