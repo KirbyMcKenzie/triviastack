@@ -41,12 +41,12 @@ const Home: NextPage = () => {
             />
           </div> */}
 
-          <h2 className="text-6xl font-extrabold b-20">
+          <h2 className="text-6xl font-extrabold mt-48">
             {"Explore Game Modes"}
           </h2>
-          <p className="mt-4 text-blue-600 text-xl font-normal tracking-wider">
+          <p className="mt-4 mb-12 text-blue-600 text-xl font-normal tracking-wider">
             {
-              "Whether you're remote, hybrid or in-office, there's a mode that suits your team"
+              "Whether you're remote, hybrid or in-office, there's a mode that suits everyone"
             }
           </p>
 
@@ -75,6 +75,24 @@ const Home: NextPage = () => {
                 practice or small breaks.
               </p>
             </div>
+          </div>
+
+          <div className="my-24">
+            <FeatureSection
+              title="Daily Trivia"
+              subtitle="Create a schedule and automatically kick off a game of trivia as often as you'd like."
+              contentSide="left"
+              contentNode={
+                <div className=" bg-blue-600  rounded-3xl p-5 relative shadow-2xl">
+                  <Image
+                    alt="Create trivia modal"
+                    src="/select-categories.png"
+                    height={526}
+                    width={474}
+                  />
+                </div>
+              }
+            />
           </div>
 
           {/* <section className="mb-16">
