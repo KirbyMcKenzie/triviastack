@@ -17,31 +17,7 @@ const Home: NextPage = () => {
         <main className="flex-grow mx-auto max-w-[1200px] px-5 text-center">
           <HeroHome />
 
-          <div className="my-24">
-            <FeatureSection
-              title="New Categories Every Week"
-              subtitle="Keep up with events and current affairs, with an ever changing set of categories and questions."
-              contentNode={
-                <div className=" bg-blue-600  rounded-3xl p-5 relative shadow-2xl">
-                  <Image
-                    alt="Create trivia modal"
-                    src="/select-categories.png"
-                    height={526}
-                    width={474}
-                  />
-                </div>
-              }
-            />
-          </div>
-          {/* <div className="my-24">
-            <FeatureSection
-              title="Easy Setup"
-              subtitle="Looking good over there mate, it's time to have a think about it"
-              contentNode={<div>hey haha</div>}
-            />
-          </div> */}
-
-          <h2 className="text-6xl font-extrabold mt-48">
+          <h2 className="text-6xl font-extrabold mt-32">
             {"Explore Game Modes"}
           </h2>
           <p className="mt-4 mb-12 text-blue-600 text-xl font-normal tracking-wider">
@@ -77,11 +53,10 @@ const Home: NextPage = () => {
             </div>
           </div>
 
-          <div className="my-24">
+          <div className="mt-48 mb-64">
             <FeatureSection
-              title="Daily Trivia"
-              subtitle="Create a schedule and automatically kick off a game of trivia as often as you'd like."
-              contentSide="left"
+              title="New Categories Every Week"
+              subtitle="Keep up with events and current affairs, with an ever changing set of categories and questions."
               contentNode={
                 <div className=" bg-blue-600  rounded-3xl p-5 relative shadow-2xl">
                   <Image
@@ -95,44 +70,74 @@ const Home: NextPage = () => {
             />
           </div>
 
-          {/* <section className="mb-16">
-            <h2 className="text-2xl md:text-4xl font-extrabold leading-tight md:leading-tight md:tracking-normal mb-3">
-              ⚡️ Quick Trivia
-            </h2>
-            <p className="max-w-xl mx-auto text-lg">
-              Instantly create a trivia in a channel using the /trivia command.
-              You can customize your instant trivia settings in the TriviaStack
-              app home.{" "}
-            </p>
-          </section>
-          <section className="my-16">
-            <h2 className="text-2xl md:text-4xl font-extrabold leading-tight md:leading-tight md:tracking-normal mb-3">
-              😎 Create your own Trivia
-            </h2>
-            <p className="max-w-xl mx-auto text-lg">
-              Choose your own adventure, select the difficulty level,
-              categories, or the number of questions to make each game unique.
-            </p>
-          </section>
-          {/* <section className="my-16">
-            <h2 className="text-2xl md:text-4xl font-extrabold leading-tight md:leading-tight md:tracking-normal mb-3">
-              ⏳ Daily trivia
-            </h2>
-            <p className="max-w-xl mx-auto text-lg">
-              Start a game at the same time everyday. It&apos;s a great way to
-              bond with your team and build a sense of friendly competition.
-            </p>
-          </section> */}
-          {/* <section className="my-16">
-            <h2 className="text-2xl md:text-4xl font-extrabold leading-tight md:leading-tight md:tracking-normal mb-3">
-              🪄 Easy to use
-            </h2>
-            <p className="max-w-xl mx-auto text-lg">
-              No need to download any software or navigate confusing interfaces.
-              TriviaStack integrates seamlessly with Slack, making it easy to
-              use for anyone in your organization.
-            </p>
-          </section> */}
+          <div className="my-64">
+            <FeatureSection
+              title="Install in Minutes"
+              subtitle="Quick, simple and free. No credit card required."
+              contentSide="left"
+              contentNode={
+                <div className=" bg-blue-600  rounded-3xl p-5 relative shadow-2xl">
+                  <Image
+                    alt="Create trivia modal"
+                    src="/onboarding-dm.png"
+                    height={142}
+                    width={696}
+                  />
+                </div>
+              }
+            />
+          </div>
+
+          <div className="my-64">
+            <div
+              className="flex flex-row justify-between items-center w-full  p-16 min-h-[500px] rounded-[46px] my-12"
+              style={{ backgroundColor: "#F7F7F7" }}
+            >
+              <div className="max-w-[466px] text-left">
+                <h2 className="text-5xl font-extrabold">
+                  {"Happy Teams are Productive Teams"}
+                </h2>
+                <p className="text-xl font-normal  mt-6">
+                  According to HBR, companies with higher employee engagement
+                  scores saw higher productivity, profitability, and customer
+                  ratings.
+                </p>
+                <a
+                  href="https://hbr.org/2013/07/employee-engagement-does-more"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block my-6 text-blue-600 text-lg hover:underline"
+                >
+                  Learn more
+                </a>
+              </div>
+              <div>
+                <Image
+                  alt="Create trivia modal"
+                  src="/trivia-reaction.png"
+                  height={362}
+                  width={582}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* <div className="my-64">
+            <FeatureSection
+              title="New Categories Every Week"
+              subtitle="Keep up with events and current affairs, with an ever changing set of categories and questions."
+              contentNode={
+                <div className=" bg-blue-600  rounded-3xl p-5 relative shadow-2xl">
+                  <Image
+                    alt="Create trivia modal"
+                    src="/select-categories.png"
+                    height={526}
+                    width={474}
+                  />
+                </div>
+              }
+            />
+          </div> */}
         </main>
         <Footer />
       </div>
