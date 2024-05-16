@@ -16,7 +16,7 @@ const HeroHome: FC = () => {
             </h1>
             <div className="max-w-3xl mx-auto">
               <p
-                className="text-2xl font-normal md:text-2xl text-slate-700 mb-8 max-w-[500px] mx-auto px-4 md:px-0"
+                className="text-2xl font-light md:text-2xl text-gray-600 tracking-wider mb-8 max-w-[500px] mx-auto px-4 md:px-0"
                 data-aos="zoom-y-out"
                 data-aos-delay="150"
               >
@@ -47,7 +47,7 @@ const HeroHome: FC = () => {
             data-aos="zoom-y-out"
             data-aos-delay="450"
           >
-            <div className="flex flex-col justify-center max-w-4xl md:min-w-[800px] md:min-h-[600px] shadow-2xl rounded-3xl">
+            <div className="flex flex-col justify-center max-w-6xl md:min-w-[800px] md:min-h-[600px] shadow-2xl rounded-3xl">
               <video
                 autoPlay={true}
                 loop={true}

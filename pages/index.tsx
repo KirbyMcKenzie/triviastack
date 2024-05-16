@@ -22,7 +22,7 @@ const Home: NextPage = () => {
               title="Start a Game in Seconds"
               subtitle="Simply select a game mode, pick some categories and jump right in."
               contentNode={
-                <div className="flex flex-col justify-center max-w-4xl shadow-2xl rounded-3xl">
+                <div className="flex flex-col justify-center max-w-6xl shadow-3xl rounded-3xl">
                   <video
                     autoPlay={true}
                     loop={true}
