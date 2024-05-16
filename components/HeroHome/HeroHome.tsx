@@ -37,9 +37,9 @@ const HeroHome: FC = () => {
                 <DemoButton />
               </div>
 
-              <p className="mt-4 text-slate-500">
+              {/* <p className="mt-4 text-slate-500">
                 {"🤑 Install for free, no credit card required."}
-              </p>
+              </p> */}
             </div>
           </div>
           <div
@@ -47,14 +47,14 @@ const HeroHome: FC = () => {
             data-aos="zoom-y-out"
             data-aos-delay="450"
           >
-            <div className="flex flex-col justify-center max-w-4xl md:min-w-[800px] md:min-h-[600px] rounded-lg">
+            <div className="flex flex-col justify-center max-w-4xl md:min-w-[800px] md:min-h-[600px] shadow-2xl rounded-3xl">
               <video
                 autoPlay={true}
                 loop={true}
                 muted={true}
                 controls={true}
                 playsInline={true}
-                className="rounded-lg"
+                className="shadow-2xl rounded-3xl"
                 src="/hero-video.mp4"
               />
             </div>
