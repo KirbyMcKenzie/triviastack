@@ -14,32 +14,26 @@ const FeatureSection: React.FC<Props> = ({
   contentSide = "right",
 }) => {
   return (
-    <section className="flex row w-full">
-      {contentSide === "right" ? (
-        <>
-          <div className="w-full justify-start text-left mr-2">
-            <h2 className="text-6xl font-extrabold">{title}</h2>
-            <span className="block text-xl my-6 text-slate-600">
-              {subtitle}
-            </span>
-          </div>
-          <div className="flex w-full items-center justify-center ml-4 pl-8">
-            {contentNode}
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="flex w-full items-center justify-center ml-2">
-            {contentNode}
-          </div>
-          <div className="w-full justify-start text-left mr-4 pl-8">
-            <h2 className="text-6xl font-extrabold">{title}</h2>
-            <span className="block text-xl my-6 text-slate-600">
-              {subtitle}
-            </span>
-          </div>
-        </>
-      )}
+    <section className="flex flex-col md:flex-row w-full">
+      <div
+        className={`flex flex-col w-full md:w-1/2 ${
+          contentSide === "right" ? "md:order-1" : "md:order-2"
+        } md:justify-start md:text-left`}
+      >
+        <h2 className="text-4xl md:text-6xl font-extrabold">{title}</h2>
+        <span className="block text-xl my-4 md:my-6 text-slate-600">
+          {subtitle}
+        </span>
+      </div>
+      <div
+        className={`flex w-full items-center justify-center md:w-1/2 ${
+          contentSide === "right"
+            ? "md:order-2 md:ml-4 md:pl-8"
+            : "md:order-1 md:mr-4 md:pr-8"
+        }`}
+      >
+        {contentNode}
+      </div>
     </section>
   );
 };

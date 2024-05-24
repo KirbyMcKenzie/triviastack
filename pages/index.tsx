@@ -17,17 +17,17 @@ const Home: NextPage = () => {
         <main className="flex-grow mx-auto max-w-[1200px] px-5 text-center">
           <HeroHome />
 
-          <h2 className="text-6xl font-extrabold mt-32">
+          <h2 className="text-4xl md:text-6xl font-extrabold mt-32">
             {"Explore Game Modes"}
           </h2>
-          <p className="mt-4 mb-12 text-blue-600 text-xl font-normal tracking-wider">
+          <p className="mt-4 mb-12 text-blue-600 text-xl font-normal tracking-wide md:tracking-wider">
             {
               "Whether you're remote, hybrid or in-office, there's a mode that suits everyone"
             }
           </p>
 
           <div className="flex flex-col md:flex-row md:space-x-4 row mb-40">
-            <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-12">
+            <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-3 md:my-12 min-h-[380px]">
               <div className="text-8xl hover:scale-125 transition-all ease-in-out">
                 {"🎉"}
               </div>
@@ -37,7 +37,7 @@ const Home: NextPage = () => {
                 participate.
               </p>
             </div>
-            <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-12 min-h-96">
+            <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-3 md:my-12 min-h-[380px]">
               <div className="text-8xl hover:scale-125 transition-all ease-in-out">
                 {"🏆"}
               </div>
@@ -47,7 +47,7 @@ const Home: NextPage = () => {
                 with the highest points win.
               </p>
             </div>
-            <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-12">
+            <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-3 md:my-12 min-h-[380px]">
               <div className="text-8xl hover:scale-125 transition-all ease-in-out">
                 {"💃"}
               </div>
@@ -96,11 +96,11 @@ const Home: NextPage = () => {
 
           <div className="my-64">
             <div
-              className="flex flex-row justify-between items-center w-full  p-16 min-h-[500px] rounded-[46px] my-12"
+              className="flex flex-col md:flex-row justify-between items-center w-full p-12  md:p-16 min-h-[500px] rounded-[46px] my-12"
               style={{ backgroundColor: "#F7F7F7" }}
             >
-              <div className="max-w-[466px] text-left">
-                <h2 className="text-5xl font-extrabold">
+              <div className="max-w-[466px] md:text-left">
+                <h2 className="text-4xl md:text-5xl font-extrabold">
                   {"Happy Teams are Productive Teams"}
                 </h2>
                 <p className="text-xl font-normal  mt-6">
@@ -112,7 +112,7 @@ const Home: NextPage = () => {
                   href="https://hbr.org/2013/07/employee-engagement-does-more"
                   target="_blank"
                   rel="noreferrer"
-                  className="block my-6 text-blue-600 text-lg hover:underline"
+                  className="block my-6 text-blue-600 text-xl hover:underline"
                 >
                   Learn more
                 </a>
@@ -127,23 +127,6 @@ const Home: NextPage = () => {
               </div>
             </div>
           </div>
-
-          {/* <div className="my-64">
-            <FeatureSection
-              title="New Categories Every Week"
-              subtitle="Keep up with events and current affairs, with an ever changing set of categories and questions."
-              contentNode={
-                <div className=" bg-blue-600  rounded-3xl p-5 relative shadow-2xl">
-                  <Image
-                    alt="Create trivia modal"
-                    src="/select-categories.png"
-                    height={526}
-                    width={474}
-                  />
-                </div>
-              }
-            />
-          </div> */}
         </main>
         <Footer />
       </div>
