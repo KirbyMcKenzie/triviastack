@@ -11,6 +11,19 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>TriviaStack</title>
+        <meta
+          name="description"
+          content="Keep your team engaged with Trivia for Slack."
+        />
+        <meta property="og:title" content="TriviaStack" />
+        <meta
+          property="og:description"
+          content="Keep your team engaged with Trivia for Slack."
+        />
+        <meta
+          property="og:image"
+          content="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg"
+        />
       </Head>
       <div className="flex flex-col min-h-screen">
         <Header />
