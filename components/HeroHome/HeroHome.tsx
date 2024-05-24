@@ -5,7 +5,7 @@ import DemoButton from "components/DemoButton";
 const HeroHome: FC = () => {
   return (
     <section>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto md:px-5">
         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
           <div className="text-center pb-12 md:pb-16">
             <h1
@@ -47,7 +47,7 @@ const HeroHome: FC = () => {
             data-aos="zoom-y-out"
             data-aos-delay="450"
           >
-            <div className="flex flex-col justify-center max-w-6xl md:min-w-[800px] md:min-h-[600px] shadow-2xl rounded-3xl">
+            <div className="flex flex-col justify-center max-w-6xl min-w-full ">
               <video
                 autoPlay={true}
                 loop={true}
