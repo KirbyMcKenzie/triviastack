@@ -28,7 +28,9 @@ const Home: NextPage = () => {
 
           <div className="flex flex-col md:flex-row md:space-x-4 row mb-40">
             <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-12">
-              <div className="text-8xl">{"🎉"}</div>
+              <div className="text-8xl hover:scale-125 transition-all ease-in-out">
+                {"🎉"}
+              </div>
               <h3 className="text-4xl font-extrabold my-8">{"Team Trivia"}</h3>
               <p className="text-xl font-normal">
                 Answer questions together as a team, anyone in the channel can
@@ -36,7 +38,9 @@ const Home: NextPage = () => {
               </p>
             </div>
             <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-12 min-h-96">
-              <div className="text-8xl">{"🏆"}</div>
+              <div className="text-8xl hover:scale-125 transition-all ease-in-out">
+                {"🏆"}
+              </div>
               <h3 className="text-4xl font-extrabold my-8">{"Head to Head"}</h3>
               <p className="text-xl font-normal">
                 Score points based on the difficulty of the questions. Those
@@ -44,7 +48,9 @@ const Home: NextPage = () => {
               </p>
             </div>
             <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-12">
-              <div className="text-8xl">{"💃"}</div>
+              <div className="text-8xl hover:scale-125 transition-all ease-in-out">
+                {"💃"}
+              </div>
               <h3 className="text-4xl font-extrabold my-8">{"Solo"}</h3>
               <p className="text-xl font-normal">
                 Play in your direct message at your own pace. Perfect for
