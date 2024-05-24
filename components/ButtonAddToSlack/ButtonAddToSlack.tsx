@@ -14,13 +14,19 @@ const ButtonAddToSlack: FC<Props> = ({
   width = 184,
   color = "black",
   logoColor = "slack",
-  backgroundColor = "#F2F2F2",
+  backgroundColor = "#f2f2f299",
 }) => {
   return (
     <a
       href="https://triviastack.fly.dev/slack/install"
       className="inline-flex items-center justify-center no-underline font-semibold px-4 rounded-full hover:shadow-lg transition-all duration-300 ease-in-out"
-      style={{ height, width, backgroundColor, color: color }}
+      style={{
+        height,
+        width,
+        backgroundColor,
+        color: color,
+        border: "1px solid #e2e8f04a",
+      }}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

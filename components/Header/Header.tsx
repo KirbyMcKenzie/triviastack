@@ -39,7 +39,7 @@ function Header() {
                 </Link>
               </li>
               <li>
-                <ButtonAddToSlack height={42} width={160} />
+                <ButtonAddToSlack height={46} width={160} />
               </li>
             </ul>
           </nav>
