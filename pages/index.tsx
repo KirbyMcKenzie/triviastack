@@ -14,7 +14,7 @@ const Home: NextPage = () => {
       </Head>
       <div className="flex flex-col min-h-screen">
         <Header />
-        <main className="flex-grow mx-auto max-w-[1200px] px-5 text-center">
+        <main className="flex-grow mx-auto max-w-[1200px] px-6 text-center">
           <HeroHome />
 
           <h2 className="text-4xl md:text-6xl font-extrabold mt-32">

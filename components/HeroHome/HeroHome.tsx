@@ -47,14 +47,14 @@ const HeroHome: FC = () => {
             data-aos="zoom-y-out"
             data-aos-delay="450"
           >
-            <div className="flex flex-col justify-center max-w-6xl min-w-full ">
+            <div className="flex flex-col justify-center max-w-6xl min-w-full -mx-6 md:-mx-0">
               <video
                 autoPlay={true}
                 loop={true}
                 muted={true}
                 controls={true}
                 playsInline={true}
-                className="shadow-2xl rounded-3xl"
+                className="shadow-2xl md:rounded-3xl"
                 src="/hero-video.mp4"
               />
             </div>
