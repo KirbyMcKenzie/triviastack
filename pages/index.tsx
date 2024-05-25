@@ -103,8 +103,23 @@ const Home: NextPage = () => {
 
           <div className="my-24 md:my-64">
             <FeatureSection
+              title="Keep up with News"
+              subtitle="Stay in the know with new current affair questions everyday. Keeping your trivia sessions fresh and your team in sync with the latest headlines and trends."
+              contentNode={
+                <div className="p-12 bg-white rounded-3xl shadow-3xl">
+                  <div className="text-9xl hover:scale-110 transition-all ease-in-out">
+                    {"🗞️"}
+                  </div>
+                </div>
+              }
+            />
+          </div>
+
+          <div className="my-24 md:my-64">
+            <FeatureSection
               title="Install in Minutes"
               subtitle="Quick, simple and free. No credit card required."
+              contentSide="left"
               contentNode={
                 <div className=" bg-blue-600  rounded-3xl p-5 relative shadow-3xl">
                   <Image

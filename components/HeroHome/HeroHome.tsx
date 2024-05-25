@@ -54,7 +54,7 @@ const HeroHome: FC = () => {
                 muted={true}
                 controls={true}
                 playsInline={true}
-                className="shadow-2xl md:rounded-3xl"
+                className="shadow-3xl md:rounded-3xl"
                 src="/hero-video.mp4"
               />
             </div>
