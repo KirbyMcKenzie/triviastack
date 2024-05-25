@@ -74,7 +74,7 @@ const Home: NextPage = () => {
               title="New Categories Every Week"
               subtitle="Keep up with events and current affairs, with an ever changing set of categories and questions."
               contentNode={
-                <div className=" bg-blue-600  rounded-3xl p-5 relative shadow-2xl">
+                <div className=" bg-blue-600  rounded-3xl p-5 relative shadow-3xl">
                   <Image
                     alt="Create trivia modal"
                     src="/select-categories.png"
@@ -88,11 +88,25 @@ const Home: NextPage = () => {
 
           <div className="my-24 md:my-64">
             <FeatureSection
-              title="Install in Minutes"
-              subtitle="Quick, simple and free. No credit card required."
+              title="Scheduled Trivia"
+              subtitle="Coming soon - Set up your trivia games to run on any day of the week at your preferred time."
               contentSide="left"
               contentNode={
-                <div className=" bg-blue-600  rounded-3xl p-5 relative shadow-2xl">
+                <div className="p-12 bg-white rounded-3xl shadow-3xl">
+                  <div className="text-9xl hover:scale-110 transition-all ease-in-out">
+                    {"⏰"}
+                  </div>
+                </div>
+              }
+            />
+          </div>
+
+          <div className="my-24 md:my-64">
+            <FeatureSection
+              title="Install in Minutes"
+              subtitle="Quick, simple and free. No credit card required."
+              contentNode={
+                <div className=" bg-blue-600  rounded-3xl p-5 relative shadow-3xl">
                   <Image
                     alt="Create trivia modal"
                     src="/onboarding-dm.png"
