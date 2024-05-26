@@ -88,26 +88,12 @@ const Home: NextPage = () => {
 
           <div className="my-24 md:my-64">
             <FeatureSection
-              title="Scheduled Trivia"
-              subtitle="Coming soon - Set up your trivia games to run on any day of the week at your preferred time."
+              title="Keep up with News"
+              subtitle="Stay in the know with new current affair questions everyday. Keeping your trivia sessions fresh and your team in sync with the latest headlines and trends."
               contentSide="left"
               contentNode={
                 <div className="p-12 bg-white rounded-3xl shadow-3xl">
-                  <div className="text-9xl hover:scale-110 transition-all ease-in-out">
-                    {"⏰"}
-                  </div>
-                </div>
-              }
-            />
-          </div>
-
-          <div className="my-24 md:my-64">
-            <FeatureSection
-              title="Keep up with News"
-              subtitle="Stay in the know with new current affair questions everyday. Keeping your trivia sessions fresh and your team in sync with the latest headlines and trends."
-              contentNode={
-                <div className="p-12 bg-white rounded-3xl shadow-3xl">
-                  <div className="text-9xl hover:scale-110 transition-all ease-in-out">
+                  <div className="text-8xl hover:scale-110 transition-all ease-in-out">
                     {"🗞️"}
                   </div>
                 </div>
@@ -117,7 +103,21 @@ const Home: NextPage = () => {
 
           <div className="my-24 md:my-64">
             <FeatureSection
-              title="Install in Minutes"
+              title="Scheduled Trivia"
+              subtitle="Coming soon - Set up your trivia games to run on any day of the week at your preferred time."
+              contentNode={
+                <div className="p-12 bg-white rounded-3xl shadow-3xl">
+                  <div className="text-8xl hover:scale-110 transition-all ease-in-out">
+                    {"⏰"}
+                  </div>
+                </div>
+              }
+            />
+          </div>
+
+          <div className="my-24 md:my-64">
+            <FeatureSection
+              title="Install in Seconds"
               subtitle="Quick, simple and free. No credit card required."
               contentSide="left"
               contentNode={
@@ -133,7 +133,7 @@ const Home: NextPage = () => {
             />
           </div>
 
-          <div className="my-24 md:my-64">
+          <div className="my-12 md:my-18">
             <div
               className="flex flex-col md:flex-row justify-between items-center w-full p-8  md:p-16 min-h-[500px] rounded-[46px] my-12"
               style={{ backgroundColor: "#F7F7F7" }}
