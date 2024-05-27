@@ -44,8 +44,8 @@ const HeroHome: FC = () => {
           </div>
           <div
             className="flex justify-center"
-            // data-aos="zoom-y-out"
-            // data-aos-delay="450"
+            data-aos="zoom-y-out"
+            data-aos-delay="400"
           >
             <div className="flex flex-col justify-center max-w-6xl min-w-full -mx-6 md:-mx-0">
               <video

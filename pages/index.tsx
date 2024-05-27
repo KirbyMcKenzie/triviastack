@@ -39,7 +39,10 @@ const Home: NextPage = () => {
             }
           </p>
 
-          <div className="flex flex-col md:flex-row md:space-x-4 row md:mb-40">
+          <div
+            className="flex flex-col md:flex-row md:space-x-4 row md:mb-40"
+            data-aos="zoom-y-out"
+          >
             <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-3 md:my-12 min-h-[380px]">
               <div className="text-8xl hover:scale-125 transition-all ease-in-out">
                 {"🎉"}
@@ -118,7 +121,7 @@ const Home: NextPage = () => {
             />
           </div>
 
-          <div className="my-24 md:my-64">
+          <div className="my-24 md:my-64" data-aos="zoom-y-out">
             <FeatureSection
               title="Install in Seconds"
               subtitle="Quick, simple and free. No credit card required."
@@ -136,7 +139,7 @@ const Home: NextPage = () => {
             />
           </div>
 
-          <div className="my-12 md:my-18" data-aos="zoom-y-out">
+          <div className="mt-18 mb-64 md:my-18" data-aos="zoom-y-out">
             <div
               className="flex flex-col md:flex-row justify-between items-center w-full p-8  md:p-16 min-h-[500px] rounded-[46px] my-12"
               style={{ backgroundColor: "#F7F7F7" }}
