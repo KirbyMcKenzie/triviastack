@@ -27,7 +27,10 @@ const Home: NextPage = () => {
         <main className="flex-grow mx-auto max-w-[1200px] px-6 text-center">
           <HeroHome />
 
-          <h2 className="text-4xl md:text-6xl font-extrabold mt-32">
+          <h2
+            className="text-4xl md:text-6xl font-extrabold mt-32"
+            data-aos="zoom-y-out"
+          >
             {"Explore Game Modes"}
           </h2>
           <p className="mt-4 mb-12 text-blue-600 text-xl font-normal tracking-wide md:tracking-wider">
@@ -69,7 +72,7 @@ const Home: NextPage = () => {
             </div>
           </div>
 
-          <div className="my-24 md:mt-48 md:mb-64">
+          <div className="my-24 md:mt-48 md:mb-64" data-aos="zoom-y-out">
             <FeatureSection
               title="New Categories Every Week"
               subtitle="Keep up with events and current affairs, with an ever changing set of categories and questions."
@@ -86,7 +89,7 @@ const Home: NextPage = () => {
             />
           </div>
 
-          <div className="my-24 md:my-64">
+          <div className="my-24 md:my-64" data-aos="zoom-y-out">
             <FeatureSection
               title="Keep up with News"
               subtitle="Stay in the know with new current affair questions everyday. Keeping your trivia sessions fresh and your team in sync with the latest headlines and trends."
@@ -101,7 +104,7 @@ const Home: NextPage = () => {
             />
           </div>
 
-          <div className="my-24 md:my-64">
+          <div className="my-24 md:my-64" data-aos="zoom-y-out">
             <FeatureSection
               title="Scheduled Trivia"
               subtitle="Coming soon - Set up your trivia games to run on any day of the week at your preferred time."
@@ -133,7 +136,7 @@ const Home: NextPage = () => {
             />
           </div>
 
-          <div className="my-12 md:my-18">
+          <div className="my-12 md:my-18" data-aos="zoom-y-out">
             <div
               className="flex flex-col md:flex-row justify-between items-center w-full p-8  md:p-16 min-h-[500px] rounded-[46px] my-12"
               style={{ backgroundColor: "#F7F7F7" }}

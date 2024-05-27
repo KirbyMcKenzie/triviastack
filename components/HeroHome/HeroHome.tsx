@@ -18,13 +18,13 @@ const HeroHome: FC = () => {
               <p
                 className="text-2xl font-light md:text-2xl text-gray-600 tracking-wider mb-8 max-w-[500px] mx-auto px-4 md:px-0"
                 data-aos="zoom-y-out"
-                // data-aos-delay="150"
+                data-aos-delay="150"
               >
                 Fun and engaging trivia with new questions added everyday
               </p>
               <div
                 className="flex justify-center mt-10 sm:flex sm:justify-center row"
-                // data-aos="zoom-y-out"
+                data-aos="zoom-y-out"
                 data-aos-delay="300"
               >
                 <div className="mr-4">
