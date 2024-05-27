@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     AOS.init({
       once: true,
-      disable: "phone",
+      // disable: "phone",
       duration: 700,
       easing: "ease-out-cubic",
     });
