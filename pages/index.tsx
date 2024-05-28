@@ -69,7 +69,7 @@ const Home: NextPage = () => {
               </div>
               <h3 className="text-4xl font-extrabold my-8">{"Solo"}</h3>
               <p className="text-xl font-normal">
-                Play in your direct message at your own pace. Perfect for
+                Play in your direct messages at your own pace. Perfect for
                 practice or small breaks.
               </p>
             </div>
