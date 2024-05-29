@@ -15,7 +15,6 @@ function Header() {
   //   return () => window.removeEventListener("scroll", scrollHandler);
   // }, [top]);
 
-  // TODO: fix next links
   return (
     <header className="fixed left-0 top-6 right-0 z-30">
       <div
@@ -23,19 +22,19 @@ function Header() {
         style={{ backgroundColor: "rgba(255, 255, 255, .6)" }}
       >
         <div className="flex items-center justify-between py-2 ">
-          <Link href="/">
-            <a className="flex items-center">
+          <Link href="/" passHref>
+            <span className="flex items-center">
               <Logo />
               <span className=" ml-2 font-bold text-xl">TriviaStack</span>
-            </a>
+            </span>
           </Link>
           <nav className="flex flex-grow">
             <ul className="flex flex-grow justify-end flex-wrap items-center">
               <li className="md:flex hidden">
-                <Link href="/support">
-                  <a className="font-medium  hover:text-blue-600 px-5 py-3 flex items-center transition duration-150 ease-in-out">
+                <Link href="/support" passHref>
+                  <span className="font-medium  hover:text-blue-600 px-5 py-3 flex items-center transition duration-150 ease-in-out">
                     Support
-                  </a>
+                  </span>
                 </Link>
               </li>
               <li>
