@@ -47,7 +47,7 @@ const HeroHome: FC = () => {
             data-aos="zoom-y-out"
             data-aos-delay="400"
           >
-            <div className="flex flex-col justify-center max-w-6xl min-w-full -mx-6 md:-mx-0">
+            <div className="flex flex-col justify-center max-w-6xl min-w-full">
               <video
                 autoPlay={true}
                 loop={true}
