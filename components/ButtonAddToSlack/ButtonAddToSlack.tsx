@@ -19,7 +19,7 @@ const ButtonAddToSlack: FC<Props> = ({
   return (
     <a
       href="https://triviastack.fly.dev/slack/install"
-      className="inline-flex items-center justify-center no-underline font-semibold px-4 rounded-full shadow-xl transition-all duration-300 ease-in-out"
+      className="inline-flex items-center justify-center no-underline font-semibold px-4 rounded-full hover:shadow-lg transition-all duration-300 ease-in-out"
       style={{
         height,
         width,

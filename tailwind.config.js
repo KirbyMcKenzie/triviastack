@@ -1,3 +1,4 @@
+//@ts-ignore
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
@@ -12,5 +13,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-hamburgers")],
 };
