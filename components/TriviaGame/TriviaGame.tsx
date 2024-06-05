@@ -137,8 +137,9 @@ const TriviaGame = () => {
   const isFirstQuestion = currentQuestionIndex === 0;
 
   const { reward, isAnimating } = useReward("rewardId", "confetti", {
-    lifetime: 300,
+    lifetime: 400,
     spread: 100,
+    elementCount: 200,
   });
 
   const handleAnswerQuestion = (answer: string) => {
@@ -170,7 +171,7 @@ const TriviaGame = () => {
 
   return (
     <div className={lato.className} id="rewardId">
-      <div className="bg-white border border-gray-100 max-w-3xl mx-auto shadow-2xl text-left px-10 pt-6 pb-12 rounded-3xl hover:scale-105 duration-300 ease-in-out transition-all">
+      <div className="bg-white border border-gray-100 max-w-3xl mx-auto shadow-2xl text-left px-10 pt-6 pb-12 rounded-3xl duration-300 ease-in-out transition-all">
         <div className="flex items-center">
           <div className="bg-gray-50 border border-gray-200 p-2 rounded-lg">
             <svg
@@ -226,8 +227,10 @@ const TriviaGame = () => {
               </a>
             </p>
 
+            <div className="border-t border-gray-200 mt-8" />
+
             <div
-              className={classNames("flex items-center justify-between mt-12")}
+              className={classNames("flex items-center justify-between mt-6")}
             >
               {/* <div className={"text-gray-800 transition-opacity duration-300"}>
                 {"Play again for a fresh set of questions 👉"}
@@ -297,19 +300,31 @@ const TriviaGame = () => {
             >
               <div
                 className={classNames(
-                  "opacity-100 text-gray-600 transition-opacity duration-300",
+                  "opacity-100 text-gray-700 transition-opacity duration-300",
                   {
-                    "opacity-100 text-gray-600": !!selectedAnswer,
+                    "opacity-100 text-gray-700": !!selectedAnswer,
                   }
                 )}
               >
-                {!selectedAnswer
-                  ? `${
-                      isFirstQuestion ? "👆" : ""
-                    } Select an answer to continue`
-                  : selectedAnswer === currentQuestion.correctAnswer
-                  ? `🎉 You answered correctly!`
-                  : `Correct Answer: ${currentQuestion.correctAnswer}`}
+                <strong>
+                  {!selectedAnswer && isFirstQuestion
+                    ? `Select an answer to continue ${
+                        isFirstQuestion ? "👆" : ""
+                      }`
+                    : selectedAnswer === currentQuestion.correctAnswer
+                    ? `🎉 You answered correctly!`
+                    : ""}
+
+                  {selectedAnswer &&
+                  selectedAnswer !== currentQuestion.correctAnswer ? (
+                    <>
+                      <strong> Correct Answer: </strong>
+                      {currentQuestion.correctAnswer}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </strong>
 
                 {selectedAnswer === currentQuestion.correctAnswer && (
                   <span className="animate-fadeIn ml-2 p-0.5 bg-gray-100 text-sm border border-gray-300 text-red-700 rounded ">{`+${getPointsByDifficulty(
@@ -323,7 +338,11 @@ const TriviaGame = () => {
 
               <div className={"h-12 transition-opacity duration-300"}>
                 <Button
-                  label="Next Question"
+                  label={
+                    currentQuestionIndex + 1 === questions.length
+                      ? "Finish Trivia"
+                      : "Next Question"
+                  }
                   isPrimary
                   isDisabled={!selectedAnswer || isAnimating}
                   onClick={handleNextQuestion}
