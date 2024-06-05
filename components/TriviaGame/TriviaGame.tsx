@@ -4,6 +4,17 @@ import { Lato } from "next/font/google";
 import classNames from "classnames";
 const lato = Lato({ weight: ["400", "700", "900"], subsets: ["latin"] });
 
+const getPointsByDifficulty = (difficulty: string) => {
+  switch (difficulty) {
+    case "Hard":
+      return 3;
+    case "Medium":
+      return 2;
+    default:
+      return 1;
+  }
+};
+
 const questions = [
   {
     text: "What event led to the collapse of the Francis Scott Key Bridge in Baltimore?",
@@ -64,6 +75,7 @@ const questions = [
 
 interface ButtonProps {
   label: string;
+  emoji?: string;
   shouldPing?: boolean;
   isPrimary?: boolean;
   isDisabled?: boolean;
@@ -72,6 +84,7 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({
   label,
+  emoji,
   shouldPing = false,
   isPrimary = false,
   isDisabled = false,
@@ -101,7 +114,12 @@ const Button: React.FC<ButtonProps> = ({
       </span>
     )}
 
-    <span>{label}</span>
+    <span>
+      {emoji && (
+        <span className="animate-fadeIn mr-2 absolute right-0">{emoji}</span>
+      )}
+      {label}
+    </span>
   </button>
 );
 
@@ -119,6 +137,7 @@ const TriviaGame = () => {
     setSelectedAnswer(answer);
     if (answer === currentQuestion.correctAnswer) {
       setScore(score + 1);
+      setPoints(points + getPointsByDifficulty(currentQuestion.difficulty));
     }
   };
 
@@ -134,13 +153,14 @@ const TriviaGame = () => {
 
   const handlePlayAgain = () => {
     setScore(0);
+    setPoints(0);
     setCurrentQuestionIndex(0);
     setHasCompleted(false);
   };
 
   return (
     <div className={lato.className}>
-      <div className="bg-white border border-gray-100 max-w-3xl mx-auto shadow-2xl text-left px-10 pt-6 pb-12 rounded-3xl">
+      <div className="bg-white border border-gray-100 max-w-3xl mx-auto shadow-2xl text-left px-10 pt-6 pb-12 rounded-3xl hover:scale-105 duration-300 ease-in-out transition-all">
         <div className="flex items-center">
           <div className="bg-gray-50 border border-gray-200 p-2 rounded-lg">
             <svg
@@ -237,25 +257,22 @@ const TriviaGame = () => {
               {currentQuestion.displayAnswers.map((answer) => (
                 <Button
                   key={answer}
-                  label={`${
-                    selectedAnswer === answer &&
-                    selectedAnswer === currentQuestion.correctAnswer
-                      ? "✅ "
-                      : ""
-                  }
-                  ${
+                  emoji={
                     selectedAnswer &&
                     selectedAnswer !== answer &&
                     answer === currentQuestion.correctAnswer
                       ? "✅ "
-                      : ""
-                  }
-                  ${
-                    selectedAnswer === answer &&
-                    selectedAnswer !== currentQuestion.correctAnswer
+                      : "" ||
+                        (selectedAnswer === answer &&
+                          selectedAnswer === currentQuestion.correctAnswer)
+                      ? "✅ "
+                      : "" ||
+                        (selectedAnswer === answer &&
+                          selectedAnswer !== currentQuestion.correctAnswer)
                       ? "❌ "
                       : ""
-                  } ${answer}`}
+                  }
+                  label={`${answer}`}
                   shouldPing={
                     !selectedAnswer &&
                     answer === currentQuestion.correctAnswer &&
