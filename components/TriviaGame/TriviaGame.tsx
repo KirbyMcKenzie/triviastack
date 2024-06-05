@@ -230,7 +230,7 @@ const TriviaGame = () => {
             <div className="border-t border-gray-200 mt-8" />
 
             <div
-              className={classNames("flex items-center justify-between mt-6")}
+              className={classNames("flex items-center justify-between mt-8")}
             >
               {/* <div className={"text-gray-800 transition-opacity duration-300"}>
                 {"Play again for a fresh set of questions 👉"}
