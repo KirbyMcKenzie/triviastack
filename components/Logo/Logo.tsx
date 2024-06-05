@@ -1,11 +1,15 @@
 import React, { FC } from "react";
 
-export interface Props {}
+export interface Props {
+  vectorOnly?: boolean;
+}
 
-const Logo: FC<Props> = () => {
+const Logo: FC<Props> = ({ vectorOnly = false }) => {
   return (
     <svg width="33" height="35" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x=".176" y=".176" width="32" height="32" rx="16" fill="#2658E8" />
+      {!vectorOnly && (
+        <rect x=".176" y=".176" width="32" height="32" rx="16" fill="#2658E8" />
+      )}
       <g filter="url(#a)">
         <path
           d="M21.955 11.483c.16 0 .29-.13.28-.288a4.999 4.999 0 0 0-.453-1.8 5.456 5.456 0 0 0-1.316-1.77 6.152 6.152 0 0 0-1.968-1.183 6.662 6.662 0 0 0-2.322-.415c-.797 0-1.586.141-2.322.415a6.152 6.152 0 0 0-1.969 1.183 5.456 5.456 0 0 0-1.315 1.77 4.999 4.999 0 0 0-.453 1.8c-.01.159.12.288.28.288h11.558Z"

@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import ButtonAddToSlack from "components/ButtonAddToSlack";
 import DemoButton from "components/DemoButton";
+import TriviaGame from "components/TriviaGame";
 
 const HeroHome: FC = () => {
   return (
@@ -46,7 +47,7 @@ const HeroHome: FC = () => {
             data-aos-delay="400"
           >
             <div className="flex flex-col justify-center max-w-6xl min-w-full">
-              <video
+              {/* <video
                 autoPlay={true}
                 loop={true}
                 muted={true}
@@ -54,7 +55,8 @@ const HeroHome: FC = () => {
                 playsInline={true}
                 className="shadow-3xl md:rounded-3xl"
                 src="/hero-video.mp4"
-              />
+              /> */}
+              <TriviaGame />
             </div>
           </div>
         </div>
