@@ -27,14 +27,12 @@ const HeroHome: FC = () => {
                 data-aos="zoom-y-out"
                 data-aos-delay="300"
               >
-                <div className="mr-4">
-                  <ButtonAddToSlack
-                    logoColor="white"
-                    color="white"
-                    backgroundColor="#2758E7"
-                  />
-                </div>
-                <DemoButton />
+                <ButtonAddToSlack
+                  logoColor="white"
+                  color="white"
+                  backgroundColor="#2758E7"
+                />
+                {/* <DemoButton /> */}
               </div>
 
               {/* <p className="mt-4 text-slate-500">
