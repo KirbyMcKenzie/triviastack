@@ -19,28 +19,46 @@ const questions = [
     difficulty: "Easy",
   },
   {
-    text: "Hey man 2",
-    correctAnswer: "hey",
-    incorrectAnswers: ["oi", "nah", "ok"],
-    displayAnswers: ["oi", "hey", "nah", "ok"],
+    text: "Who developed the theory of evolution by natural selection?",
+    correctAnswer: "Charles Darwin",
+    incorrectAnswers: ["Galileo Galilei", "Albert Einstein", "Isaac Newton"],
+    displayAnswers: [
+      "Galileo Galilei",
+      "Charles Darwin",
+      "Albert Einstein",
+      "Isaac Newton",
+    ],
+    category: "Science",
+    difficulty: "Medium",
+  },
+  {
+    text: "Who declared victory in India's recent election after falling short of securing a 272-seat majority in parliament?",
+    correctAnswer: "Narendra Modi",
+    incorrectAnswers: ["Rahul Gandhi", "Jawaharlal Nehru", "Amit Shah"],
+    displayAnswers: [
+      "Narendra Modi",
+      "Rahul Gandhi",
+      "Jawaharlal Nehru",
+      "Amit Shah",
+    ],
     category: "Current Affairs",
     difficulty: "Medium",
   },
   {
-    text: "Hey man",
-    correctAnswer: "hey 2",
-    incorrectAnswers: ["oi", "nah", "ok"],
-    displayAnswers: ["oi", "hey", "nah", "ok"],
-    category: "Current Affairs",
+    text: "When will the first debate between President Biden and former President Trump take place?",
+    correctAnswer: "June 27",
+    incorrectAnswers: ["June 20", "June 25", "July 1"],
+    displayAnswers: ["June 20", "June 25", "June 27", "July 1"],
+    category: "Election 2024",
     difficulty: "Medium",
   },
   {
-    text: "Hey man",
-    correctAnswer: "hey 2",
-    incorrectAnswers: ["oi", "nah", "ok"],
-    displayAnswers: ["oi", "hey", "nah", "ok"],
-    category: "Current Affairs",
-    difficulty: "Medium",
+    text: "When did the demolition of the Berlin wall begin?",
+    correctAnswer: "1990",
+    incorrectAnswers: ["1984", "1999", "1994"],
+    displayAnswers: ["1990", "1984", "1999", "1994"],
+    category: "History",
+    difficulty: "Hard",
   },
 ];
 
@@ -48,6 +66,7 @@ interface ButtonProps {
   label: string;
   shouldPing?: boolean;
   isPrimary?: boolean;
+  isDisabled?: boolean;
   onClick: () => void;
 }
 
@@ -55,21 +74,30 @@ const Button: React.FC<ButtonProps> = ({
   label,
   shouldPing = false,
   isPrimary = false,
+  isDisabled = false,
   onClick,
 }) => (
   <button
+    disabled={isDisabled}
     className={classNames(
-      "relative px-4 py-1 border border-gray-300 rounded-md font-semibold hover:bg-gray-50 h-full",
+      "relative px-4 py-1 border border-gray-300 rounded-md font-semibold h-full disabled:opacity-50",
       {
-        "bg-[#006F50] hover:bg-[#147A5C] text-white": isPrimary,
+        "bg-[#147A5C] hover:bg-[#006F50] text-white": isPrimary,
+      },
+      {
+        "hover:bg-gray-50": !isPrimary,
       }
     )}
     onClick={onClick}
   >
     {shouldPing && (
-      <span className="absolute -top-3 -left-2 h-4 w-4">
-        <span className="animate-ping absolute -left-0.5 -top-0 inline-flex h-5 w-5 rounded-full bg-blue-400 opacity-75"></span>
-        <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+      <span
+        className="absolute -top-3 -left-2 h-4 w-4"
+        data-aos="zoom-y-out"
+        data-aos-delay="2000"
+      >
+        <span className="animate-ping absolute -left-0.5 -top-0 inline-flex h-5 w-5 rounded-full bg-blue-400 opacity-75" />
+        <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500" />
       </span>
     )}
 
@@ -81,22 +109,38 @@ const TriviaGame = () => {
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [hasCompleted, setHasCompleted] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-
-  const handleClick = (answer: string) => {
-    setSelectedAnswer(answer);
-    // if (currentQuestionIndex === questions.length) {
-    //   setHasCompleted(true);
-    //   return;
-    // } else {
-    //   setCurrentQuestionIndex(() => currentQuestionIndex + 1);
-    // }
-  };
+  const [score, setScore] = useState(0);
+  const [points, setPoints] = useState(0);
 
   const currentQuestion = questions[currentQuestionIndex];
+  const isFirstQuestion = currentQuestionIndex === 0;
+
+  const handleAnswerQuestion = (answer: string) => {
+    setSelectedAnswer(answer);
+    if (answer === currentQuestion.correctAnswer) {
+      setScore(score + 1);
+    }
+  };
+
+  const handleNextQuestion = () => {
+    setSelectedAnswer("");
+    if (currentQuestionIndex === questions.length) {
+      setHasCompleted(true);
+      return;
+    } else {
+      setCurrentQuestionIndex(() => currentQuestionIndex + 1);
+    }
+  };
+
+  const handlePlayAgain = () => {
+    setScore(0);
+    setCurrentQuestionIndex(0);
+    setHasCompleted(false);
+  };
 
   return (
     <div className={lato.className}>
-      <div className="bg-white border border-gray-100 max-w-3xl mx-auto shadow-2xl text-left px-10 pt-6 pb-12 rounded-xl">
+      <div className="bg-white border border-gray-100 max-w-3xl mx-auto shadow-2xl text-left px-10 pt-6 pb-12 rounded-3xl">
         <div className="flex items-center">
           <div className="bg-gray-50 border border-gray-200 p-2 rounded-lg">
             <svg
@@ -127,15 +171,58 @@ const TriviaGame = () => {
         </div>
 
         {!currentQuestion?.text || hasCompleted ? (
-          <div>
-            <p className="mt-8 text-lg">
-              <strong>{"You did it!"}</strong>
-              {` You managed to score 5/10`}
+          <div className="text-lg">
+            <p className="mt-8 text-xl">
+              <span className="mr-2">{"🎉"}</span>
+              <strong>{"Quiz Complete!"}</strong>
             </p>
+            <p className="mt-4 text-xl">
+              {"You got "}
+              <strong>{score}</strong>
+              {" of "}
+              <strong>{questions.length}</strong>
+              {" questions correct, scoring "}
+              <strong>{points} points!</strong>
+            </p>
+            <p className="mt-2 text-gray-600 text-md">
+              {"🏆 Did you know engaged teams are more productive?"}
+              <a
+                href="https://hbr.org/2013/07/employee-engagement-does-more"
+                target="_blank"
+                rel="noreferrer"
+                className=" ml-1 text-blue-600 hover:underline"
+              >
+                Learn more
+              </a>
+            </p>
+
+            <div
+              className={classNames("flex items-center justify-between mt-12")}
+            >
+              {/* <div className={"text-gray-800 transition-opacity duration-300"}>
+                {"Play again for a fresh set of questions 👉"}
+              </div> */}
+              <div className={"h-12 transition-opacity duration-300"}>
+                <span className="mr-2">
+                  <Button
+                    label="Play Again "
+                    isPrimary
+                    onClick={handlePlayAgain}
+                  />
+                </span>
+                <a
+                  href="https://calendly.com/kirby-mckenzie/30min"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Button label="Book Demo" onClick={() => {}} />
+                </a>
+              </div>
+            </div>
           </div>
         ) : (
           <>
-            <p className="mt-8 text-lg">
+            <p className="mt-8 text-lg min-h-14">
               <strong>{`Question ${currentQuestionIndex + 1}/${
                 questions.length
               } - `}</strong>
@@ -170,10 +257,11 @@ const TriviaGame = () => {
                       : ""
                   } ${answer}`}
                   shouldPing={
+                    !selectedAnswer &&
                     answer === currentQuestion.correctAnswer &&
-                    currentQuestionIndex === 0
+                    isFirstQuestion
                   }
-                  onClick={() => handleClick(answer)}
+                  onClick={() => handleAnswerQuestion(answer)}
                 />
               ))}
             </div>
@@ -182,21 +270,26 @@ const TriviaGame = () => {
             >
               <div
                 className={classNames(
-                  "opacity-0 text-gray-600 transition-opacity duration-300",
+                  "opacity-100 text-gray-600 transition-opacity duration-300",
                   {
                     "opacity-100 text-gray-600": !!selectedAnswer,
                   }
                 )}
               >
-                {selectedAnswer === currentQuestion.correctAnswer
+                {!selectedAnswer
+                  ? `${
+                      isFirstQuestion ? "👆" : ""
+                    } Select an answer to continue`
+                  : selectedAnswer === currentQuestion.correctAnswer
                   ? "🎉 You answered correctly!"
                   : `Correct Answer: ${currentQuestion.correctAnswer}`}
               </div>
-              <div className="h-12">
+              <div className={"h-12 transition-opacity duration-300"}>
                 <Button
                   label="Next Question"
                   isPrimary
-                  onClick={() => console.log("next")}
+                  isDisabled={!selectedAnswer}
+                  onClick={handleNextQuestion}
                 />
               </div>
             </div>
