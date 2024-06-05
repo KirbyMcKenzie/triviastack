@@ -10,14 +10,11 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ label, shouldPing = false }) => (
-  //   <button className="relative px-4 py-1 border border-gray-300 rounded-md  font-semibold hover:bg-gray-50 animate-ping">
-  //     <span>{label}</span>
-  //   </button>
   <button className="relative px-4 py-1 border border-gray-300 rounded-md font-semibold hover:bg-gray-50">
     {shouldPing && (
       <span className="absolute -top-3 -left-2 h-4 w-4">
         <span className="animate-ping absolute -left-0.5 -top-0 inline-flex h-5 w-5 rounded-full bg-blue-400 opacity-75"></span>
-        <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-600"></span>
+        <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
       </span>
     )}
 
@@ -67,8 +64,8 @@ const TriviaGame = () => {
         </p>
 
         <div className="mt-6 grid grid-cols-2 gap-2">
-          <Button label="Technical malfunction" shouldPing />
-          <Button label="Inappropriate content" />
+          <Button label="Technical malfunction" />
+          <Button shouldPing label="Inappropriate content" />
           <Button label="Weather conditions" />
           <Button label="Lack of interest" />
         </div>
