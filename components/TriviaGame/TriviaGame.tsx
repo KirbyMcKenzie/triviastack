@@ -171,7 +171,7 @@ const TriviaGame = () => {
 
   return (
     <div className={lato.className} id="rewardId">
-      <div className="bg-white border border-gray-100 max-w-3xl mx-auto shadow-2xl text-left px-10 pt-6 pb-12 rounded-3xl duration-300 ease-in-out transition-all">
+      <div className="bg-white border border-gray-100 max-w-3xl mx-auto shadow-2xl text-left px-6 py-6 md:px-10 md:pt-6 md:pb-12 rounded-3xl duration-300 ease-in-out transition-all">
         <div className="flex items-center">
           <div className="bg-gray-50 border border-gray-200 p-2 rounded-lg">
             <svg
@@ -227,10 +227,10 @@ const TriviaGame = () => {
               </a>
             </p>
 
-            <div className="border-t border-gray-200 mt-8" />
+            <div className="border-t border-gray-100 mt-[64px]" />
 
             <div
-              className={classNames("flex items-center justify-between mt-8")}
+              className={classNames("flex items-center justify-between mt-12")}
             >
               {/* <div className={"text-gray-800 transition-opacity duration-300"}>
                 {"Play again for a fresh set of questions 👉"}
@@ -238,7 +238,7 @@ const TriviaGame = () => {
               <div className={"h-12 transition-opacity duration-300"}>
                 <span className="mr-2">
                   <Button
-                    label="Play Again "
+                    label="Play Again"
                     isPrimary
                     onClick={handlePlayAgain}
                   />
@@ -336,12 +336,28 @@ const TriviaGame = () => {
                 )}
               </div>
 
-              <div className={"h-12 transition-opacity duration-300"}>
+              <div
+                className={
+                  "hidden md:block h-12 transition-opacity duration-300"
+                }
+              >
                 <Button
                   label={
                     currentQuestionIndex + 1 === questions.length
                       ? "Finish Trivia"
                       : "Next Question"
+                  }
+                  isPrimary
+                  isDisabled={!selectedAnswer || isAnimating}
+                  onClick={handleNextQuestion}
+                />
+              </div>
+              <div className={"md:hidden h-12 transition-opacity duration-300"}>
+                <Button
+                  label={
+                    currentQuestionIndex + 1 === questions.length
+                      ? "Finish"
+                      : "Next"
                   }
                   isPrimary
                   isDisabled={!selectedAnswer || isAnimating}
