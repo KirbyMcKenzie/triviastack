@@ -3,6 +3,7 @@ import pluralize from "pluralize";
 import { Lato } from "next/font/google";
 import classNames from "classnames";
 const lato = Lato({ weight: ["400", "700", "900"], subsets: ["latin"] });
+import { useReward } from "react-rewards";
 
 const getPointsByDifficulty = (difficulty: string) => {
   switch (difficulty) {
@@ -89,39 +90,41 @@ const Button: React.FC<ButtonProps> = ({
   isPrimary = false,
   isDisabled = false,
   onClick,
-}) => (
-  <button
-    disabled={isDisabled}
-    className={classNames(
-      "relative px-4 py-1 border border-gray-300 rounded-md font-semibold h-full disabled:opacity-50",
-      {
-        "bg-[#147A5C] hover:bg-[#006F50] text-white": isPrimary,
-      },
-      {
-        "hover:bg-gray-50": !isPrimary,
-      }
-    )}
-    onClick={onClick}
-  >
-    {shouldPing && (
-      <span
-        className="absolute -top-3 -left-2 h-4 w-4"
-        data-aos="zoom-y-out"
-        data-aos-delay="2000"
-      >
-        <span className="animate-ping absolute -left-0.5 -top-0 inline-flex h-5 w-5 rounded-full bg-blue-400 opacity-75" />
-        <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500" />
-      </span>
-    )}
-
-    <span>
-      {emoji && (
-        <span className="animate-fadeIn mr-2 absolute right-0">{emoji}</span>
+}) => {
+  return (
+    <button
+      disabled={isDisabled}
+      className={classNames(
+        "relative px-4 py-1 border border-gray-300 rounded-md font-semibold h-full disabled:opacity-50",
+        {
+          "bg-[#147A5C] hover:bg-[#006F50] text-white": isPrimary,
+        },
+        {
+          "hover:bg-gray-50": !isPrimary,
+        }
       )}
-      {label}
-    </span>
-  </button>
-);
+      onClick={onClick}
+    >
+      {shouldPing && (
+        <span
+          className="absolute -top-3 -left-2 h-4 w-4"
+          data-aos="zoom-y-out"
+          data-aos-delay="2000"
+        >
+          <span className="animate-ping absolute -left-0.5 -top-0 inline-flex h-5 w-5 rounded-full bg-blue-400 opacity-75" />
+          <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500" />
+        </span>
+      )}
+
+      <span>
+        {emoji && (
+          <span className="animate-fadeIn mr-2 absolute right-0">{emoji}</span>
+        )}
+        {label}
+      </span>
+    </button>
+  );
+};
 
 const TriviaGame = () => {
   const [selectedAnswer, setSelectedAnswer] = useState("");
@@ -133,6 +136,11 @@ const TriviaGame = () => {
   const currentQuestion = questions[currentQuestionIndex];
   const isFirstQuestion = currentQuestionIndex === 0;
 
+  const { reward, isAnimating } = useReward("rewardId", "confetti", {
+    lifetime: 300,
+    spread: 100,
+  });
+
   const handleAnswerQuestion = (answer: string) => {
     setSelectedAnswer(answer);
     if (answer === currentQuestion.correctAnswer) {
@@ -143,8 +151,10 @@ const TriviaGame = () => {
 
   const handleNextQuestion = () => {
     setSelectedAnswer("");
-    if (currentQuestionIndex === questions.length) {
+    console.log({ currentQuestionIndex, len: questions.length });
+    if (currentQuestionIndex + 1 === questions.length) {
       setHasCompleted(true);
+      reward();
       return;
     } else {
       setCurrentQuestionIndex(() => currentQuestionIndex + 1);
@@ -159,7 +169,7 @@ const TriviaGame = () => {
   };
 
   return (
-    <div className={lato.className}>
+    <div className={lato.className} id="rewardId">
       <div className="bg-white border border-gray-100 max-w-3xl mx-auto shadow-2xl text-left px-10 pt-6 pb-12 rounded-3xl hover:scale-105 duration-300 ease-in-out transition-all">
         <div className="flex items-center">
           <div className="bg-gray-50 border border-gray-200 p-2 rounded-lg">
@@ -315,7 +325,7 @@ const TriviaGame = () => {
                 <Button
                   label="Next Question"
                   isPrimary
-                  isDisabled={!selectedAnswer}
+                  isDisabled={!selectedAnswer || isAnimating}
                   onClick={handleNextQuestion}
                 />
               </div>
