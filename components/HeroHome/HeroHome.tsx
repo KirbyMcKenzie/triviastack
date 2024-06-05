@@ -35,10 +35,6 @@ const HeroHome: FC = () => {
                 />
                 {/* <DemoButton /> */}
               </div>
-
-              {/* <p className="mt-4 text-slate-500">
-                {"🤑 Install for free, no credit card required."}
-              </p> */}
             </div>
           </div>
           <div

@@ -1,16 +1,71 @@
-import React, { ReactChildren } from "react";
+import React, { useState } from "react";
 
 import { Lato } from "next/font/google";
-import Logo from "components/Logo/Logo";
+import classNames from "classnames";
 const lato = Lato({ weight: ["400", "700", "900"], subsets: ["latin"] });
+
+const questions = [
+  {
+    text: "What event led to the collapse of the Francis Scott Key Bridge in Baltimore?",
+    correctAnswer: "Struck by cargo ship",
+    incorrectAnswers: ["Tsunami", "Earthquake", "Struck by  Iceberg"],
+    displayAnswers: [
+      "Tsunami",
+      "Struck by cargo ship",
+      "Struck by Iceberg",
+      "Earthquake",
+    ],
+    category: "Current Affairs",
+    difficulty: "Easy",
+  },
+  {
+    text: "Hey man 2",
+    correctAnswer: "hey",
+    incorrectAnswers: ["oi", "nah", "ok"],
+    displayAnswers: ["oi", "hey", "nah", "ok"],
+    category: "Current Affairs",
+    difficulty: "Medium",
+  },
+  {
+    text: "Hey man",
+    correctAnswer: "hey 2",
+    incorrectAnswers: ["oi", "nah", "ok"],
+    displayAnswers: ["oi", "hey", "nah", "ok"],
+    category: "Current Affairs",
+    difficulty: "Medium",
+  },
+  {
+    text: "Hey man",
+    correctAnswer: "hey 2",
+    incorrectAnswers: ["oi", "nah", "ok"],
+    displayAnswers: ["oi", "hey", "nah", "ok"],
+    category: "Current Affairs",
+    difficulty: "Medium",
+  },
+];
 
 interface ButtonProps {
   label: string;
   shouldPing?: boolean;
+  isPrimary?: boolean;
+  onClick: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({ label, shouldPing = false }) => (
-  <button className="relative px-4 py-1 border border-gray-300 rounded-md font-semibold hover:bg-gray-50">
+const Button: React.FC<ButtonProps> = ({
+  label,
+  shouldPing = false,
+  isPrimary = false,
+  onClick,
+}) => (
+  <button
+    className={classNames(
+      "relative px-4 py-1 border border-gray-300 rounded-md font-semibold hover:bg-gray-50 h-full",
+      {
+        "bg-[#006F50] hover:bg-[#147A5C] text-white": isPrimary,
+      }
+    )}
+    onClick={onClick}
+  >
     {shouldPing && (
       <span className="absolute -top-3 -left-2 h-4 w-4">
         <span className="animate-ping absolute -left-0.5 -top-0 inline-flex h-5 w-5 rounded-full bg-blue-400 opacity-75"></span>
@@ -23,6 +78,22 @@ const Button: React.FC<ButtonProps> = ({ label, shouldPing = false }) => (
 );
 
 const TriviaGame = () => {
+  const [selectedAnswer, setSelectedAnswer] = useState("");
+  const [hasCompleted, setHasCompleted] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
+  const handleClick = (answer: string) => {
+    setSelectedAnswer(answer);
+    // if (currentQuestionIndex === questions.length) {
+    //   setHasCompleted(true);
+    //   return;
+    // } else {
+    //   setCurrentQuestionIndex(() => currentQuestionIndex + 1);
+    // }
+  };
+
+  const currentQuestion = questions[currentQuestionIndex];
+
   return (
     <div className={lato.className}>
       <div className="bg-white border border-gray-100 max-w-3xl mx-auto shadow-2xl text-left px-10 pt-6 pb-12 rounded-xl">
@@ -54,21 +125,83 @@ const TriviaGame = () => {
 
           <h2 className="text-3xl font-black ml-3">Head to Head Trivia</h2>
         </div>
-        <p className="mt-8 text-lg">
-          <strong>Question 2/10 - </strong> Why was the New York-Dublin Portal
-          temporarily shut down?
-        </p>
-        <p className="text-gray-500 mt-3">
-          <strong>Category:</strong> Current Affairs  ·  
-          <strong>Difficulty:</strong> Hard{" "}
-        </p>
 
-        <div className="mt-6 grid grid-cols-2 gap-2">
-          <Button label="Technical malfunction" />
-          <Button shouldPing label="Inappropriate content" />
-          <Button label="Weather conditions" />
-          <Button label="Lack of interest" />
-        </div>
+        {!currentQuestion?.text || hasCompleted ? (
+          <div>
+            <p className="mt-8 text-lg">
+              <strong>{"You did it!"}</strong>
+              {` You managed to score 5/10`}
+            </p>
+          </div>
+        ) : (
+          <>
+            <p className="mt-8 text-lg">
+              <strong>{`Question ${currentQuestionIndex + 1}/${
+                questions.length
+              } - `}</strong>
+              {` ${currentQuestion.text}`}
+            </p>
+            <p className="text-gray-500 mt-3">
+              <strong>Category:</strong> {currentQuestion.category}  ·  
+              <strong>Difficulty:</strong> {currentQuestion.difficulty}{" "}
+            </p>
+
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-2">
+              {currentQuestion.displayAnswers.map((answer) => (
+                <Button
+                  key={answer}
+                  label={`${
+                    selectedAnswer === answer &&
+                    selectedAnswer === currentQuestion.correctAnswer
+                      ? "✅ "
+                      : ""
+                  }
+                  ${
+                    selectedAnswer &&
+                    selectedAnswer !== answer &&
+                    answer === currentQuestion.correctAnswer
+                      ? "✅ "
+                      : ""
+                  }
+                  ${
+                    selectedAnswer === answer &&
+                    selectedAnswer !== currentQuestion.correctAnswer
+                      ? "❌ "
+                      : ""
+                  } ${answer}`}
+                  shouldPing={
+                    answer === currentQuestion.correctAnswer &&
+                    currentQuestionIndex === 0
+                  }
+                  onClick={() => handleClick(answer)}
+                />
+              ))}
+            </div>
+            <div
+              className={classNames("flex items-center justify-between mt-8")}
+            >
+              <div
+                className={classNames(
+                  "opacity-0 text-gray-600 transition-opacity duration-300",
+                  {
+                    "opacity-100 text-gray-600": !!selectedAnswer,
+                  }
+                )}
+              >
+                {selectedAnswer === currentQuestion.correctAnswer
+                  ? "🎉 You answered correctly!"
+                  : `Correct Answer: ${currentQuestion.correctAnswer}`}
+              </div>
+              <div className="h-12">
+                <Button
+                  label="Next Question"
+                  isPrimary
+                  onClick={() => console.log("next")}
+                />
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
