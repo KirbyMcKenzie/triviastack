@@ -44,7 +44,7 @@ function Header() {
     <header className="fixed left-0 top-6 right-0 z-30">
       <div
         className={classNames(
-          "md:max-w-[700px] mx-6 md:mx-auto px-4  bg-slate backdrop-blur-xl md:bg-opacity-90",
+          "md:max-w-[700px] mx-6 md:mx-auto px-4 backdrop-blur-2xl md:bg-opacity-90",
           {
             "rounded-3xl border border-slate-200": isOpened,
             "rounded-full border border-slate-200": !isOpened,
@@ -56,7 +56,9 @@ function Header() {
           <Link href="/" passHref>
             <span className="flex items-center">
               <Logo />
-              <span className=" ml-2 font-bold text-xl">TriviaStack</span>
+              <span className="ml-2 font-bold text-xl hover:text-blue-600">
+                TriviaStack
+              </span>
             </span>
           </Link>
           <nav className="flex flex-col flex-grow">
