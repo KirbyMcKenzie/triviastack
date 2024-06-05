@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import pluralize from "pluralize";
 import { Lato } from "next/font/google";
 import classNames from "classnames";
 const lato = Lato({ weight: ["400", "700", "900"], subsets: ["latin"] });
@@ -246,7 +246,7 @@ const TriviaGame = () => {
               <strong>{`Question ${currentQuestionIndex + 1}/${
                 questions.length
               } - `}</strong>
-              {` ${currentQuestion.text}`}
+              {currentQuestion.text}
             </p>
             <p className="text-gray-500 mt-3">
               <strong>Category:</strong> {currentQuestion.category}  ·  
@@ -298,9 +298,19 @@ const TriviaGame = () => {
                       isFirstQuestion ? "👆" : ""
                     } Select an answer to continue`
                   : selectedAnswer === currentQuestion.correctAnswer
-                  ? "🎉 You answered correctly!"
+                  ? `🎉 You answered correctly!`
                   : `Correct Answer: ${currentQuestion.correctAnswer}`}
+
+                {selectedAnswer === currentQuestion.correctAnswer && (
+                  <span className="animate-fadeIn ml-2 p-0.5 bg-gray-100 text-sm border border-gray-300 text-red-700 rounded ">{`+${getPointsByDifficulty(
+                    currentQuestion.difficulty
+                  )} ${pluralize(
+                    "points",
+                    getPointsByDifficulty(currentQuestion.difficulty)
+                  )}`}</span>
+                )}
               </div>
+
               <div className={"h-12 transition-opacity duration-300"}>
                 <Button
                   label="Next Question"
