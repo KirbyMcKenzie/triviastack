@@ -144,7 +144,7 @@ const Home: NextPage = () => {
               />
             </div>
 
-            <div className="mt-18 mb-64 md:my-18" data-aos="zoom-y-out">
+            {/* <div className="mt-18 mb-64 md:my-18" data-aos="zoom-y-out">
               <div
                 className="flex flex-col md:flex-row justify-between items-center w-full p-8  md:p-16 min-h-[500px] rounded-[46px] my-12"
                 style={{ backgroundColor: "#F7F7F7" }}
@@ -176,7 +176,7 @@ const Home: NextPage = () => {
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </main>
         <Footer />
