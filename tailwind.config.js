@@ -14,7 +14,7 @@ module.exports = {
         },
       },
       animation: {
-        fadeIn: "fadeIn 400ms ease-in-out",
+        fadeIn: "fadeIn 350ms ease-in-out",
       },
       boxShadow: {
         "3xl":
