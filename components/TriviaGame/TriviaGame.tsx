@@ -370,12 +370,8 @@ const TriviaGame = () => {
     <div className={lato.className} id="rewardId">
       <div className=" bg-white border-2 border-gray-100 max-w-[820px] mx-auto shadow-3xl text-left px-5 py-4 md:px-10 md:pt-8 md:pb-10 md:rounded-3xl duration-300 ease-in-out transition-all">
         <div className="flex items-center">
-          <div className="bg-gray-50 border border-gray-200 p-2 rounded-lg">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              style={{ height: 36, width: 36 }}
-              viewBox="0 0 122.8 122.8"
-            >
+          <div className="bg-gray-50 border border-gray-200 p-1.5 md:p-2 rounded-lg h-10 w-10  md:h-14 md:w-14 hover:scale-75 transition-all duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.8 122.8">
               <path
                 d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9zm6.5 0c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z"
                 fill={"#e01e5a"}
@@ -395,9 +391,7 @@ const TriviaGame = () => {
             </svg>
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-black ml-3">
-            Head to Head Trivia
-          </h2>
+          <h2 className="text-2xl md:text-4xl font-black ml-3">Play Trivia</h2>
         </div>
 
         {!currentQuestion?.text || hasCompleted ? (
