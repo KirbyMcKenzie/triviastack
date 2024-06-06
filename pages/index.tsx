@@ -184,17 +184,17 @@ const Home: NextPage = () => {
         <Footer />
       </div>
       <div
-        // className="absolute top-0 right-0 bottom-0 opacity-70"
-        className="hidden md:block absolute top-0 right-0 bottom-0 opacity-70"
+        className="absolute top-0 left-0 right-0 bottom-0 opacity-70"
         data-aos="zoom-y-out"
-        data-aos-delay="600"
+        data-aos-delay="800"
       >
         <svg
-          width="1511"
+          width="100%"
           height="1774"
           viewBox="0 0 1511 1774"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          // className="absolute top-0 left-0 right-0 bottom-0 opacity-70"
         >
           <g filter="url(#filter0_f_487_2)">
             <path
