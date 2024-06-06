@@ -33,58 +33,6 @@ const Home: NextPage = () => {
 
           <div className="max-w-[1200px] mx-auto px-6">
             <div>
-              <h2
-                className="text-4xl md:text-6xl font-extrabold mt-32"
-                data-aos="zoom-y-out"
-              >
-                {"Explore Game Modes"}
-              </h2>
-              <p className="mt-4 mb-12 text-blue-600 text-xl font-normal tracking-wide md:tracking-wider">
-                {
-                  "Whether you're remote, hybrid or in-office, there's a mode that suits everyone"
-                }
-              </p>
-
-              <div
-                className="flex flex-col md:flex-row md:space-x-4 row md:mb-40"
-                data-aos="zoom-y-out"
-              >
-                <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-3 md:my-12 min-h-[380px]">
-                  <div className="text-8xl hover:scale-125 transition-all ease-in-out">
-                    {"🎉"}
-                  </div>
-                  <h3 className="text-4xl font-extrabold my-8">
-                    {"Team Trivia"}
-                  </h3>
-                  <p className="text-xl font-normal">
-                    Answer questions together as a team, anyone in the channel
-                    can participate.
-                  </p>
-                </div>
-                <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-3 md:my-12 min-h-[380px]">
-                  <div className="text-8xl hover:scale-125 transition-all ease-in-out">
-                    {"🏆"}
-                  </div>
-                  <h3 className="text-4xl font-extrabold my-8">
-                    {"Head to Head"}
-                  </h3>
-                  <p className="text-xl font-normal">
-                    Score points based on the difficulty of the questions. Those
-                    with the highest points win.
-                  </p>
-                </div>
-                <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-3 md:my-12 min-h-[380px]">
-                  <div className="text-8xl hover:scale-125 transition-all ease-in-out">
-                    {"💃"}
-                  </div>
-                  <h3 className="text-4xl font-extrabold my-8">{"Solo"}</h3>
-                  <p className="text-xl font-normal">
-                    Play in your direct messages at your own pace. Perfect for
-                    practice or small breaks.
-                  </p>
-                </div>
-              </div>
-
               <div className="my-24 md:mt-48 md:mb-64" data-aos="zoom-y-out">
                 <FeatureSection
                   title="New Categories Every Week"
@@ -147,6 +95,58 @@ const Home: NextPage = () => {
                     </div>
                   }
                 />
+              </div>
+
+              <h2
+                className="text-4xl md:text-6xl font-extrabold mt-32"
+                data-aos="zoom-y-out"
+              >
+                {"Explore Game Modes"}
+              </h2>
+              <p className="mt-4 mb-12 text-blue-600 text-xl font-normal tracking-wide md:tracking-wider">
+                {
+                  "Whether you're remote, hybrid or in-office, there's a mode that suits everyone"
+                }
+              </p>
+
+              <div
+                className="flex flex-col md:flex-row md:space-x-4 row md:mb-40"
+                data-aos="zoom-y-out"
+              >
+                <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-3 md:my-12 min-h-[380px]">
+                  <div className="text-8xl hover:scale-125 transition-all ease-in-out">
+                    {"🎉"}
+                  </div>
+                  <h3 className="text-4xl font-extrabold my-8">
+                    {"Team Trivia"}
+                  </h3>
+                  <p className="text-xl font-normal">
+                    Answer questions together as a team, anyone in the channel
+                    can participate.
+                  </p>
+                </div>
+                <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-3 md:my-12 min-h-[380px]">
+                  <div className="text-8xl hover:scale-125 transition-all ease-in-out">
+                    {"🏆"}
+                  </div>
+                  <h3 className="text-4xl font-extrabold my-8">
+                    {"Head to Head"}
+                  </h3>
+                  <p className="text-xl font-normal">
+                    Score points based on the difficulty of the questions. Those
+                    with the highest points win.
+                  </p>
+                </div>
+                <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-3 md:my-12 min-h-[380px]">
+                  <div className="text-8xl hover:scale-125 transition-all ease-in-out">
+                    {"💃"}
+                  </div>
+                  <h3 className="text-4xl font-extrabold my-8">{"Solo"}</h3>
+                  <p className="text-xl font-normal">
+                    Play in your direct messages at your own pace. Perfect for
+                    practice or small breaks.
+                  </p>
+                </div>
               </div>
 
               {/* <div className="mt-18 mb-64 md:my-18" data-aos="zoom-y-out">
