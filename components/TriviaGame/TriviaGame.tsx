@@ -304,9 +304,9 @@ const Button: React.FC<ButtonProps> = ({
         <span
           className="absolute -top-3 -left-2 h-4 w-4"
           data-aos="zoom-y-out"
-          data-aos-delay="2000"
+          data-aos-delay="1600"
         >
-          <span className="animate-ping absolute -left-0.5 -top-0 inline-flex h-5 w-5 rounded-full bg-blue-400 opacity-75" />
+          <span className="animate-ping absolute -left-0.5 top-1 inline-flex h-5 w-5 rounded-full bg-blue-300 opacity-75" />
           <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500" />
         </span>
       )}
