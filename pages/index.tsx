@@ -184,7 +184,8 @@ const Home: NextPage = () => {
         <Footer />
       </div>
       <div
-        className="hidden md:block absolute top-0 right-0 bottom-0 opacity-70"
+        className="absolute top-0 right-0 bottom-0 opacity-70"
+        // className="hidden md:block absolute top-0 right-0 bottom-0 opacity-70"
         data-aos="zoom-y-out"
         data-aos-delay="600"
       >
