@@ -5,10 +5,6 @@ import HeroHome from "components/HeroHome/HeroHome";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-// import { Lato } from "next/font/google";
-import TriviaGame from "components/TriviaGame";
-
-// const lato = Lato({ weight: "400", subsets: ["latin"] });
 
 const Home: NextPage = () => {
   return (

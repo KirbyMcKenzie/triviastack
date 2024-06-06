@@ -368,7 +368,7 @@ const TriviaGame = () => {
 
   return (
     <div className={lato.className} id="rewardId">
-      <div className=" bg-white border-2 border-gray-100 max-w-[820px] mx-auto shadow-3xl text-left px-8 py-6 md:px-10 md:pt-8 md:pb-10 rounded-3xl duration-300 ease-in-out transition-all">
+      <div className=" bg-white border-2 border-gray-100 max-w-[820px] mx-auto shadow-3xl text-left px-5 py-4 md:px-10 md:pt-8 md:pb-10 md:rounded-3xl duration-300 ease-in-out transition-all">
         <div className="flex items-center">
           <div className="bg-gray-50 border border-gray-200 p-2 rounded-lg">
             <svg
@@ -497,7 +497,7 @@ const TriviaGame = () => {
             <div className="flex items-center justify-between mt-8">
               <div
                 className={classNames(
-                  "opacity-100 text-gray-700 transition-opacity duration-300",
+                  "opacity-100 text-gray-700 transition-opacity duration-300 max-w-48 md:max-w-full",
                   {
                     "opacity-100 text-gray-700": !!selectedAnswer,
                   }

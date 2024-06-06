@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import ButtonAddToSlack from "components/ButtonAddToSlack";
-import DemoButton from "components/DemoButton";
 import TriviaGame from "components/TriviaGame";
 
 const HeroHome: FC = () => {
@@ -33,7 +32,6 @@ const HeroHome: FC = () => {
                   color="white"
                   backgroundColor="#2758E7"
                 />
-                {/* <DemoButton /> */}
               </div>
             </div>
           </div>
@@ -42,16 +40,7 @@ const HeroHome: FC = () => {
             data-aos="zoom-y-out"
             data-aos-delay="400"
           >
-            <div className="flex flex-col justify-center max-w-6xl min-w-full px-6">
-              {/* <video
-                autoPlay={true}
-                loop={true}
-                muted={true}
-                controls={true}
-                playsInline={true}
-                className="shadow-3xl md:rounded-3xl"
-                src="/hero-video.mp4"
-              /> */}
+            <div className="flex flex-col justify-center max-w-6xl min-w-full">
               <TriviaGame />
             </div>
           </div>
