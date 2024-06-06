@@ -190,7 +190,7 @@ const Home: NextPage = () => {
       <div
         className="absolute top-0 right-0 bottom-0 opacity-70"
         data-aos="zoom-y-out"
-        data-aos-delay="700"
+        data-aos-delay="600"
       >
         <svg
           width="1511"

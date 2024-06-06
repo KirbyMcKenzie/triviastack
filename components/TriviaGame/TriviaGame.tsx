@@ -304,7 +304,7 @@ const Button: React.FC<ButtonProps> = ({
         <span
           className="absolute -top-3 -left-2 h-4 w-4"
           data-aos="zoom-y-out"
-          data-aos-delay="1600"
+          data-aos-delay="1200"
         >
           <span className="animate-ping absolute -left-0.5 top-1 inline-flex h-5 w-5 rounded-full bg-blue-300 opacity-75" />
           <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500" />
@@ -368,7 +368,7 @@ const TriviaGame = () => {
 
   return (
     <div className={lato.className} id="rewardId">
-      <div className="bg-white border-2 border-gray-100 max-w-[820px] mx-auto shadow-3xl text-left px-8 py-6 md:px-10 md:pt-8 md:pb-10 rounded-3xl duration-300 ease-in-out transition-all">
+      <div className=" bg-white border-2 border-gray-100 max-w-[820px] mx-auto shadow-3xl text-left px-8 py-6 md:px-10 md:pt-8 md:pb-10 rounded-3xl duration-300 ease-in-out transition-all">
         <div className="flex items-center">
           <div className="bg-gray-50 border border-gray-200 p-2 rounded-lg">
             <svg
