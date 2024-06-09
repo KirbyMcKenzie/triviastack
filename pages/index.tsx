@@ -3,25 +3,29 @@ import Footer from "components/Footer/Footer";
 import Header from "components/Header/Header";
 import HeroHome from "components/HeroHome/HeroHome";
 import type { NextPage } from "next";
-import Head from "next/head";
+import NextHead from "next/head";
 import Image from "next/image";
+
+const Head = () => (
+  <NextHead>
+    <title>TriviaStack</title>
+    <meta
+      name="description"
+      content="Keep your team engaged with Trivia for Slack."
+    />
+    <meta property="og:title" content="TriviaStack" />
+    <meta
+      property="og:description"
+      content="Keep your team engaged with Trivia for Slack."
+    />
+    <meta property="og:image" content="/og-thumbnail.png" />
+  </NextHead>
+);
 
 const Home: NextPage = () => {
   return (
     <>
-      <Head>
-        <title>TriviaStack</title>
-        <meta
-          name="description"
-          content="Keep your team engaged with Trivia for Slack."
-        />
-        <meta property="og:title" content="TriviaStack" />
-        <meta
-          property="og:description"
-          content="Keep your team engaged with Trivia for Slack."
-        />
-        <meta property="og:image" content="/og-thumbnail.png" />
-      </Head>
+      <Head />
       <div className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-grow mx-auto text-center z-10">
