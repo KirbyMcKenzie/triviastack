@@ -23,6 +23,14 @@ const getPointsByDifficulty = (difficulty: string) => {
 
 const questionsData = [
   {
+    text: "What planet is known as the Red Planet?",
+    correctAnswer: "Mars",
+    incorrectAnswers: ["Jupiter", "Saturn", "Venus"],
+    displayAnswers: ["Mars", "Jupiter", "Saturn", "Venus"],
+    category: "Science",
+    difficulty: "Easy",
+  },
+  {
     text: "Which former US President was recently found guilty on 34 counts of  falsifying business records?",
     correctAnswer: "Donald Trump",
     incorrectAnswers: ["Barack Obama", "George W. Bush ", "Bill Clinton"],
@@ -33,14 +41,6 @@ const questionsData = [
       "Bill Clinton",
     ],
     category: "Current Affairs",
-    difficulty: "Easy",
-  },
-  {
-    text: "What planet is known as the Red Planet?",
-    correctAnswer: "Mars",
-    incorrectAnswers: ["Jupiter", "Saturn", "Venus"],
-    displayAnswers: ["Mars", "Jupiter", "Saturn", "Venus"],
-    category: "Science",
     difficulty: "Easy",
   },
 
@@ -395,20 +395,22 @@ const TriviaGame = () => {
         </div>
 
         {!currentQuestion?.text || hasCompleted ? (
-          <div className="text-lg">
-            <p className="mt-8 text-2xl">
+          <div className="md:text-lg">
+            <p className="mt-8 text-xl md:text-2xl">
               <span className="mr-2">{"🎉"}</span>
               <strong>{"Quiz Complete!"}</strong>
             </p>
-            <p className="mt-4 text-2xl">
+            <p className="mt-4 text-lg md:text-2xl">
               {"You got "}
               <strong>{score}</strong>
               {" of "}
               <strong>{questions.length}</strong>
               {" questions correct, scoring "}
-              <strong>{points} points!</strong>
+              <strong>
+                {points} {pluralize("points", points)}!
+              </strong>
             </p>
-            <p className="mt-3 text-gray-600 text-lg">
+            <p className="mt-3 text-gray-600 md:text-lg">
               {"🏆 Did you know engaged teams are more productive?"}
               <a
                 href="https://hbr.org/2013/07/employee-engagement-does-more"
