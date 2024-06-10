@@ -23,14 +23,14 @@ const getPointsByDifficulty = (difficulty: string) => {
 
 const questionsData = [
   {
-    text: "What event led to the collapse of the Francis Scott Key Bridge in Baltimore?",
-    correctAnswer: "Struck by cargo ship",
-    incorrectAnswers: ["Tsunami", "Earthquake", "Struck by  Iceberg"],
+    text: "Which former US President was recently found guilty on 34 counts of  falsifying business records?",
+    correctAnswer: "Donald Trump",
+    incorrectAnswers: ["Barack Obama", "George W. Bush ", "Bill Clinton"],
     displayAnswers: [
-      "Tsunami",
-      "Struck by cargo ship",
-      "Struck by Iceberg",
-      "Earthquake",
+      "Barack Obama",
+      "George W. Bush ",
+      "Donald Trump",
+      "Bill Clinton",
     ],
     category: "Current Affairs",
     difficulty: "Easy",
@@ -45,7 +45,7 @@ const questionsData = [
   },
 
   {
-    text: "Who declared victory in India's recent election after falling short of securing a 272-seat majority in parliament?",
+    text: "Claiming a third term, who recently declared victory in India's general election?",
     correctAnswer: "Narendra Modi",
     incorrectAnswers: ["Rahul Gandhi", "Jawaharlal Nehru", "Amit Shah"],
     displayAnswers: [
