@@ -29,28 +29,11 @@ const Home: NextPage = () => {
       <Head />
       <div className="flex flex-col min-h-screen">
         <Header />
-        <main className="flex-grow mx-auto text-center z-10">
+        <main className="flex-grow mx-auto text-center z-10 overflow-hidden">
           <HeroHome />
 
           <div className="max-w-[1200px] mx-auto px-6">
             <div>
-              <div className="my-24 md:mt-48 md:mb-64" data-aos="zoom-y-out">
-                <FeatureSection
-                  title="New Categories Every Week"
-                  subtitle="Keep up with events and current affairs, with an ever changing set of categories and questions."
-                  contentNode={
-                    <div className=" bg-blue-600  rounded-3xl p-5 relative shadow-3xl">
-                      <Image
-                        alt="Create trivia modal"
-                        src="/select-categories.png"
-                        height={526}
-                        width={474}
-                      />
-                    </div>
-                  }
-                />
-              </div>
-
               <div className="my-24 md:my-64" data-aos="zoom-y-out">
                 <FeatureSection
                   title="Keep up with News"

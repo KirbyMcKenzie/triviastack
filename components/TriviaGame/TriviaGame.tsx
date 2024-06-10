@@ -4,6 +4,7 @@ import { Lato } from "next/font/google";
 import classNames from "classnames";
 const lato = Lato({ weight: ["400", "700", "900"], subsets: ["latin"] });
 import { useReward } from "react-rewards";
+import questionsData from "./questions.json";
 
 const getRandomQuestions = (questions: any, numQuestions: number = 5): any => {
   const shuffled = questions.sort(() => 0.5 - Math.random());
@@ -20,254 +21,6 @@ const getPointsByDifficulty = (difficulty: string) => {
       return 1;
   }
 };
-
-const questionsData = [
-  {
-    text: "What planet is known as the Red Planet?",
-    correctAnswer: "Mars",
-    incorrectAnswers: ["Jupiter", "Saturn", "Venus"],
-    displayAnswers: ["Mars", "Jupiter", "Saturn", "Venus"],
-    category: "Science",
-    difficulty: "Easy",
-  },
-  {
-    text: "Which former US President was recently found guilty on 34 counts of  falsifying business records?",
-    correctAnswer: "Donald Trump",
-    incorrectAnswers: ["Barack Obama", "George W. Bush ", "Bill Clinton"],
-    displayAnswers: [
-      "Barack Obama",
-      "George W. Bush ",
-      "Donald Trump",
-      "Bill Clinton",
-    ],
-    category: "Current Affairs",
-    difficulty: "Easy",
-  },
-
-  {
-    text: "Claiming a third term, who recently declared victory in India's general election?",
-    correctAnswer: "Narendra Modi",
-    incorrectAnswers: ["Rahul Gandhi", "Jawaharlal Nehru", "Amit Shah"],
-    displayAnswers: [
-      "Narendra Modi",
-      "Rahul Gandhi",
-      "Jawaharlal Nehru",
-      "Amit Shah",
-    ],
-    category: "Current Affairs",
-    difficulty: "Medium",
-  },
-  {
-    text: "Who painted the Mona Lisa?",
-    correctAnswer: "Leonardo da Vinci",
-    incorrectAnswers: ["Vincent van Gogh", "Pablo Picasso", "Claude Monet"],
-    displayAnswers: [
-      "Vincent van Gogh",
-      "Pablo Picasso",
-      "Claude Monet",
-      "Leonardo da Vinci",
-    ],
-    category: "Society & Culture",
-    difficulty: "Medium",
-  },
-  {
-    text: "What is the chemical formula for table salt?",
-    correctAnswer: "NaCl",
-    incorrectAnswers: ["KCl", "CaCl2", "Na2SO4"],
-    displayAnswers: ["NaCl", "KCl", "CaCl2", "Na2SO4"],
-    category: "Science",
-    difficulty: "Hard",
-  },
-  {
-    text: "Who developed the theory of evolution by natural selection?",
-    correctAnswer: "Charles Darwin",
-    incorrectAnswers: ["Galileo Galilei", "Albert Einstein", "Isaac Newton"],
-    displayAnswers: [
-      "Galileo Galilei",
-      "Charles Darwin",
-      "Albert Einstein",
-      "Isaac Newton",
-    ],
-    category: "Science",
-    difficulty: "Medium",
-  },
-  {
-    text: "What is the capital of France?",
-    correctAnswer: "Paris",
-    incorrectAnswers: ["London", "Berlin", "Rome"],
-    displayAnswers: ["Paris", "London", "Berlin", "Rome"],
-    category: "General Knowledge",
-    difficulty: "Easy",
-  },
-
-  {
-    text: "In which year did World War II end?",
-    correctAnswer: "1945",
-    incorrectAnswers: ["1944", "1943", "1942"],
-    displayAnswers: ["1945", "1944", "1943", "1942"],
-    category: "History",
-    difficulty: "Easy",
-  },
-  {
-    text: "Who wrote the play 'Romeo and Juliet'?",
-    correctAnswer: "William Shakespeare",
-    incorrectAnswers: ["Charles Dickens", "Mark Twain", "Jane Austen"],
-    displayAnswers: [
-      "William Shakespeare",
-      "Charles Dickens",
-      "Mark Twain",
-      "Jane Austen",
-    ],
-    category: "Society & Culture",
-    difficulty: "Easy",
-  },
-  {
-    text: "Which element has the chemical symbol 'O'?",
-    correctAnswer: "Oxygen",
-    incorrectAnswers: ["Osmium", "Oganesson", "Ozone"],
-    displayAnswers: ["Osmium", "Oganesson", "Ozone", "Oxygen"],
-    category: "Science",
-    difficulty: "Easy",
-  },
-  {
-    text: "What is the largest ocean on Earth?",
-    correctAnswer: "Pacific Ocean",
-    incorrectAnswers: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean"],
-    displayAnswers: [
-      "Indian Ocean",
-      "Atlantic Ocean",
-      "Arctic Ocean",
-      "Pacific Ocean",
-    ],
-    category: "General Knowledge",
-    difficulty: "Easy",
-  },
-  {
-    text: "What is the main ingredient in traditional Japanese miso soup?",
-    correctAnswer: "Soybeans",
-    incorrectAnswers: ["Rice", "Tofu", "Seaweed"],
-    displayAnswers: ["Soybeans", "Rice", "Tofu", "Seaweed"],
-    category: "Society & Culture",
-    difficulty: "Easy",
-  },
-  {
-    text: "Who is known as the 'King of Pop'?",
-    correctAnswer: "Michael Jackson",
-    incorrectAnswers: ["Elvis Presley", "Prince", "Madonna"],
-    displayAnswers: ["Michael Jackson", "Elvis Presley", "Prince", "Madonna"],
-    category: "Music",
-    difficulty: "Easy",
-  },
-  {
-    text: "What is the smallest prime number?",
-    correctAnswer: "2",
-    incorrectAnswers: ["1", "3", "5"],
-    displayAnswers: ["2", "1", "3", "5"],
-    category: "General Knowledge",
-    difficulty: "Easy",
-  },
-  {
-    text: "What is the powerhouse of the cell?",
-    correctAnswer: "Mitochondria",
-    incorrectAnswers: ["Nucleus", "Ribosome", "Endoplasmic Reticulum"],
-    displayAnswers: [
-      "Nucleus",
-      "Ribosome",
-      "Mitochondria",
-      "Endoplasmic Reticulum",
-    ],
-    category: "Science",
-    difficulty: "Medium",
-  },
-  {
-    text: "Who painted the Mona Lisa?",
-    correctAnswer: "Leonardo da Vinci",
-    incorrectAnswers: ["Vincent van Gogh", "Pablo Picasso", "Claude Monet"],
-    displayAnswers: [
-      "Vincent van Gogh",
-      "Pablo Picasso",
-      "Claude Monet",
-      "Leonardo da Vinci",
-    ],
-    category: "Society & Culture",
-    difficulty: "Medium",
-  },
-  {
-    text: "Which planet has the most moons?",
-    correctAnswer: "Jupiter",
-    incorrectAnswers: ["Saturn", "Uranus", "Neptune"],
-    displayAnswers: ["Jupiter", "Saturn", "Uranus", "Neptune"],
-    category: "Science",
-    difficulty: "Medium",
-  },
-  {
-    text: "In which year did the Titanic sink?",
-    correctAnswer: "1912",
-    incorrectAnswers: ["1905", "1915", "1920"],
-    displayAnswers: ["1912", "1905", "1915", "1920"],
-    category: "History",
-    difficulty: "Medium",
-  },
-  {
-    text: "Who directed the film 'Pulp Fiction'?",
-    correctAnswer: "Quentin Tarantino",
-    incorrectAnswers: ["Steven Spielberg", "Martin Scorsese", "James Cameron"],
-    displayAnswers: [
-      "Steven Spielberg",
-      "Martin Scorsese",
-      "Quentin Tarantino",
-      "James Cameron",
-    ],
-    category: "Film & TV",
-    difficulty: "Medium",
-  },
-  {
-    text: "What is the longest river in the world?",
-    correctAnswer: "Nile River",
-    incorrectAnswers: ["Amazon River", "Yangtze River", "Mississippi River"],
-    displayAnswers: [
-      "Amazon River",
-      "Yangtze River",
-      "Mississippi River",
-      "Nile River",
-    ],
-    category: "General Knowledge",
-    difficulty: "Medium",
-  },
-  {
-    text: "Who composed the music for the ballet 'Swan Lake'?",
-    correctAnswer: "Pyotr Ilyich Tchaikovsky",
-    incorrectAnswers: [
-      "Ludwig van Beethoven",
-      "Johann Sebastian Bach",
-      "Wolfgang Amadeus Mozart",
-    ],
-    displayAnswers: [
-      "Ludwig van Beethoven",
-      "Pyotr Ilyich Tchaikovsky",
-      "Johann Sebastian Bach",
-      "Wolfgang Amadeus Mozart",
-    ],
-    category: "Music",
-    difficulty: "Medium",
-  },
-  {
-    text: "What is the chemical formula for table salt?",
-    correctAnswer: "NaCl",
-    incorrectAnswers: ["KCl", "CaCl2", "Na2SO4"],
-    displayAnswers: ["NaCl", "KCl", "CaCl2", "Na2SO4"],
-    category: "Science",
-    difficulty: "Hard",
-  },
-  {
-    text: "What year did the Berlin Wall fall?",
-    correctAnswer: "1989",
-    incorrectAnswers: ["1987", "1990", "1991"],
-    displayAnswers: ["1989", "1987", "1990", "1991"],
-    category: "History",
-    difficulty: "Hard",
-  },
-];
 
 interface ButtonProps {
   label: string;
@@ -290,7 +43,7 @@ const Button: React.FC<ButtonProps> = ({
     <button
       disabled={isDisabled}
       className={classNames(
-        "relative px-4 py-1 border border-gray-300 rounded-md font-semibold h-full disabled:opacity-50 md:text-lg",
+        "relative px-4 py-1 border border-gray-300 rounded-md font-semibold disabled:opacity-50 h-10 md:h-full md:text-lg",
         {
           "bg-[#147A5C] hover:bg-[#006F50] text-white": isPrimary,
         },
@@ -450,7 +203,7 @@ const TriviaGame = () => {
           </div>
         ) : (
           <>
-            <p className="mt-8 text-xl md:text-2xl min-h-16">
+            <p className="mt-8 text-lg md:text-2xl min-h-16">
               <strong>{`Question ${currentQuestionIndex + 1}/${
                 questions.length
               } - `}</strong>
