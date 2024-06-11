@@ -7,6 +7,9 @@ import { useReward } from "react-rewards";
 import questionsData from "./questions.json";
 import LogoSlack from "components/LogoSlack";
 
+const calendlyLink = "https://calendly.com/kirby-mckenzie/30min";
+const learnMoreLink = "https://hbr.org/2013/07/employee-engagement-does-more";
+
 const getRandomQuestions = (questions: any, numQuestions: number = 5): any => {
   const shuffled = questions.sort(() => 0.5 - Math.random());
   return shuffled.slice(0, numQuestions);
@@ -29,7 +32,7 @@ interface ButtonProps {
   shouldPing?: boolean;
   isPrimary?: boolean;
   isDisabled?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -38,7 +41,7 @@ const Button: React.FC<ButtonProps> = ({
   shouldPing = false,
   isPrimary = false,
   isDisabled = false,
-  onClick,
+  onClick = () => {},
 }) => {
   return (
     <button
@@ -150,7 +153,7 @@ const TriviaGame = () => {
             <p className="mt-3 text-gray-600 md:text-lg">
               {"🏆 Did you know engaged teams are more productive?"}
               <a
-                href="https://hbr.org/2013/07/employee-engagement-does-more"
+                href={learnMoreLink}
                 target="_blank"
                 rel="noreferrer"
                 className=" ml-1 text-blue-600 hover:underline"
@@ -175,12 +178,8 @@ const TriviaGame = () => {
                     onClick={handlePlayAgain}
                   />
                 </span>
-                <a
-                  href="https://calendly.com/kirby-mckenzie/30min"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Button label="Book Demo" onClick={() => {}} />
+                <a href={calendlyLink} target="_blank" rel="noreferrer">
+                  <Button label="Book Demo" />
                 </a>
               </div>
             </div>
