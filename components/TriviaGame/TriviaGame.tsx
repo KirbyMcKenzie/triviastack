@@ -6,6 +6,7 @@ const lato = Lato({ weight: ["400", "700", "900"], subsets: ["latin"] });
 import { useReward } from "react-rewards";
 import questionsData from "./questions.json";
 import LogoSlack from "components/LogoSlack";
+import TriviaGameButton from "./TriviaGameButton";
 
 const calendlyLink = "https://calendly.com/kirby-mckenzie/30min";
 const learnMoreLink = "https://hbr.org/2013/07/employee-engagement-does-more";
@@ -24,58 +25,6 @@ const getPointsByDifficulty = (difficulty: string) => {
     default:
       return 1;
   }
-};
-
-interface ButtonProps {
-  label: string;
-  emoji?: string;
-  shouldPing?: boolean;
-  isPrimary?: boolean;
-  isDisabled?: boolean;
-  onClick?: () => void;
-}
-
-const Button: React.FC<ButtonProps> = ({
-  label,
-  emoji,
-  shouldPing = false,
-  isPrimary = false,
-  isDisabled = false,
-  onClick = () => {},
-}) => {
-  return (
-    <button
-      disabled={isDisabled}
-      className={classNames(
-        "relative px-4 py-1 border border-gray-300 rounded-md font-semibold disabled:opacity-50 h-10 md:h-full md:text-lg",
-        {
-          "bg-[#147A5C] hover:bg-[#006F50] text-white": isPrimary,
-        },
-        {
-          "hover:bg-gray-50": !isPrimary,
-        }
-      )}
-      onClick={onClick}
-    >
-      {shouldPing && (
-        <span
-          className="absolute -top-3 -left-2 h-4 w-4"
-          data-aos="zoom-y-out"
-          data-aos-delay="1200"
-        >
-          <span className="animate-ping absolute -left-0.5 top-1 inline-flex h-5 w-5 rounded-full bg-blue-300 opacity-75" />
-          <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500" />
-        </span>
-      )}
-
-      <span>
-        {emoji && (
-          <span className="animate-fadeIn mr-2 absolute right-0">{emoji}</span>
-        )}
-        {label}
-      </span>
-    </button>
-  );
 };
 
 const TriviaGame = () => {
@@ -172,14 +121,14 @@ const TriviaGame = () => {
               </div> */}
               <div className={"h-12 transition-opacity duration-300"}>
                 <span className="mr-2">
-                  <Button
+                  <TriviaGameButton
                     label="Play Again"
                     isPrimary
                     onClick={handlePlayAgain}
                   />
                 </span>
                 <a href={calendlyLink} target="_blank" rel="noreferrer">
-                  <Button label="Book Demo" />
+                  <TriviaGameButton label="Book Demo" />
                 </a>
               </div>
             </div>
@@ -199,7 +148,7 @@ const TriviaGame = () => {
 
             <div className="my-10 grid grid-cols-1 md:grid-cols-2 gap-2">
               {currentQuestion.displayAnswers.map((answer) => (
-                <Button
+                <TriviaGameButton
                   key={answer}
                   emoji={
                     selectedAnswer &&
@@ -270,7 +219,7 @@ const TriviaGame = () => {
                   "hidden md:block h-12 transition-opacity duration-300"
                 }
               >
-                <Button
+                <TriviaGameButton
                   label={
                     currentQuestionIndex + 1 === questions.length
                       ? "Finish Trivia"
@@ -282,7 +231,7 @@ const TriviaGame = () => {
                 />
               </div>
               <div className={"md:hidden h-12 transition-opacity duration-300"}>
-                <Button
+                <TriviaGameButton
                   label={
                     currentQuestionIndex + 1 === questions.length
                       ? "Finish"
