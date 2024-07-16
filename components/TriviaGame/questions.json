@@ -8,27 +8,27 @@
     "difficulty": "Easy"
   },
   {
-    "text": "Which former US President was recently found guilty on 34 counts of falsifying business records?",
-    "correctAnswer": "Donald Trump",
-    "incorrectAnswers": ["Barack Obama", "George W. Bush", "Bill Clinton"],
+    "text": "Who is Trump's running mate for the 2024 election?",
+    "incorrectAnswers": ["Mike Pence", "Ron DeSantis", "Nikki Haley"],
+    "correctAnswer": "J. D. Vance",
     "displayAnswers": [
-      "Barack Obama",
-      "George W. Bush",
-      "Donald Trump",
-      "Bill Clinton"
+      "Mike Pence",
+      "J. D. Vance",
+      "Ron DeSantis",
+      "Nikki Haley"
     ],
     "category": "Current Affairs",
     "difficulty": "Easy"
   },
   {
-    "text": "Claiming a third term, who recently declared victory in India's general election?",
-    "correctAnswer": "Narendra Modi",
-    "incorrectAnswers": ["Rahul Gandhi", "Jawaharlal Nehru", "Amit Shah"],
+    "text": "Who is the new UK prime minister following the 2024 general election?",
+    "incorrectAnswers": ["Boris Johnson", "Liz Truss", "Rishi Sunak"],
+    "correctAnswer": "Keir Starmer",
     "displayAnswers": [
-      "Narendra Modi",
-      "Rahul Gandhi",
-      "Jawaharlal Nehru",
-      "Amit Shah"
+      "Keir Starmer",
+      "Boris Johnson",
+      "Liz Truss",
+      "Rishi Sunak"
     ],
     "category": "Current Affairs",
     "difficulty": "Medium"
