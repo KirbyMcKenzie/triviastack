@@ -1,11 +1,24 @@
 [
   {
-    "text": "What planet is known as the Red Planet?",
-    "correctAnswer": "Mars",
-    "incorrectAnswers": ["Jupiter", "Saturn", "Venus"],
-    "displayAnswers": ["Mars", "Jupiter", "Saturn", "Venus"],
+    "text": "What is the capital of Japan?",
+    "correctAnswer": "Tokyo",
+    "incorrectAnswers": ["Osaka", "Kyoto", "Nara"],
+    "displayAnswers": ["Osaka", "Kyoto", "Tokyo", "Nara"],
     "category": "Science",
     "difficulty": "Easy"
+  },
+  {
+    "text": "After resigning from the candidacy, who has President Joe Biden endorsed for the 2024 election?",
+    "incorrectAnswers": ["Gavin Newsom", "Bernie Sanders", "Elizabeth Warren"],
+    "correctAnswer": "Kamala Harris",
+    "displayAnswers": [
+      "Bernie Sanders",
+      "Gavin Newsom",
+      "Elizabeth Warren",
+      "Kamala Harris"
+    ],
+    "category": "Current Affairs",
+    "difficulty": "Medium"
   },
   {
     "text": "Who is Trump's running mate for the 2024 election?",
@@ -18,20 +31,40 @@
       "Nikki Haley"
     ],
     "category": "Current Affairs",
-    "difficulty": "Easy"
+    "difficulty": "Medium"
   },
   {
-    "text": "Who is the new UK prime minister following the 2024 general election?",
-    "incorrectAnswers": ["Boris Johnson", "Liz Truss", "Rishi Sunak"],
-    "correctAnswer": "Keir Starmer",
-    "displayAnswers": [
-      "Keir Starmer",
-      "Boris Johnson",
-      "Liz Truss",
-      "Rishi Sunak"
+    "text": "Who directed the film 'Pulp Fiction'?",
+    "correctAnswer": "Quentin Tarantino",
+    "incorrectAnswers": [
+      "Steven Spielberg",
+      "Martin Scorsese",
+      "James Cameron"
     ],
-    "category": "Current Affairs",
+    "displayAnswers": [
+      "Steven Spielberg",
+      "Martin Scorsese",
+      "Quentin Tarantino",
+      "James Cameron"
+    ],
+    "category": "Film & TV",
     "difficulty": "Medium"
+  },
+  {
+    "text": "In which year did the Berlin Wall fall?",
+    "correctAnswer": "1989",
+    "incorrectAnswers": ["1987", "1990", "1991"],
+    "displayAnswers": ["1989", "1987", "1990", "1991"],
+    "category": "History",
+    "difficulty": "Hard"
+  },
+  {
+    "text": "What is the chemical formula for table salt?",
+    "correctAnswer": "NaCl",
+    "incorrectAnswers": ["KCl", "CaCl2", "Na2SO4"],
+    "displayAnswers": ["NaCl", "KCl", "CaCl2", "Na2SO4"],
+    "category": "Science",
+    "difficulty": "Hard"
   },
   {
     "text": "Who painted the Mona Lisa?",
@@ -45,14 +78,6 @@
     ],
     "category": "Society & Culture",
     "difficulty": "Medium"
-  },
-  {
-    "text": "What is the chemical formula for table salt?",
-    "correctAnswer": "NaCl",
-    "incorrectAnswers": ["KCl", "CaCl2", "Na2SO4"],
-    "displayAnswers": ["NaCl", "KCl", "CaCl2", "Na2SO4"],
-    "category": "Science",
-    "difficulty": "Hard"
   },
   {
     "text": "Who developed the theory of evolution by natural selection?",
@@ -236,14 +261,6 @@
     "incorrectAnswers": ["KCl", "CaCl2", "Na2SO4"],
     "displayAnswers": ["NaCl", "KCl", "CaCl2", "Na2SO4"],
     "category": "Science",
-    "difficulty": "Hard"
-  },
-  {
-    "text": "What year did the Berlin Wall fall?",
-    "correctAnswer": "1989",
-    "incorrectAnswers": ["1987", "1990", "1991"],
-    "displayAnswers": ["1989", "1987", "1990", "1991"],
-    "category": "History",
     "difficulty": "Hard"
   }
 ]
