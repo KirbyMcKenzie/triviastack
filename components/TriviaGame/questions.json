@@ -1,13 +1,13 @@
 [
   {
     "text": "Who recently won the US Presidential Election?",
-    "incorrectAnswers": ["Joe Biden", "Kamala Harris", "Barack Obama"],
+    "incorrectAnswers": ["Joe Biden", "Kamala Harris", "JD Vance"],
     "correctAnswer": "Donald Trump",
     "displayAnswers": [
-      "Joe Biden",
-      "Donald Trump",
       "Kamala Harris",
-      "Barack Obama"
+      "Donald Trump",
+      "Joe Biden",
+      "JD Vance"
     ],
     "category": "Current Affairs",
     "difficulty": "Easy"
