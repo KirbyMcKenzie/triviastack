@@ -1,37 +1,58 @@
 [
   {
-    "text": "What is the capital of Japan?",
-    "correctAnswer": "Tokyo",
-    "incorrectAnswers": ["Osaka", "Kyoto", "Nara"],
-    "displayAnswers": ["Osaka", "Kyoto", "Tokyo", "Nara"],
-    "category": "Science",
+    "text": "Who recently won the US Presidential Election?",
+    "incorrectAnswers": ["Joe Biden", "Kamala Harris", "Barack Obama"],
+    "correctAnswer": "Donald Trump",
+    "displayAnswers": [
+      "Joe Biden",
+      "Donald Trump",
+      "Kamala Harris",
+      "Barack Obama"
+    ],
+    "category": "Current Affairs",
     "difficulty": "Easy"
   },
   {
-    "text": "After resigning from the candidacy, who has President Joe Biden endorsed for the 2024 election?",
-    "incorrectAnswers": ["Gavin Newsom", "Bernie Sanders", "Elizabeth Warren"],
-    "correctAnswer": "Kamala Harris",
+    "text": "Who wrote the play 'Romeo and Juliet'?",
+    "correctAnswer": "William Shakespeare",
+    "incorrectAnswers": ["Charles Dickens", "Mark Twain", "Jane Austen"],
     "displayAnswers": [
-      "Bernie Sanders",
-      "Gavin Newsom",
-      "Elizabeth Warren",
-      "Kamala Harris"
+      "William Shakespeare",
+      "Charles Dickens",
+      "Mark Twain",
+      "Jane Austen"
     ],
-    "category": "Current Affairs",
+    "category": "Society & Culture",
+    "difficulty": "Easy"
+  },
+  {
+    "text": "Which city will host the 2028 Summer Olympics?",
+    "incorrectAnswers": ["Paris", "Tokyo", "London"],
+    "displayAnswers": ["Paris", "Los Angeles", "Tokyo", "London"],
+    "correctAnswer": "Los Angeles",
+    "category": "Science",
     "difficulty": "Medium"
   },
   {
-    "text": "Who is Trump's running mate for the 2024 election?",
-    "incorrectAnswers": ["Mike Pence", "Ron DeSantis", "Nikki Haley"],
-    "correctAnswer": "J. D. Vance",
+    "text": "Who painted the Mona Lisa?",
+    "correctAnswer": "Leonardo da Vinci",
+    "incorrectAnswers": ["Vincent van Gogh", "Pablo Picasso", "Claude Monet"],
     "displayAnswers": [
-      "Mike Pence",
-      "J. D. Vance",
-      "Ron DeSantis",
-      "Nikki Haley"
+      "Vincent van Gogh",
+      "Pablo Picasso",
+      "Claude Monet",
+      "Leonardo da Vinci"
     ],
-    "category": "Current Affairs",
+    "category": "Society & Culture",
     "difficulty": "Medium"
+  },
+  {
+    "text": "In which year did the Berlin Wall fall?",
+    "correctAnswer": "1989",
+    "incorrectAnswers": ["1987", "1990", "1991"],
+    "displayAnswers": ["1989", "1987", "1990", "1991"],
+    "category": "History",
+    "difficulty": "Hard"
   },
   {
     "text": "Who directed the film 'Pulp Fiction'?",
@@ -51,46 +72,12 @@
     "difficulty": "Medium"
   },
   {
-    "text": "In which year did the Berlin Wall fall?",
-    "correctAnswer": "1989",
-    "incorrectAnswers": ["1987", "1990", "1991"],
-    "displayAnswers": ["1989", "1987", "1990", "1991"],
-    "category": "History",
-    "difficulty": "Hard"
-  },
-  {
     "text": "What is the chemical formula for table salt?",
     "correctAnswer": "NaCl",
     "incorrectAnswers": ["KCl", "CaCl2", "Na2SO4"],
     "displayAnswers": ["NaCl", "KCl", "CaCl2", "Na2SO4"],
     "category": "Science",
     "difficulty": "Hard"
-  },
-  {
-    "text": "Who painted the Mona Lisa?",
-    "correctAnswer": "Leonardo da Vinci",
-    "incorrectAnswers": ["Vincent van Gogh", "Pablo Picasso", "Claude Monet"],
-    "displayAnswers": [
-      "Vincent van Gogh",
-      "Pablo Picasso",
-      "Claude Monet",
-      "Leonardo da Vinci"
-    ],
-    "category": "Society & Culture",
-    "difficulty": "Medium"
-  },
-  {
-    "text": "Who developed the theory of evolution by natural selection?",
-    "correctAnswer": "Charles Darwin",
-    "incorrectAnswers": ["Galileo Galilei", "Albert Einstein", "Isaac Newton"],
-    "displayAnswers": [
-      "Galileo Galilei",
-      "Charles Darwin",
-      "Albert Einstein",
-      "Isaac Newton"
-    ],
-    "category": "Science",
-    "difficulty": "Medium"
   },
   {
     "text": "What is the capital of France?",
@@ -109,16 +96,24 @@
     "difficulty": "Easy"
   },
   {
-    "text": "Who wrote the play 'Romeo and Juliet'?",
-    "correctAnswer": "William Shakespeare",
-    "incorrectAnswers": ["Charles Dickens", "Mark Twain", "Jane Austen"],
+    "text": "Who developed the theory of evolution by natural selection?",
+    "correctAnswer": "Charles Darwin",
+    "incorrectAnswers": ["Galileo Galilei", "Albert Einstein", "Isaac Newton"],
     "displayAnswers": [
-      "William Shakespeare",
-      "Charles Dickens",
-      "Mark Twain",
-      "Jane Austen"
+      "Galileo Galilei",
+      "Charles Darwin",
+      "Albert Einstein",
+      "Isaac Newton"
     ],
-    "category": "Society & Culture",
+    "category": "Science",
+    "difficulty": "Medium"
+  },
+  {
+    "text": "What is the capital of Japan?",
+    "correctAnswer": "Tokyo",
+    "incorrectAnswers": ["Osaka", "Kyoto", "Nara"],
+    "displayAnswers": ["Osaka", "Kyoto", "Tokyo", "Nara"],
+    "category": "Science",
     "difficulty": "Easy"
   },
   {
@@ -148,14 +143,6 @@
     "incorrectAnswers": ["Rice", "Tofu", "Seaweed"],
     "displayAnswers": ["Soybeans", "Rice", "Tofu", "Seaweed"],
     "category": "Society & Culture",
-    "difficulty": "Easy"
-  },
-  {
-    "text": "Who is known as the 'King of Pop'?",
-    "correctAnswer": "Michael Jackson",
-    "incorrectAnswers": ["Elvis Presley", "Prince", "Madonna"],
-    "displayAnswers": ["Michael Jackson", "Elvis Presley", "Prince", "Madonna"],
-    "category": "Music",
     "difficulty": "Easy"
   },
   {
