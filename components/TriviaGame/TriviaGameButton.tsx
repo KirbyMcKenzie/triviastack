@@ -3,7 +3,6 @@ import classNames from "classnames";
 interface ButtonProps {
   label: string;
   emoji?: string;
-  shouldPing?: boolean;
   isPrimary?: boolean;
   isDisabled?: boolean;
   onClick?: () => void;
@@ -12,7 +11,6 @@ interface ButtonProps {
 const TriviaGameButton: React.FC<ButtonProps> = ({
   label,
   emoji,
-  shouldPing = false,
   isPrimary = false,
   isDisabled = false,
   onClick = () => {},
@@ -31,17 +29,6 @@ const TriviaGameButton: React.FC<ButtonProps> = ({
       )}
       onClick={onClick}
     >
-      {shouldPing && (
-        <span
-          className="absolute -top-3 -left-2 h-4 w-4"
-          data-aos="zoom-y-out"
-          data-aos-delay="1200"
-        >
-          <span className="animate-ping absolute -left-0.5 top-1 inline-flex h-5 w-5 rounded-full bg-blue-300 opacity-75" />
-          <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500" />
-        </span>
-      )}
-
       <span>
         {emoji && (
           <span className="animate-fadeIn mr-2 absolute right-0">{emoji}</span>

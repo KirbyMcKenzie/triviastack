@@ -116,9 +116,6 @@ const TriviaGame = () => {
             <div
               className={classNames("flex items-center justify-between mt-8")}
             >
-              {/* <div className={"text-gray-800 transition-opacity duration-300"}>
-                {"Play again for a fresh set of questions 👉"}
-              </div> */}
               <div className={"h-12 transition-opacity duration-300"}>
                 <span className="mr-2">
                   <TriviaGameButton
@@ -166,11 +163,6 @@ const TriviaGame = () => {
                       : ""
                   }
                   label={`${answer}`}
-                  shouldPing={
-                    !selectedAnswer &&
-                    answer === currentQuestion.correctAnswer &&
-                    isFirstQuestion
-                  }
                   onClick={() => handleAnswerQuestion(answer)}
                 />
               ))}
