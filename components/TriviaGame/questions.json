@@ -1,6 +1,6 @@
 [
   {
-    "text": "Who recently won the US Presidential Election?",
+    "text": "Who won the 2024 US Presidential Election?",
     "incorrectAnswers": ["Joe Biden", "Kamala Harris", "JD Vance"],
     "correctAnswer": "Donald Trump",
     "displayAnswers": [
