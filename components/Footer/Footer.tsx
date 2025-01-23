@@ -20,7 +20,7 @@ function Footer() {
             <a
               className="hover:underline font-medium hover:text-blue-600"
               target="blank"
-              href="https://twitter.com/kirbymckenzie_"
+              href="https://bsky.app/profile/kirby.co.nz"
             >
               Kirby McKenzie
             </a>
