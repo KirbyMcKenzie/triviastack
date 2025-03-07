@@ -1,15 +1,19 @@
 [
   {
-    "text": "Who won the 2024 US Presidential Election?",
-    "incorrectAnswers": ["Joe Biden", "Kamala Harris", "JD Vance"],
-    "correctAnswer": "Donald Trump",
-    "displayAnswers": [
-      "Kamala Harris",
-      "Donald Trump",
-      "Joe Biden",
-      "JD Vance"
+    "text": "Who won Super Bowl LIX in 2025?",
+    "incorrectAnswers": [
+      "Kansas City Chiefs",
+      "New England Patriots",
+      "Los Angeles Rams"
     ],
-    "category": "Current Affairs",
+    "correctAnswer": "Philadelphia Eagles",
+    "displayAnswers": [
+      "Kansas City Chiefs",
+      "Philadelphia Eagles",
+      "New England Patriots",
+      "Los Angeles Rams"
+    ],
+    "category": "Sports",
     "difficulty": "Easy"
   },
   {
