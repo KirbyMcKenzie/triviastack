@@ -1,18 +1,17 @@
+import Link from "next/link";
+import React, { useState } from "react";
+import classNames from "classnames";
+
 import ButtonAddToSlack from "components/ButtonAddToSlack";
 import Logo from "components/Logo/Logo";
-import Link from "next/link";
-import React, { useState, useEffect } from "react";
-import classNames from "classnames";
 
 const Menu = ({
   isOpened,
   onClick,
 }: {
   isOpened: boolean;
-  onClick: () => void; // TODO: type
+  onClick: () => void;
 }) => {
-  // const [opened, setOpened] = useState(false);
-
   return (
     <div
       className={classNames(`tham tham-e-squeeze tham-w-6`, {
@@ -28,17 +27,7 @@ const Menu = ({
 };
 
 function Header() {
-  const [top, setTop] = useState(true);
   const [isOpened, setIsOpened] = useState(false);
-
-  // TODO: this may come in handy
-  // useEffect(() => {
-  //   const scrollHandler = () => {
-  //     window.pageYOffset > 10 ? setTop(false) : setTop(true);
-  //   };
-  //   window.addEventListener("scroll", scrollHandler);
-  //   return () => window.removeEventListener("scroll", scrollHandler);
-  // }, [top]);
 
   return (
     <header className="fixed left-0 top-6 right-0 z-30">
