@@ -69,7 +69,7 @@ const Home: NextPage = () => {
                   subtitle="Quick, simple and free. No credit card required."
                   contentSide="left"
                   contentNode={
-                    <div className=" bg-blue-600  rounded-3xl p-5 relative shadow-3xl">
+                    <div className="bg-blue-600 rounded-3xl p-5 relative shadow-3xl">
                       <Image
                         alt="Create trivia modal"
                         src="/onboarding-dm.png"
@@ -88,9 +88,8 @@ const Home: NextPage = () => {
                 {"Explore Game Modes"}
               </h2>
               <p className="mt-4 mb-12 text-blue-600 text-xl font-normal tracking-wide md:tracking-wider">
-                {
-                  "Whether you're remote, hybrid or in-office, there's a mode that suits everyone"
-                }
+                Whether you&apos;re remote, hybrid or in-office, there&apos;s a
+                mode that suits everyone
               </p>
 
               <div
@@ -132,40 +131,6 @@ const Home: NextPage = () => {
                   </p>
                 </div>
               </div>
-
-              {/* <div className="mt-18 mb-64 md:my-18" data-aos="zoom-y-out">
-              <div
-                className="flex flex-col md:flex-row justify-between items-center w-full p-8  md:p-16 min-h-[500px] rounded-[46px] my-12"
-                style={{ backgroundColor: "#F7F7F7" }}
-              >
-                <div className="max-w-[466px] md:text-left">
-                  <h2 className="text-4xl md:text-5xl font-extrabold">
-                    {"Happy Teams are Productive Teams"}
-                  </h2>
-                  <p className="text-xl font-normal  mt-6">
-                    According to HBR, companies with higher employee engagement
-                    scores saw higher productivity, profitability, and customer
-                    ratings.
-                  </p>
-                  <a
-                    href="https://hbr.org/2013/07/employee-engagement-does-more"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="block my-6 text-blue-600 text-xl hover:underline"
-                  >
-                    Learn more
-                  </a>
-                </div>
-                <div>
-                  <Image
-                    alt="Create trivia modal"
-                    src="/trivia-reaction.png"
-                    height={362}
-                    width={582}
-                  />
-                </div>
-              </div>
-            </div> */}
             </div>
           </div>
         </main>
