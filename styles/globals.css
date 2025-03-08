@@ -19,6 +19,11 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  background-color: black;
+  color: white;
+}
+
 .form-input:focus,
 .form-textarea:focus,
 .form-multiselect:focus,

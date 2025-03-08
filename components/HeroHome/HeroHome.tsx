@@ -9,18 +9,18 @@ const HeroHome: FC = () => {
         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
           <div className="text-center pb-12 md:pb-16">
             <h1
-              className="text-4xl md:text-7xl px-6 font-black leading-tight md:leading-tight md:tracking-tight mb-4 max-w-[860px] mx-auto"
+              className="text-4xl md:text-7xl px-6 font-black leading-tight md:leading-tight md:tracking-tight mb-10 max-w-[870px] mx-auto"
               data-aos="zoom-y-out"
             >
               Keep your team engaged with Trivia for Slack
             </h1>
             <div className="max-w-3xl mx-auto">
               <p
-                className="text-xl font-light md:text-2xl text-gray-600 tracking-wider mb-8 max-w-[500px] mx-auto px-4 md:px-0"
+                className="text-xl font-light text-gray-300 tracking-wider mb-8 max-w-[400px] mx-auto px-4 md:px-0"
                 data-aos="zoom-y-out"
                 data-aos-delay="150"
               >
-                Fun and engaging trivia with new questions added everyday
+                Fun and engaging trivia with new questions added every day
               </p>
               <div
                 className="flex justify-center mt-10 sm:flex sm:justify-center row"
@@ -31,6 +31,7 @@ const HeroHome: FC = () => {
                   logoColor="white"
                   color="white"
                   backgroundColor="#2758E7"
+                  border="none"
                 />
               </div>
             </div>

@@ -74,7 +74,7 @@ const TriviaGame = () => {
 
   return (
     <div className={lato.className} id="rewardId">
-      <div className=" bg-white border-2 border-gray-100 max-w-[820px] mx-auto shadow-3xl text-left px-5 py-4 md:px-10 md:pt-8 md:pb-10 md:rounded-3xl duration-300 ease-in-out transition-all">
+      <div className=" bg-white border-2 border-gray-100 text-black max-w-[820px] mx-auto shadow-3xl text-left px-5 py-4 md:px-10 md:pt-8 md:pb-10 md:rounded-3xl duration-300 ease-in-out transition-all">
         <div className="flex items-center">
           <div className="bg-gray-50 border border-gray-200 p-1.5 md:p-2 rounded-lg h-10 w-10  md:h-14 md:w-14 hover:scale-75 transition-all duration-300">
             <LogoSlack />

@@ -6,6 +6,7 @@ import type { NextPage } from "next";
 import NextHead from "next/head";
 import Image from "next/image";
 import BackgroundGradient from "components/BackgroundGradient";
+import GameModeCard from "components/GameModeCard/GameModeCard";
 
 const Head = () => (
   <NextHead>
@@ -87,7 +88,11 @@ const Home: NextPage = () => {
               >
                 {"Explore Game Modes"}
               </h2>
-              <p className="mt-4 mb-12 text-blue-600 text-xl font-normal tracking-wide md:tracking-wider">
+              <p
+                className="mt-4 mb-12 text-slate-300 text-lg font-light tracking-wide md:tracking-wider"
+                data-aos="zoom-y-out"
+                data-aos-delay="100"
+              >
                 Whether you&apos;re remote, hybrid or in-office, there&apos;s a
                 mode that suits everyone
               </p>
@@ -96,40 +101,21 @@ const Home: NextPage = () => {
                 className="flex flex-col md:flex-row md:space-x-4 row md:mb-40"
                 data-aos="zoom-y-out"
               >
-                <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-3 md:my-12 min-h-[380px]">
-                  <div className="text-8xl hover:scale-125 transition-all ease-in-out">
-                    {"🎉"}
-                  </div>
-                  <h3 className="text-4xl font-extrabold my-8">
-                    {"Team Trivia"}
-                  </h3>
-                  <p className="text-xl font-normal">
-                    Answer questions together as a team, anyone in the channel
-                    can participate.
-                  </p>
-                </div>
-                <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-3 md:my-12 min-h-[380px]">
-                  <div className="text-8xl hover:scale-125 transition-all ease-in-out">
-                    {"🏆"}
-                  </div>
-                  <h3 className="text-4xl font-extrabold my-8">
-                    {"Head to Head"}
-                  </h3>
-                  <p className="text-xl font-normal">
-                    Score points based on the difficulty of the questions. Those
-                    with the highest points win.
-                  </p>
-                </div>
-                <div className="flex flex-col justify-center w-full bg-gray-100 px-8 rounded-[46px] my-3 md:my-12 min-h-[380px]">
-                  <div className="text-8xl hover:scale-125 transition-all ease-in-out">
-                    {"💃"}
-                  </div>
-                  <h3 className="text-4xl font-extrabold my-8">{"Solo"}</h3>
-                  <p className="text-xl font-normal">
-                    Play in your direct messages at your own pace. Perfect for
-                    practice or small breaks.
-                  </p>
-                </div>
+                <GameModeCard
+                  emoji="🎉"
+                  title="Team"
+                  subtitle="Answer questions together as a team, anyone in the channel can participate."
+                />
+                <GameModeCard
+                  emoji="🏆"
+                  title="Head to Head"
+                  subtitle="Score points based on the difficulty of the questions. Scores are shared at the end."
+                />
+                <GameModeCard
+                  emoji="💃"
+                  title="Solo"
+                  subtitle="Play in your direct messages at your own pace. Perfect for practice or small breaks."
+                />
               </div>
             </div>
           </div>

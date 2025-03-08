@@ -21,7 +21,7 @@ const FeatureSection: React.FC<Props> = ({
         } md:justify-start md:text-left`}
       >
         <h2 className="text-4xl md:text-6xl font-extrabold">{title}</h2>
-        <span className="block text-xl my-4 md:my-6 text-slate-600">
+        <span className="block text-lg my-4 font-light text-slate-300">
           {subtitle}
         </span>
       </div>

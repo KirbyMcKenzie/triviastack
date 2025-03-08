@@ -33,13 +33,13 @@ function Header() {
     <header className="fixed left-0 top-6 right-0 z-30">
       <div
         className={classNames(
-          "md:max-w-[700px] mx-6 md:mx-auto px-4 backdrop-blur-2xl md:bg-opacity-90",
+          "md:max-w-[700px] mx-6 md:mx-auto px-4 backdrop-blur-2xl bg-opacity-60 bg-[#00010e]",
           {
-            "rounded-3xl border border-slate-200": isOpened,
-            "rounded-full border border-slate-200": !isOpened,
+            "rounded-3xl border border-gray-900": isOpened,
+            "rounded-full border border-gray-900": !isOpened,
           }
         )}
-        style={{ backgroundColor: "rgba(255, 255, 255, .6)" }}
+        style={{ backgroundColor: "rgb(0 1 14 / 60%)" }}
       >
         <div className="flex items-center justify-between py-2 ">
           <Link href="/" passHref>
@@ -92,7 +92,7 @@ function Header() {
                   <div className="my-4">
                     <a
                       href="https://triviastack.fly.dev/slack/install"
-                      className="inline-flex items-center justify-center no-underline font-medium border bg-blue-600 text-white py-3 px-5 -ml-2  rounded-full hover:shadow-lg transition-all duration-300 ease-in-out"
+                      className="inline-flex items-center justify-center no-underline font-medium border bg-blue-600 text-black py-3 px-5 -ml-2  rounded-full hover:shadow-lg transition-all duration-300 ease-in-out"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

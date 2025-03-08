@@ -6,15 +6,17 @@ export interface Props {
   color?: string;
   logoColor?: "white" | "slack";
   backgroundColor?: string;
+  border?: string;
 }
 
 // TODO: update props with tw classes
 const ButtonAddToSlack: FC<Props> = ({
   height = 54,
   width = 184,
-  color = "black",
+  color = "white",
   logoColor = "slack",
-  backgroundColor = "#f2f2f299",
+  backgroundColor = "#00010e",
+  border = "1px solid rgb(0 1 14 / 60%)",
 }) => {
   return (
     <a
@@ -24,8 +26,8 @@ const ButtonAddToSlack: FC<Props> = ({
         height,
         width,
         backgroundColor,
-        color: color,
-        border: "1px solid #e2e8f04a",
+        color,
+        border,
       }}
     >
       <svg
