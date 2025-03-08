@@ -1,8 +1,6 @@
-## Deploy Slack Bolt App using Vercel
+## TriviaStack Landing Page
 
-This is an example of how to deploy a Slack Bolt app using Vercel. By leveraging The Vercel Serverless Platform, one can quickly build a Slack App and deploy for free.
-
-A blog post is [here](https://www.divby0.io/posts/slack-bot-vercel-nextjs).
+This repository contains the source code for the landing page of TriviaStack, a platform to keep your team engaged with trivia for Slack.
 
 ## Getting Started
 
