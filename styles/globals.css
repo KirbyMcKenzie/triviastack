@@ -228,3 +228,8 @@ body {
     transform: translate3d(10px, 0, 0) scale(1.2);
   }
 }
+
+/* tailwind-hamburgers */
+.tham-inner {
+  background-color: white;
+}
