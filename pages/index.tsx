@@ -41,7 +41,7 @@ const Home: NextPage = () => {
                   subtitle="Stay in the know with new current affair questions everyday. Keeping your trivia sessions fresh and your team in sync with the latest headlines and trends."
                   contentSide="left"
                   contentNode={
-                    <div className="p-12 bg-white rounded-3xl shadow-3xl">
+                    <div className="p-12 bg-black/30 backdrop-blur-sm transition-colors rounded-3xl shadow-3xl">
                       <div className="text-8xl hover:scale-110 transition-all ease-in-out">
                         {"🗞️"}
                       </div>
@@ -53,9 +53,9 @@ const Home: NextPage = () => {
               <div className="my-24 md:my-64" data-aos="zoom-y-out">
                 <FeatureSection
                   title="Scheduled Trivia"
-                  subtitle="Coming soon - Set up your trivia games to run on any day of the week at your preferred time."
+                  subtitle="Set up your trivia games to run on any day of the week at your preferred time."
                   contentNode={
-                    <div className="p-12 bg-white rounded-3xl shadow-3xl">
+                    <div className="p-12 bg-slate-800/30 rounded-3xl shadow-3xl">
                       <div className="text-8xl hover:scale-110 transition-all ease-in-out">
                         {"⏰"}
                       </div>
