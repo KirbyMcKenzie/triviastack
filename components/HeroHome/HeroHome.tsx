@@ -16,7 +16,7 @@ const HeroHome: FC = () => {
             </h1>
             <div className="max-w-3xl mx-auto">
               <p
-                className="text-xl font-light text-gray-300 tracking-wider mb-8 max-w-[400px] mx-auto px-4 md:px-0"
+                className="text-lg font-light text-gray-300 tracking-wider mb-8 max-w-[420px] mx-auto px-4 md:px-0"
                 data-aos="zoom-y-out"
                 data-aos-delay="150"
               >
